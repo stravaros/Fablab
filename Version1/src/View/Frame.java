@@ -107,10 +107,10 @@ public class Frame implements GLEventListener {
 		cubeLargeur(gl, longueur, largeur);
 		cubeLargeur(gl, -longueur, largeur);
 	}
+	
 	@Override
 	public void dispose(GLAutoDrawable arg0) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override

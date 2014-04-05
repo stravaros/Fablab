@@ -27,6 +27,7 @@ public class Main {
 		 * System.out.println("Combien de capteur \n "); nombreCapteur =
 		 * in.nextInt();
 		 */
+		
 		tabCapteurFixe = new Capteur[nombreCapteurFixe];
 		tabCapteurMouvant = new Capteur[nombreCapteurMouvant];
 
@@ -57,6 +58,5 @@ public class Main {
 		MainAPP app = new MainAPP(tabCapteurFixe, tabCapteurMouvant,
 				longueur / 2, largeur / 2);
 		app.setVisible(true);
-
 	}
 }
