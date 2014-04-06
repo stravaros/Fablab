@@ -57,16 +57,14 @@ public class Frame implements GLEventListener {
 	}
 
 	private void capteurfixe(GL2 gl) {
-		for (int i = 0; i < mdl.getTabCapteurMouvant().length; i++) {
+			Capteur capteur = mdl.getCapteurMouvant();
 			gl.glBegin(GL2.GL_QUADS);
 			gl.glColor3d(1, 1, 0); // set the color of the quad
-				gl.glVertex3d(-taille, taille, 0.5); // Top Left
-				gl.glVertex3d(taille, taille, 0.5); // Top Right
-				gl.glVertex3d(taille, -taille, 0.5); // Bottom Right
-				gl.glVertex3d(-taille, -taille, 0.5); // Bottom Left
-			gl.glEnd();
-		}
-		
+				gl.glVertex3d(-taille+mdl.getCapteurMouvant().getCoordoneeX(), taille+mdl.getCapteurMouvant().getCoordoneeY(), 0.5); // Top Left
+				gl.glVertex3d(taille+mdl.getCapteurMouvant().getCoordoneeX(), taille+mdl.getCapteurMouvant().getCoordoneeY(), 0.5); // Top Right
+				gl.glVertex3d(taille+mdl.getCapteurMouvant().getCoordoneeX(), -taille+mdl.getCapteurMouvant().getCoordoneeY(), 0.5); // Bottom Right
+				gl.glVertex3d(-taille+mdl.getCapteurMouvant().getCoordoneeX(), -taille+mdl.getCapteurMouvant().getCoordoneeY(), 0.5); // Bottom Left
+			gl.glEnd();	
 	}
 
 	public void capteurmouvant(GL2 gl) {

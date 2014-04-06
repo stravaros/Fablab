@@ -11,10 +11,10 @@ public class Main {
 		// / TODO Supprimer les commenatire et enlever les = des attributs
 
 		int nombreCapteurFixe = 1;
-		int nombreCapteurMouvant = 1;
+		
 
 		Capteur tabCapteurFixe[];
-		Capteur tabCapteurMouvant[];
+	
 		float longueur = 20;
 		float largeur = 20;
 
@@ -29,10 +29,13 @@ public class Main {
 		 */
 		
 		tabCapteurFixe = new Capteur[nombreCapteurFixe];
-		tabCapteurMouvant = new Capteur[nombreCapteurMouvant];
+		
+		Capteur capteurMouvement = new Capteur (2,0); //Initialise le recepteur il est le capteur 0
+		// Les autres capteurs sont entre 1 et nombreCapteurFixe + 1
+	
 
 		for (int i = 0; i < nombreCapteurFixe; i++) {
-			tabCapteurFixe[i] = new Capteur(1, i);
+			tabCapteurFixe[i] = new Capteur(1, i+1);
 			System.out.println("Le capteur est un recepteur");
 			System.out
 					.println("Entrer les coordonnées polaires du points (la distance et l'angle par rapport au centre de la classe");
@@ -49,14 +52,13 @@ public class Main {
 				
 			}
 		}
-		for (int i = 0; i < nombreCapteurMouvant; i++) {
-			tabCapteurMouvant[i] = new Capteur(2, i);
-			System.out
-					.println("Il s'agit d'un capteur. Aucune donnée n'est demandé");
-		}
+	
+		
 
-		MainAPP app = new MainAPP(tabCapteurFixe, tabCapteurMouvant,
+		MainAPP app = new MainAPP(tabCapteurFixe, capteurMouvement,
 				longueur / 2, largeur / 2);
 		app.setVisible(true);
 	}
+
+
 }

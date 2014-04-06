@@ -12,7 +12,7 @@ static String alpha = "plop";
 	public static void main(String argv[]) throws Exception {
 		InetAddress serveur = InetAddress.getByName(argv[0]);
 		int length = alpha.length();
-		System.out.print(alpha.getBytes() + "plop");
+	
 		byte buffer[] =alpha.getBytes();
 		DatagramSocket socket = new DatagramSocket();
 		DatagramPacket donneesEmises = new DatagramPacket(buffer, length,

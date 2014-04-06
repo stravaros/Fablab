@@ -2,5 +2,13 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/home/sylvain/Documents/Info/Fablab/Version2/server/libraries/bluecove-2.1.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/home/sylvain/Documents/Info/Fablab/Version2/server/libraries/bluecove-gpl-2.1.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/home/sylvain/Documents/Info/Fablab/Version2/server/libraries/gluegen-java-src.zip"/>
+	<classpathentry kind="lib" path="/home/sylvain/Documents/Info/Fablab/Version2/server/libraries/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="/home/sylvain/Documents/Info/Fablab/Version2/server/libraries/gluegen-rt-natives-linux-amd64.jar"/>
+	<classpathentry kind="lib" path="/home/sylvain/Documents/Info/Fablab/Version2/server/libraries/joal-java-src.zip"/>
+	<classpathentry kind="lib" path="/home/sylvain/Documents/Info/Fablab/Version2/server/libraries/jogl-all.jar"/>
+	<classpathentry kind="lib" path="/home/sylvain/Documents/Info/Fablab/Version2/server/libraries/jogl-all-natives-linux-amd64.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

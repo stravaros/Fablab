@@ -7,8 +7,8 @@ public class Capteur {
 	private int type;
 	private int numero;
 
-	public Capteur(int valDef, int numero) {
-		type = valDef;
+	public Capteur(int type, int numero) {
+		type = type;
 		numero=numero;
 	}
 

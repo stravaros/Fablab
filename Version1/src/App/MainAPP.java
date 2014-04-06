@@ -20,9 +20,9 @@ public class MainAPP extends JFrame implements Observer {
 	private static GLCanvas cv =null;
 
 	
-	public MainAPP( Capteur tabCapteurFixe[], Capteur[] tabCapteurMouvant, float longueur, float largeur){
+	public MainAPP( Capteur tabCapteurFixe[], Capteur capteurMouvant, float longueur, float largeur){
 		cv=new GLCanvas(); //CREATION D'UN CANVAS
-		Mdl mdl= new Mdl(tabCapteurFixe,tabCapteurMouvant);
+		Mdl mdl= new Mdl(tabCapteurFixe,capteurMouvant);
 		
 		mdl.addObserver(this);
 		Frame fr = new Frame (cv, mdl, longueur, largeur); //FENETRE

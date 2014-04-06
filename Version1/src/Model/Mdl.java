@@ -18,11 +18,11 @@ public class Mdl extends Observable {
 	float vitesse;
 	
 	private Capteur tabCapteurFixe[];
-	private Capteur tabCapteurMouvant[];
+	private Capteur capteurMouvant;
 	
 	int parametreAnimation=0;
 	
-	public Mdl(Capteur tabCapteurFixe[], Capteur[] tabCapteurMouvant){
+	public Mdl(Capteur tabCapteurFixe[], Capteur capteurMouvant){
 		setAngleElevation(30.0f);
 		setAngleAzimuth(30.0f);
 		
@@ -32,7 +32,7 @@ public class Mdl extends Observable {
 		setMouseX(0);
 		setMouseY(0);
 		this.setTabCapteurFixe(tabCapteurFixe);
-		this.setTabCapteurMouvant(tabCapteurMouvant);
+		this.setCapteurMouvant(capteurMouvant);
 	}
 	
 	//QUAND ON BOUGE LA SOURIS EN CLIQUANT
@@ -129,12 +129,12 @@ public class Mdl extends Observable {
 		this.tabCapteurFixe = tabCapteurFixe;
 	}
 
-	public Capteur[] getTabCapteurMouvant() {
-		return tabCapteurMouvant;
+	public Capteur getCapteurMouvant() {
+		return capteurMouvant;
 	}
 
-	public void setTabCapteurMouvant(Capteur tabCapteurMouvant[]) {
-		this.tabCapteurMouvant = tabCapteurMouvant;
+	public void setCapteurMouvant(Capteur capteurMouvant) {
+		this.capteurMouvant = capteurMouvant;
 	}
 
 
