@@ -8,8 +8,8 @@ public class Capteur {
 	private int numero;
 
 	public Capteur(int type, int numero) {
-		type = type;
-		numero=numero;
+		this.type = type;
+		this.numero=numero;
 	}
 
 	public int getType() {

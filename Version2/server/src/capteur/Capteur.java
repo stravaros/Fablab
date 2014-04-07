@@ -2,8 +2,8 @@ package capteur;
 
 public class Capteur {
 
-	private int coordoneeXPol;
-	private int coordoneeYPol;
+	private int coordoneeXCar;
+	private int coordoneeYCar;
 	private int type;
 	private int numero;
 
@@ -29,21 +29,22 @@ public class Capteur {
 		this.numero = numero;
 	}
 
-	public int getCoordoneeXPol() {
-		return coordoneeXPol;
+	public int getCoordoneeXCar() {
+		return coordoneeXCar;
 	}
 
-	public void setCoordoneeXPol(int coordoneeXPol) {
-		this.coordoneeXPol = coordoneeXPol;
+	public void setCoordoneeXCar(int coordoneeXCar) {
+		this.coordoneeXCar = coordoneeXCar;
 	}
 
-	public int getCoordoneeYPol() {
-		return coordoneeYPol;
+	public int getCoordoneeYCar() {
+		return coordoneeYCar;
 	}
 
-	public void setCoordoneeYPol(int coordoneeYPol) {
-		this.coordoneeYPol = coordoneeYPol;
+	public void setCoordoneeYCar(int coordoneeYCar) {
+		this.coordoneeYCar = coordoneeYCar;
 	}
+
 
 
 }

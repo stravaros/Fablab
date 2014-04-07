@@ -12,13 +12,14 @@ public class TestServeurUDP {
 	static float longeur;
 	static float largeur;
 	private static Capteur[] tabCapteurFixe;
+	
 
 	public static void main(String argv[]) throws Exception {
 		DatagramSocket socket = new DatagramSocket(port);
 		String donnees = "";
 		String message = "";
 		int taille = 0;
-
+		
 		System.out.println("Lancement du serveur");
 		while (true) {
 			DatagramPacket paquet = new DatagramPacket(buffer, buffer.length);
@@ -32,18 +33,37 @@ public class TestServeurUDP {
 			if (tokens[0].equals("Longeur")) {
 				longeur = Float.parseFloat(tokens[1]);
 				largeur = Float.parseFloat(tokens[3]);
+				System.out.println(longeur);
+				System.out.println(largeur);
+			message="ACK dimension";
+			envoi = new DatagramPacket(message.getBytes(), message.length(), paquet.getAddress(), paquet.getPort()); socket.send(envoi);
+			socket.send(envoi);
 			}
+			message="";
 			if(tokens[0].equals("NombreCapteur")){
 				tabCapteurFixe = new Capteur[Integer.parseInt(tokens[1])];
+				message="ACK NombreCapteur";
+				envoi = new DatagramPacket(message.getBytes(), message.length(), paquet.getAddress(), paquet.getPort()); socket.send(envoi);
+				socket.send(envoi);
+				System.out.println(Integer.parseInt(tokens[1]));
 			}
+			message="";
 			if(tokens[0].equals("Capteur")){
 				tabCapteurFixe[Integer.parseInt(tokens[1])]=new Capteur();
 				tabCapteurFixe[Integer.parseInt(tokens[1])].setType(1);
 				tabCapteurFixe[Integer.parseInt(tokens[1])].setNumero(Integer.parseInt(tokens[1]));
-				tabCapteurFixe[Integer.parseInt(tokens[1])].setCoordoneeXPol(Integer.parseInt(tokens[3]));
-				tabCapteurFixe[Integer.parseInt(tokens[1])].setCoordoneeYPol(Integer.parseInt(tokens[5]));
-			System.out.println(tabCapteurFixe[Integer.parseInt(tokens[1])].getCoordoneeYPol());
+				tabCapteurFixe[Integer.parseInt(tokens[1])].setCoordoneeXCar(Integer.parseInt(tokens[3]));
+				tabCapteurFixe[Integer.parseInt(tokens[1])].setCoordoneeYCar(Integer.parseInt(tokens[5]));
+				message="ACK Capteur";
+				envoi = new DatagramPacket(message.getBytes(), message.length(), paquet.getAddress(), paquet.getPort()); socket.send(envoi);
+				socket.send(envoi);
 			}
+			message="";
+			if(tokens[0].equals("Mouvement")){
+				//TODO
+			}
+			
+			
 		}
 		/*
 		 * 
