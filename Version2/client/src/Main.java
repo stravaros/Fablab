@@ -19,7 +19,7 @@ public class Main {
 		// / TODO Supprimer les commenatire et enlever les = des attributs
 		InetAddress serveur = InetAddress.getByName(argv[0]);
 
-		int nombreCapteurFixe = 25;
+		int nombreCapteurFixe = 1;
 
 		Capteur tabCapteurFixe[];
 
