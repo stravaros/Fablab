@@ -69,7 +69,7 @@ public class Main {
 		String data = "Init";
 		int length;
 		byte buffer[] = data.getBytes();
-		;
+		
 		length = data.length();
 		DatagramSocket socket = new DatagramSocket();
 		DatagramPacket donneesEmises = new DatagramPacket(buffer, length,
@@ -77,6 +77,8 @@ public class Main {
 		DatagramPacket donneesRecues = new DatagramPacket(new byte[taille],
 				taille);
 		try {
+			while(true){
+				
 			data = "Longeur " + longueur + " Largeur " + largeur;
 			length = data.length();
 			buffer = data.getBytes();
@@ -88,8 +90,22 @@ public class Main {
 			Thread.sleep(10);
 			socket.setSoTimeout(30000);
 			socket.send(donneesEmises);
-			socket.receive(donneesRecues);// TODO Faire un test dessus
+			//socket.receive(donneesRecues);// TODO Faire un test dessus
 			System.out.println("Longeur/Largeur recue");
+			
+			data = "NombreCapteur " + nombreCapteurFixe;
+			length = data.length();
+			buffer = data.getBytes();
+			donneesEmises.setData(buffer);
+			donneesEmises.setLength(length);
+			donneesEmises.setAddress(serveur);
+			donneesEmises.setPort(port);
+			Thread.sleep(10);
+			socket.setSoTimeout(30000);
+			socket.send(donneesEmises);
+			//socket.receive(donneesRecues);// TODO Faire un test dessus
+			System.out.println("Nombre envoyee");
+			
 			for (int i = 0; i < nombreCapteurFixe; i++) {
 
 				data = "Capteur " + tabCapteurFixe[i].getNumero() + " X  "
@@ -104,13 +120,13 @@ public class Main {
 				Thread.sleep(10);
 				socket.setSoTimeout(30000);
 				socket.send(donneesEmises);
-				socket.receive(donneesRecues);// TODO Faire un test dessus
+				//socket.receive(donneesRecues);// TODO Faire un test dessus
 				System.out.println("Transmission capteur"
 						+ tabCapteurFixe[i].getNumero());
 			}
 
 			data = "Fin capteur";
-			length = data.length();
+			/*length = data.length();
 			buffer = data.getBytes();
 			donneesEmises.setData(buffer);
 			donneesEmises.setLength(length);
@@ -120,14 +136,14 @@ public class Main {
 			socket.setSoTimeout(30000);
 			socket.send(donneesEmises);
 			socket.receive(donneesRecues);// TODO Faire un test dessus
-			System.out.println("Fin recue");
-
+			System.out.println("Fin recue");*/
+			}
 		} catch (SocketTimeoutException ste) {
 			System.out.println("Le delai pour la reponse a expire");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		while (true) {
+	/*	while (true) {
 			try {
 				data = "Mouvement";
 				length = data.length();
@@ -149,7 +165,7 @@ public class Main {
 				e.printStackTrace();
 			}
 
-		}
+		}*/
 
 	}
 
