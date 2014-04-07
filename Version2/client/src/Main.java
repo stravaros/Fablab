@@ -114,7 +114,7 @@ public class Main {
 			System.out.println("Nombre de capteur transferer");
 			
 			for (int i = 0; i < nombreCapteurFixe; i++) {
-
+				
 				data = "Capteur " + tabCapteurFixe[i].getNumero() + " X  "
 						+ tabCapteurFixe[i].getCoordoneeX() + " Y  "
 						+ tabCapteurFixe[i].getCoordoneeY();

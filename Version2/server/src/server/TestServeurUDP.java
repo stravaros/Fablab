@@ -49,11 +49,11 @@ public class TestServeurUDP {
 			}
 			message="";
 			if(tokens[0].equals("Capteur")){
-				tabCapteurFixe[Integer.parseInt(tokens[1])]=new Capteur();
-				tabCapteurFixe[Integer.parseInt(tokens[1])].setType(1);
-				tabCapteurFixe[Integer.parseInt(tokens[1])].setNumero(Integer.parseInt(tokens[1]));
-				tabCapteurFixe[Integer.parseInt(tokens[1])].setCoordoneeXCar(Integer.parseInt(tokens[3]));
-				tabCapteurFixe[Integer.parseInt(tokens[1])].setCoordoneeYCar(Integer.parseInt(tokens[5]));
+				tabCapteurFixe[Integer.parseInt(tokens[1])-1]=new Capteur();
+				tabCapteurFixe[Integer.parseInt(tokens[1])-1].setType(1);
+				tabCapteurFixe[Integer.parseInt(tokens[1])-1].setNumero(Integer.parseInt(tokens[1]));
+				tabCapteurFixe[Integer.parseInt(tokens[1])-1].setCoordoneeXCar(Integer.parseInt(tokens[3]));
+				tabCapteurFixe[Integer.parseInt(tokens[1])-1].setCoordoneeYCar(Integer.parseInt(tokens[5]));
 				message="ACK Capteur";
 				envoi = new DatagramPacket(message.getBytes(), message.length(), paquet.getAddress(), paquet.getPort()); socket.send(envoi);
 				socket.send(envoi);
