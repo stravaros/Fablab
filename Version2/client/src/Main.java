@@ -19,7 +19,7 @@ public class Main {
 	public static void main(String argv[]) throws Exception {
 		// / TODO Supprimer les commenatire et enlever les = des attributs
 		InetAddress serveur = InetAddress.getByName(argv[0]);
-		int nombreCapteurFixe = 25;
+		int nombreCapteurFixe = 1;
 		Capteur tabCapteurFixe[];
 		float longueur = 20;
 		float largeur = 20;
