@@ -14,15 +14,13 @@ public class Main {
 	final static int taille = 1024;
 	static byte buffer[] = new byte[taille];
 	static String donnees = "";
+	private static DatagramSocket socket;
 
 	public static void main(String argv[]) throws Exception {
 		// / TODO Supprimer les commenatire et enlever les = des attributs
 		InetAddress serveur = InetAddress.getByName(argv[0]);
-
 		int nombreCapteurFixe = 1;
-
 		Capteur tabCapteurFixe[];
-
 		float longueur = 20;
 		float largeur = 20;
 
@@ -37,11 +35,9 @@ public class Main {
 		 */
 
 		tabCapteurFixe = new Capteur[nombreCapteurFixe];
-
 		Capteur capteurMouvement = new Capteur(2, 0); // Initialise le recepteur
 														// il est le capteur 0
 		// Les autres capteurs sont entre 1 et nombreCapteurFixe + 1
-
 		for (int i = 0; i < nombreCapteurFixe; i++) {
 			tabCapteurFixe[i] = new Capteur(1, i + 1);
 			System.out.println("Le capteur est un recepteur");
@@ -57,20 +53,17 @@ public class Main {
 						angle, longueur);
 				coordoneeCorect = tabCapteurFixe[i].setCoordoneeY(distance,
 						angle, largeur);
-
 			}
 		}
-
 		String data = "Init";
 		int length;
 		byte buffer[] = data.getBytes();
 		
 		length = data.length();
-		DatagramSocket socket = new DatagramSocket();
+		socket = new DatagramSocket();
 		DatagramPacket donneesEmises = new DatagramPacket(buffer, length,
 				serveur, length);
-		DatagramPacket donneesRecues = new DatagramPacket(new byte[taille],
-				taille);
+		
 		String delims = "[ ]+";
 		String[] tokens;
 		try {
@@ -82,7 +75,8 @@ public class Main {
 			donneesEmises.setLength(length);
 			donneesEmises.setAddress(serveur);
 			donneesEmises.setPort(port);
-			
+			DatagramPacket donneesRecues = new DatagramPacket(new byte[taille],
+					taille);
 			do{
 				Thread.sleep(10);
 				socket.setSoTimeout(30000);
@@ -93,8 +87,7 @@ public class Main {
 				tokens = donnees.split(delims);
 			}while(!(tokens[0].equals("ACK"))&&(!tokens[1].equals("dimension")));
 			donnees="";
-			System.out.println("Longeur et Largeur recuent");
-			
+			System.out.println("Longeur et Largeur recues");
 			data = "NombreCapteur " + nombreCapteurFixe;
 			length = data.length();
 			buffer = data.getBytes();
@@ -132,14 +125,10 @@ public class Main {
 					donnees = new String(donneesRecues.getData(), 0, taille);	
 					tokens = donnees.split(delims);
 				}while(!(tokens[0].equals("ACK"))&&(!tokens[1].equals("Capteur")));
-				donnees="";
-				System.out.println("Nombre de capteur transferer");
-				donnees="";
-				
+				donnees="";				
 				System.out.println("Transmission capteur "
 						+ tabCapteurFixe[i].getNumero());
 			}
-
 		} catch (SocketTimeoutException ste) {
 			System.out.println("Le delai pour la reponse a expire");
 		} catch (Exception e) {
@@ -151,9 +140,10 @@ public class Main {
 		//MainAPP app = new MainAPP(tabCapteurFixe, capteurMouvement,longueur / 2, largeur / 2);
 		//app.setVisible(true);
 		////////////////////////////////////
-		
 		while (true) {
 			try {
+				DatagramPacket donneesRecues = new DatagramPacket(new byte[taille],
+						taille);
 				data = "Mouvement";
 				length = data.length();
 				buffer = data.getBytes();
@@ -164,18 +154,17 @@ public class Main {
 				Thread.sleep(10);
 				socket.setSoTimeout(30000);
 				socket.send(donneesEmises);
-				//socket.receive(donneesRecues);// TODO Faire un test dessus
-				// TODO parser la réponse
-			//	System.out.println("Ack");
-
+				socket.receive(donneesRecues);
+				donnees = new String(donneesRecues.getData(), 0, taille);	
+				tokens = donnees.split(delims);
+				//TODO A decomenter
+			//	capteurMouvement.setCoordoneeX(Integer.parseInt(tokens[1]));
+			//	capteurMouvement.setCoordoneeY(Integer.parseInt(tokens[3]));
 			} catch (SocketTimeoutException ste) {
 				System.out.println("Le delai pour la reponse a expire");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 		}
-
 	}
-
 }

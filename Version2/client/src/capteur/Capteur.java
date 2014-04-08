@@ -57,4 +57,11 @@ public class Capteur {
 	public void setNumero(int numero) {
 		this.numero = numero;
 	}
+
+	public void setCoordoneeX(int coordoneeX) {
+		this.coordoneeX = coordoneeX;		
+	}
+	public void setCoordoneeY(int coordoneeY) {
+		this.coordoneeY = coordoneeY;		
+	}
 }

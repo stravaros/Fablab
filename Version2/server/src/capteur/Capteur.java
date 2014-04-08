@@ -19,8 +19,6 @@ public class Capteur {
 		this.type = type;
 	}
 
-	
-
 	public int getNumero() {
 		return numero;
 	}
@@ -44,7 +42,4 @@ public class Capteur {
 	public void setCoordoneeYCar(int coordoneeYCar) {
 		this.coordoneeYCar = coordoneeYCar;
 	}
-
-
-
 }
