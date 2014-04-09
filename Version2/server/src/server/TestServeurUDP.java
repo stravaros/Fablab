@@ -2,6 +2,7 @@ package server;
 
 import java.net.*;
 
+import calculMath.CalculMath;
 import capteur.Capteur;
 
 public class TestServeurUDP {
@@ -12,8 +13,9 @@ public class TestServeurUDP {
 	static float longeur;
 	static float largeur;
 	private static Capteur[] tabCapteurFixe;
-	//TODO private CalculMath calculMath;
+	private static CalculMath calculMath;
 	private static DatagramSocket socket;
+	private static boolean alreadyInstanciated = false;
 	
 	public static void main(String argv[]) throws Exception {
 		socket = new DatagramSocket(port);
@@ -45,7 +47,6 @@ public class TestServeurUDP {
 				DatagramPacket envoi = new DatagramPacket(message.getBytes(), message.length(), paquet.getAddress(), paquet.getPort()); socket.send(envoi);
 				socket.send(envoi);
 				System.out.println(Integer.parseInt(tokens[1]));
-				//TODO calculMath = new CalculMath(tabCapteurFixe);
 			}
 			if(tokens[0].equals("Capteur")){
 				String message="";
@@ -60,7 +61,13 @@ public class TestServeurUDP {
 			}
 			if(tokens[0].equals("Mouvement")){
 				String message="";
-				message="X " + "Y "; //TODO a finir
+				if(!alreadyInstanciated ) {
+					calculMath = new CalculMath(tabCapteurFixe);
+					alreadyInstanciated = true;
+				}
+				System.out.println("APPEL AUX MATHS");
+				double[] pos = calculMath.getPosition();
+				message= (int)(pos[0]) +" " +(int)(pos[1]) ; //TODO a finir
 				DatagramPacket envoi = new DatagramPacket(message.getBytes(), message.length(), paquet.getAddress(), paquet.getPort()); socket.send(envoi);
 				socket.send(envoi);
 			}	
