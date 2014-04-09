@@ -7,4 +7,5 @@
 *.aux
 *.toc
 *.class
-
+.classpath
+.project
