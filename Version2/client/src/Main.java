@@ -19,7 +19,7 @@ public class Main {
 	public static void main(String argv[]) throws Exception {
 		// / TODO Supprimer les commenatire et enlever les = des attributs
 		InetAddress serveur = InetAddress.getByName(argv[0]);
-		int nombreCapteurFixe = 1;
+		int nombreCapteurFixe = 3;
 		Capteur tabCapteurFixe[];
 		float longueur = 20;
 		float largeur = 20;
@@ -137,8 +137,8 @@ public class Main {
 		
 		/////////////////////////////////////
 		//TODO A decomenter
-		//MainAPP app = new MainAPP(tabCapteurFixe, capteurMouvement,longueur / 2, largeur / 2);
-		//app.setVisible(true);
+		MainAPP app = new MainAPP(tabCapteurFixe, capteurMouvement,longueur / 2, largeur / 2);
+		app.setVisible(true);
 		////////////////////////////////////
 		while (true) {
 			try {
@@ -151,15 +151,15 @@ public class Main {
 				donneesEmises.setLength(length);
 				donneesEmises.setAddress(serveur);
 				donneesEmises.setPort(port);
-				Thread.sleep(10);
+				Thread.sleep(1000);
 				socket.setSoTimeout(30000);
 				socket.send(donneesEmises);
 				socket.receive(donneesRecues);
 				donnees = new String(donneesRecues.getData(), 0, taille);	
 				tokens = donnees.split(delims);
 				//TODO A decomenter
-			//	capteurMouvement.setCoordoneeX(Integer.parseInt(tokens[1]));
-			//	capteurMouvement.setCoordoneeY(Integer.parseInt(tokens[3]));
+				capteurMouvement.setCoordoneeX(Integer.parseInt(tokens[0]));
+				capteurMouvement.setCoordoneeY(Integer.parseInt(tokens[2]));
 			} catch (SocketTimeoutException ste) {
 				System.out.println("Le delai pour la reponse a expire");
 			} catch (Exception e) {
