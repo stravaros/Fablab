@@ -46,9 +46,9 @@ public class Main {
 			System.out.println("Tous d'abord la distance");
 			boolean coordoneeCorect = false;
 			while (coordoneeCorect == false) {
-				float distance = in.nextFloat();
+				double distance = in.nextDouble();
 				System.out.println("Puis l'angle");
-				float angle = in.nextFloat();
+				double angle = in.nextDouble();
 				coordoneeCorect = tabCapteurFixe[i].setCoordoneeX(distance,
 						angle, longueur);
 				coordoneeCorect = tabCapteurFixe[i].setCoordoneeY(distance,

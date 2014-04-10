@@ -10,8 +10,8 @@ public class TestServeurUDP {
 	final static int port = 9632;
 	final static int taille = 1024;
 	static byte buffer[] = new byte[taille];
-	static float longeur;
-	static float largeur;
+	static double longeur;
+	static double largeur;
 	private static Capteur[] tabCapteurFixe;
 	private static CalculMath calculMath;
 	private static DatagramSocket socket;
@@ -32,8 +32,8 @@ public class TestServeurUDP {
 
 			if (tokens[0].equals("Longeur")) {
 				String message="";
-				longeur = Float.parseFloat(tokens[1]);
-				largeur = Float.parseFloat(tokens[3]);
+				longeur = Double.parseDouble(tokens[1]);
+				largeur =  Double.parseDouble(tokens[3]);
 				System.out.println(longeur);
 				System.out.println(largeur);
 			message="ACK dimension";

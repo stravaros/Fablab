@@ -39,8 +39,8 @@ public class Capteur {
 		}
 	}
 
-	public boolean setCoordoneeX(float distance, float angle, float longueur) {
-		this.coordoneeX = (int) (distance * (Math.cos(Math.PI * angle / 180.0)));
+	public boolean setCoordoneeX(double distance, double angle, double longueur) {
+		this.coordoneeX = (distance * (Math.cos(Math.PI * angle / 180.0)));
 		if (coordoneeX <= longueur / 2 && coordoneeX >= -longueur / 2) {
 			return true;
 		} else {

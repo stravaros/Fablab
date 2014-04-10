@@ -16,11 +16,11 @@ public class Frame implements GLEventListener {
 	Mdl mdl;
 	GLAutoDrawable drawable;
 	GLUquadric qobj;
-	float longueur;
-	float largeur;
+	double longueur;
+	double largeur;
 	float taille = (float) 0.5;
 
-	public Frame(GLAutoDrawable gld, Mdl m, float longueur, float largeur) {
+	public Frame(GLAutoDrawable gld, Mdl m, double longueur, double largeur) {
 		this.drawable = gld;
 		this.mdl = m;
 		this.longueur = longueur;
@@ -183,98 +183,98 @@ public class Frame implements GLEventListener {
 
 	}
 
-	static void cubeLongeur(GL2 gl, float i, float j) {
+	static void cubeLongeur(GL2 gl, double i, double j) {
 		gl.glColor3d(0, 1, 0);
 		/* draws the sides of a unit cube (0,0,0)-(1,1,1) */
 		gl.glBegin(GL2.GL_POLYGON);/* f1: front */
 		gl.glNormal3f(-1.0f, 0.0f, 0.0f);
-			gl.glVertex3f(-i, -j, 0.0f);
-			gl.glVertex3f(-i, -j, 1.0f);
-			gl.glVertex3f(i, -j, 1.0f);
-			gl.glVertex3f(i, -j, 0.0f);
+			gl.glVertex3d(-i, -j, 0.0f);
+			gl.glVertex3d(-i, -j, 1.0f);
+			gl.glVertex3d(i, -j, 1.0f);
+			gl.glVertex3d(i, -j, 0.0f);
 		gl.glEnd();
 		gl.glBegin(GL2.GL_POLYGON);/* f2: bottom */
 		gl.glNormal3f(-2.0f, 0.0f, -1.0f);
-			gl.glVertex3f(-i, -j, 0.0f);
-			gl.glVertex3f(i, -j, 0.0f);
-			gl.glVertex3f(i, -j + 1.0f, 0.0f);
-			gl.glVertex3f(-i, -j + 1.0f, 0.0f);
+			gl.glVertex3d(-i, -j, 0.0f);
+			gl.glVertex3d(i, -j, 0.0f);
+			gl.glVertex3d(i, -j + 1.0f, 0.0f);
+			gl.glVertex3d(-i, -j + 1.0f, 0.0f);
 		gl.glEnd();
 		gl.glBegin(GL2.GL_POLYGON);/* f3:back */
 		gl.glNormal3f(1.0f, 0.0f, 0.0f);
-			gl.glVertex3f(-i, -j + 1.0f, 0.0f);
-			gl.glVertex3f(i, -j + 1.0f, 1.0f);
-			gl.glVertex3f(-i, -j + 1.0f, 1.0f);
-			gl.glVertex3f(-i, -j + 1.0f, 0.0f);
+			gl.glVertex3d(-i, -j + 1.0f, 0.0f);
+			gl.glVertex3d(i, -j + 1.0f, 1.0f);
+			gl.glVertex3d(-i, -j + 1.0f, 1.0f);
+			gl.glVertex3d(-i, -j + 1.0f, 0.0f);
 		gl.glEnd();
 		gl.glBegin(GL2.GL_POLYGON);/* f4: top */
 		gl.glNormal3f(0.0f, 0.0f, 1.0f);
-			gl.glVertex3f(i, -j + 1.0f, 1.0f);
-			gl.glVertex3f(i, -j, 1.0f);
-			gl.glVertex3f(-i, -j, 1.0f);
-			gl.glVertex3f(-i, -j + 1.0f, 1.0f);
+			gl.glVertex3d(i, -j + 1.0f, 1.0f);
+			gl.glVertex3d(i, -j, 1.0f);
+			gl.glVertex3d(-i, -j, 1.0f);
+			gl.glVertex3d(-i, -j + 1.0f, 1.0f);
 		gl.glEnd();
 		gl.glBegin(GL2.GL_POLYGON);/* f5: left */
 		gl.glNormal3f(0.0f, 1.0f, 0.0f);
-			gl.glVertex3f(-i, -j, 0.0f);
-			gl.glVertex3f(-i, -j + 1.0f, 0.0f);
-			gl.glVertex3f(-i, -j + 1.0f, 1.0f);
-			gl.glVertex3f(-i, -j, 1.0f);
+			gl.glVertex3d(-i, -j, 0.0f);
+			gl.glVertex3d(-i, -j + 1.0f, 0.0f);
+			gl.glVertex3d(-i, -j + 1.0f, 1.0f);
+			gl.glVertex3d(-i, -j, 1.0f);
 		gl.glEnd();
 		gl.glBegin(GL2.GL_POLYGON);/* f6: right */
 		gl.glNormal3f(0.0f, -1.0f, 0.0f);
-			gl.glVertex3f(i, -j, 0.0f);
-			gl.glVertex3f(i, -j, 1.0f);
-			gl.glVertex3f(i, -j + 1.0f, 1.0f);
-			gl.glVertex3f(i, -j + 1.0f, 0.0f);
+			gl.glVertex3d(i, -j, 0.0f);
+			gl.glVertex3d(i, -j, 1.0f);
+			gl.glVertex3d(i, -j + 1.0f, 1.0f);
+			gl.glVertex3d(i, -j + 1.0f, 0.0f);
 		gl.glEnd();
 	}
 
-	static void cubeLargeur(GL2 gl, float i, float j) {
+	static void cubeLargeur(GL2 gl, double i, double j) {
 		gl.glColor3d(0, 1, 0);
 
 		/* draws the sides of a unit cube (0,0,0)-(1,1,1) */
 		gl.glBegin(GL2.GL_POLYGON);/* f1: front */
 		gl.glNormal3f(-1.0f, 0.0f, 0.0f);
-			gl.glVertex3f(i, -j, 0.0f);
-			gl.glVertex3f(i, -j, 1.0f);
-			gl.glVertex3f(i + 1, -j, 1.0f);
-			gl.glVertex3f(i + 1, -j, 0.0f);
+			gl.glVertex3d(i, -j, 0.0f);
+			gl.glVertex3d(i, -j, 1.0f);
+			gl.glVertex3d(i + 1, -j, 1.0f);
+			gl.glVertex3d(i + 1, -j, 0.0f);
 		gl.glEnd();
 		gl.glBegin(GL2.GL_POLYGON);/* f2: bottom */
 		gl.glNormal3f(0.0f, 0.0f, -1.0f);
-			gl.glVertex3f(i, -j, 0.0f);
-			gl.glVertex3f(i + 1, -j, 0.0f);
-			gl.glVertex3f(i + 1, j + 1, 0.0f);
-			gl.glVertex3f(i, j + 1, 0.0f);
+			gl.glVertex3d(i, -j, 0.0f);
+			gl.glVertex3d(i + 1, -j, 0.0f);
+			gl.glVertex3d(i + 1, j + 1, 0.0f);
+			gl.glVertex3d(i, j + 1, 0.0f);
 		gl.glEnd();
 		gl.glBegin(GL2.GL_POLYGON);/* f3:back */
 		gl.glNormal3f(-1.0f, 0.0f, 0.0f);
-			gl.glVertex3f(i, j + 1, 0.0f);
-			gl.glVertex3f(i, j + 1, 1.0f);
-			gl.glVertex3f(i + 1, j + 1, 1.0f);
-			gl.glVertex3f(i + 1, j + 1, 0.0f);
+			gl.glVertex3d(i, j + 1, 0.0f);
+			gl.glVertex3d(i, j + 1, 1.0f);
+			gl.glVertex3d(i + 1, j + 1, 1.0f);
+			gl.glVertex3d(i + 1, j + 1, 0.0f);
 		gl.glEnd();
 		gl.glBegin(GL2.GL_POLYGON);/* f4: top */
 		gl.glNormal3f(0.0f, 0.0f, 1.0f);
-			gl.glVertex3f(i + 1, j + 1, 1.0f);
-			gl.glVertex3f(i + 1, -j, 1.0f);
-			gl.glVertex3f(i, -j, 1.0f);
-			gl.glVertex3f(i, j + 1, 1.0f);
+			gl.glVertex3d(i + 1, j + 1, 1.0f);
+			gl.glVertex3d(i + 1, -j, 1.0f);
+			gl.glVertex3d(i, -j, 1.0f);
+			gl.glVertex3d(i, j + 1, 1.0f);
 		gl.glEnd();
 		gl.glBegin(GL2.GL_POLYGON);/* f5: left */
 		gl.glNormal3f(0.0f, 1.0f, 0.0f);
-			gl.glVertex3f(i, -j, 0.0f);
-			gl.glVertex3f(i, j + 1, 0.0f);
-			gl.glVertex3f(i, j + 1, 1.0f);
-			gl.glVertex3f(i, -j, 1.0f);
+			gl.glVertex3d(i, -j, 0.0f);
+			gl.glVertex3d(i, j + 1, 0.0f);
+			gl.glVertex3d(i, j + 1, 1.0f);
+			gl.glVertex3d(i, -j, 1.0f);
 		gl.glEnd();
 		gl.glBegin(GL2.GL_POLYGON);/* f6: right */
 		gl.glNormal3f(0.0f, -1.0f, 0.0f);
-			gl.glVertex3f(i, -j, 0.0f);
-			gl.glVertex3f(i, -j, 1.0f);
-			gl.glVertex3f(i, j + 1, 1.0f);
-			gl.glVertex3f(i, j + 1, 0.0f);
+			gl.glVertex3d(i, -j, 0.0f);
+			gl.glVertex3d(i, -j, 1.0f);
+			gl.glVertex3d(i, j + 1, 1.0f);
+			gl.glVertex3d(i, j + 1, 0.0f);
 		gl.glEnd();
 	}
 
