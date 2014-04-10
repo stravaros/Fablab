@@ -21,8 +21,8 @@ public class Main {
 		InetAddress serveur = InetAddress.getByName(argv[0]);
 		int nombreCapteurFixe = 3;
 		Capteur tabCapteurFixe[];
-		float longueur = 20;
-		float largeur = 20;
+		double longueur = 20;
+		double largeur = 20;
 
 		/*
 		 * System.out.println("Taille de la pièce : \n ");
@@ -157,9 +157,9 @@ public class Main {
 				socket.receive(donneesRecues);
 				donnees = new String(donneesRecues.getData(), 0, taille);	
 				tokens = donnees.split(delims);
-				//TODO A decomenter
-				capteurMouvement.setCoordoneeX(Integer.parseInt(tokens[0]));
-				capteurMouvement.setCoordoneeY(Integer.parseInt(tokens[2]));
+				//TODO A decomenter 
+				capteurMouvement.setCoordoneeX(Integer.parseInt(tokens[1]));
+				capteurMouvement.setCoordoneeY(Integer.parseInt(tokens[3]));
 			} catch (SocketTimeoutException ste) {
 				System.out.println("Le delai pour la reponse a expire");
 			} catch (Exception e) {

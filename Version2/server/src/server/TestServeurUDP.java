@@ -67,7 +67,7 @@ public class TestServeurUDP {
 				}
 				System.out.println("APPEL AUX MATHS");
 				double[] pos = calculMath.getPosition();
-				message= (int)(pos[0]) +" " +(int)(pos[1]) ; //TODO a finir
+				message= "X "+pos[0] +"Y " +pos[1] ; //TODO a finir
 				DatagramPacket envoi = new DatagramPacket(message.getBytes(), message.length(), paquet.getAddress(), paquet.getPort()); socket.send(envoi);
 				socket.send(envoi);
 			}	

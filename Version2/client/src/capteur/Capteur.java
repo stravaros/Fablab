@@ -2,8 +2,8 @@ package capteur;
 
 public class Capteur {
 
-	private int coordoneeX;
-	private int coordoneeY;
+	private double coordoneeX;
+	private double coordoneeY;
 	private int type;
 	private int numero;
 
@@ -20,16 +20,16 @@ public class Capteur {
 		this.type = type;
 	}
 
-	public int getCoordoneeX() {
+	public double getCoordoneeX() {
 		return coordoneeX;
 	}
 
-	public int getCoordoneeY() {
+	public double getCoordoneeY() {
 		return coordoneeY;
 	}
 
-	public boolean setCoordoneeY(float distance, float angle, float largeur) {
-		coordoneeY = (int) (distance * Math.sin(Math.PI * angle / 180.0));
+	public boolean setCoordoneeY(double distance, double angle, double largeur) {
+		coordoneeY =  (distance * Math.sin(Math.PI * angle / 180.0));
 		if (coordoneeY <= largeur / 2 && coordoneeY >= -largeur / 2) {
 			return true;
 		} else {
@@ -58,10 +58,10 @@ public class Capteur {
 		this.numero = numero;
 	}
 
-	public void setCoordoneeX(int coordoneeX) {
+	public void setCoordoneeX(double coordoneeX) {
 		this.coordoneeX = coordoneeX;		
 	}
-	public void setCoordoneeY(int coordoneeY) {
+	public void setCoordoneeY(double coordoneeY) {
 		this.coordoneeY = coordoneeY;		
 	}
 }
