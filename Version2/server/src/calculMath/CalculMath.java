@@ -80,8 +80,7 @@ public final class CalculMath {
 			matrixH = new Matrix(tabH, nbLignes, 2);
 
 			// Calcul de (transp(H)*H)^-1 * transp(H)
-			constMatrix = matrixH.transpose().times(matrixH).inverse()
-					.times(matrixH.transpose());
+			constMatrix = matrixH.transpose().times(matrixH).inverse().times(matrixH.transpose());
 
 			// Initialisation de la matrice C
 			tabC = new double[nbLignes];

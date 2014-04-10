@@ -156,10 +156,10 @@ public class Main {
 				socket.send(donneesEmises);
 				socket.receive(donneesRecues);
 				donnees = new String(donneesRecues.getData(), 0, taille);	
+				System.out.println(donnees);
 				tokens = donnees.split(delims);
-				//TODO A decomenter 
-				capteurMouvement.setCoordoneeX(Integer.parseInt(tokens[1]));
-				capteurMouvement.setCoordoneeY(Integer.parseInt(tokens[3]));
+				capteurMouvement.setCoordoneeX(Double.parseDouble(tokens[1]));
+				capteurMouvement.setCoordoneeY(Double.parseDouble(tokens[3]));
 			} catch (SocketTimeoutException ste) {
 				System.out.println("Le delai pour la reponse a expire");
 			} catch (Exception e) {

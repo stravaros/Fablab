@@ -53,21 +53,24 @@ public class TestServeurUDP {
 				tabCapteurFixe[Integer.parseInt(tokens[1])-1]=new Capteur();
 				tabCapteurFixe[Integer.parseInt(tokens[1])-1].setType(1);
 				tabCapteurFixe[Integer.parseInt(tokens[1])-1].setNumero(Integer.parseInt(tokens[1]));
-				tabCapteurFixe[Integer.parseInt(tokens[1])-1].setCoordoneeXCar(Integer.parseInt(tokens[3]));
-				tabCapteurFixe[Integer.parseInt(tokens[1])-1].setCoordoneeYCar(Integer.parseInt(tokens[5]));
+				tabCapteurFixe[Integer.parseInt(tokens[1])-1].setCoordoneeXCar(Double.parseDouble(tokens[3]));
+				tabCapteurFixe[Integer.parseInt(tokens[1])-1].setCoordoneeYCar(Double.parseDouble(tokens[5]));
 				message="ACK Capteur";
 				DatagramPacket envoi = new DatagramPacket(message.getBytes(), message.length(), paquet.getAddress(), paquet.getPort()); socket.send(envoi);
 				socket.send(envoi);
 			}
 			if(tokens[0].equals("Mouvement")){
+
 				String message="";
+				
 				if(!alreadyInstanciated ) {
 					calculMath = new CalculMath(tabCapteurFixe);
 					alreadyInstanciated = true;
+					System.out.println("APPEL AUX MATHS");
 				}
 				System.out.println("APPEL AUX MATHS");
 				double[] pos = calculMath.getPosition();
-				message= "X "+pos[0] +"Y " +pos[1] ; //TODO a finir
+				message= "X "+pos[0] +" Y " +pos[1] ;
 				DatagramPacket envoi = new DatagramPacket(message.getBytes(), message.length(), paquet.getAddress(), paquet.getPort()); socket.send(envoi);
 				socket.send(envoi);
 			}	
