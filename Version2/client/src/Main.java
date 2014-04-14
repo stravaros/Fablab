@@ -134,6 +134,7 @@ public class Main {
 		} catch (Exception e) {
 			e.printStackTrace();}
 		
+		Thread.sleep(1000);
 		
 		/////////////////////////////////////
 		//TODO A decomenter
@@ -151,15 +152,20 @@ public class Main {
 				donneesEmises.setLength(length);
 				donneesEmises.setAddress(serveur);
 				donneesEmises.setPort(port);
-				Thread.sleep(1000);
+				Thread.sleep(10);
 				socket.setSoTimeout(30000);
 				socket.send(donneesEmises);
 				socket.receive(donneesRecues);
 				donnees = new String(donneesRecues.getData(), 0, taille);	
-				System.out.println(donnees);
 				tokens = donnees.split(delims);
+				if(tokens[0].equals("X")){	
 				capteurMouvement.setCoordoneeX(Double.parseDouble(tokens[1]));
 				capteurMouvement.setCoordoneeY(Double.parseDouble(tokens[3]));
+				}
+				else if (tokens[0].equals("Matrice")){
+					System.out.println("Matrice singuliere veuiller relancer le programme");
+					System.exit(-1);
+				}
 			} catch (SocketTimeoutException ste) {
 				System.out.println("Le delai pour la reponse a expire");
 			} catch (Exception e) {

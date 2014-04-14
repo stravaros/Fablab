@@ -2,7 +2,10 @@ package server;
 
 import java.net.*;
 
+import com.sun.xml.internal.bind.v2.runtime.ElementBeanInfoImpl;
+
 import calculMath.CalculMath;
+import calculMath.ExceptionSingularite;
 import capteur.Capteur;
 
 public class TestServeurUDP {
@@ -64,11 +67,20 @@ public class TestServeurUDP {
 				String message="";
 				
 				if(!alreadyInstanciated ) {
+					try {
 					calculMath = new CalculMath(tabCapteurFixe);
 					alreadyInstanciated = true;
-					System.out.println("APPEL AUX MATHS");
+					}
+				 catch (ExceptionSingularite e) {
+					 message = e.getMessage();
+						DatagramPacket envoi = new DatagramPacket(message.getBytes(), message.length(), paquet.getAddress(), paquet.getPort()); socket.send(envoi);
+						socket.send(envoi);
+						//TODO Possible amelioration sur relancer le serveur
+						System.out.println("Probleme pour l'initialisation du serveur");
+						System.exit(-1);
 				}
-				System.out.println("APPEL AUX MATHS");
+				}
+					
 				double[] pos = calculMath.getPosition();
 				message= "X "+pos[0] +" Y " +pos[1] ;
 				DatagramPacket envoi = new DatagramPacket(message.getBytes(), message.length(), paquet.getAddress(), paquet.getPort()); socket.send(envoi);
