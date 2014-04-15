@@ -35,8 +35,8 @@ public final class CalculMath {
 		int indiceLigne = 0;
 
 		// VALEURS DE RSSI EN DUR
-		double[] RSSI = { 20, 20, 20 };
-		// double[] RSSI = {10,22,22};
+		//double[] RSSI = { 20, 20, 20 };
+		double[] RSSI = {10,22,22};
 
 		for (int i = 0; i < tabCapteur.length - 1; i++) {
 			for (int j = i + 1; j < tabCapteur.length; j++) {
@@ -51,12 +51,13 @@ public final class CalculMath {
 
 		return position.getColumnPackedCopy();
 	}
-
+ 
 	/**
 	 * Initialise les matrices pour le calcul de la position suivant les capteurs présents dans tabCapteur
 	 * @param tabCapteur
+	 * @throws ExceptionSingularite 
 	 */
-	public CalculMath(Capteur[] tabCapteur) {
+	public CalculMath(Capteur[] tabCapteur) throws ExceptionSingularite {
 		this.tabCapteur = tabCapteur;
 		int nbLignes = tabCapteur.length * (tabCapteur.length - 1) / 2;
 		if (tabCapteur.length > 1) {
@@ -78,10 +79,12 @@ public final class CalculMath {
 				}
 			}
 			matrixH = new Matrix(tabH, nbLignes, 2);
-
+			try {
 			// Calcul de (transp(H)*H)^-1 * transp(H)
 			constMatrix = matrixH.transpose().times(matrixH).inverse().times(matrixH.transpose());
-
+			}
+			catch (Exception e) {
+				throw new ExceptionSingularite ("Matrice singuliere"); }
 			// Initialisation de la matrice C
 			tabC = new double[nbLignes];
 			indiceLigne = 0;
@@ -105,7 +108,7 @@ public final class CalculMath {
 
 	
 	
-	public static void main(String argv[]) {
+	public static void main(String argv[]) throws ExceptionSingularite {
 		Capteur[] tabCapteur = new Capteur[3];
 		for (int i = 0; i < tabCapteur.length; i++)
 			tabCapteur[i] = new Capteur();
