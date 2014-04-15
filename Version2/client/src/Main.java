@@ -1,3 +1,5 @@
+
+
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -17,12 +19,14 @@ public class Main {
 	private static DatagramSocket socket;
 
 	public static void main(String argv[]) throws Exception {
+		
 		// / TODO Supprimer les commenatire et enlever les = des attributs
 		InetAddress serveur = InetAddress.getByName(argv[0]);
 		int nombreCapteurFixe = 3;
 		Capteur tabCapteurFixe[];
-		double longueur = 20;
-		double largeur = 20;
+		double longueur = 40;
+		double largeur = 40;
+	
 
 		/*
 		 * System.out.println("Taille de la pièce : \n ");
@@ -38,6 +42,9 @@ public class Main {
 		Capteur capteurMouvement = new Capteur(2, 0); // Initialise le recepteur
 														// il est le capteur 0
 		// Les autres capteurs sont entre 1 et nombreCapteurFixe + 1
+		
+
+		
 		for (int i = 0; i < nombreCapteurFixe; i++) {
 			tabCapteurFixe[i] = new Capteur(1, i + 1);
 			System.out.println("Le capteur est un recepteur");
@@ -55,6 +62,13 @@ public class Main {
 						angle, largeur);
 			}
 		}
+		
+		/////////////////////////////////////
+		//TODO A decomenter
+		MainAPP app = new MainAPP(tabCapteurFixe, capteurMouvement,longueur / 2, largeur / 2);
+		app.setVisible(true);
+		////////////////////////////////////
+		
 		String data = "Init";
 		int length;
 		byte buffer[] = data.getBytes();
@@ -135,11 +149,7 @@ public class Main {
 			e.printStackTrace();}
 		
 		
-		/////////////////////////////////////
-		//TODO A decomenter
-		MainAPP app = new MainAPP(tabCapteurFixe, capteurMouvement,longueur / 2, largeur / 2);
-		app.setVisible(true);
-		////////////////////////////////////
+		
 		while (true) {
 			try {
 				DatagramPacket donneesRecues = new DatagramPacket(new byte[taille],

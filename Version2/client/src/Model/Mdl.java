@@ -23,8 +23,8 @@ public class Mdl extends Observable {
 	int parametreAnimation=0;
 	
 	public Mdl(Capteur tabCapteurFixe[], Capteur capteurMouvant){
-		setAngleElevation(30.0f);
-		setAngleAzimuth(30.0f);
+		setAngleElevation(270.0f);
+		setAngleAzimuth(0.0f);
 		
 		setVitesse(1);
 		setDistance(50);
