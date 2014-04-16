@@ -88,7 +88,6 @@ public class ClientToServer {
 			System.out.println("Transmission capteur "
 					+ listCapteur.get(i).getNumero());
 		}
-
 		try {
 			data = "Fin ";
 			length = data.length();
@@ -120,16 +119,13 @@ public class ClientToServer {
 			tokens = donnees.split(delims);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}	
-		if(tokens[0].equals("X")){	
+		}
+		if (tokens[0].equals("X")) {
 			capteurMouvant.setCoordoneeX(Double.parseDouble(tokens[1]));
 			capteurMouvant.setCoordoneeY(Double.parseDouble(tokens[3]));
-			}
-		else if (tokens[0].equals("Matrice")){
+		} else if (tokens[0].equals("Matrice")) {
 			System.out.println("Matrice singuliere");
-			throw new ExceptionSingularite ("Matrice singuliere"); 
+			throw new ExceptionSingularite("Matrice singuliere");
 		}
-		
 	}
-	
 }
