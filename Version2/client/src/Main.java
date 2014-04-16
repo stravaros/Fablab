@@ -1,31 +1,24 @@
 
 
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketTimeoutException;
-import java.util.Scanner;
 
-import capteur.Capteur;
+import java.net.InetAddress;
+
+import Capteur.Capteur;
+import Client.ClientToServer;
 import App.MainAPP;
+import Model.Mdl;
 
 public class Main {
 
-	static Scanner in = new Scanner(System.in);
-	final static int port = 9632;
-	final static int taille = 1024;
-	static byte buffer[] = new byte[taille];
-	static String donnees = "";
-	private static DatagramSocket socket;
-
+	
 	public static void main(String argv[]) throws Exception {
-		
-		// / TODO Supprimer les commenatire et enlever les = des attributs
-		InetAddress serveur = InetAddress.getByName(argv[0]);
-		
-
+		InetAddress adresseServeur = InetAddress.getByName(argv[0]);
+		ClientToServer cl = new ClientToServer (adresseServeur);
+		//MainAPP app = new MainAPP(cl);
 		MainAPP app = new MainAPP();
 		app.setVisible(true);
+		
+	
 		
 		String data = "Init";
 		int length;

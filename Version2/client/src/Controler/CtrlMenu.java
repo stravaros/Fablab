@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import capteur.Capteur;
+import Capteur.Capteur;
 import Model.Mdl;
 import View.FrameMenu;
 

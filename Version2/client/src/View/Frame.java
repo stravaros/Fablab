@@ -8,7 +8,7 @@ import javax.media.opengl.glu.gl2.GLUgl2;
 
 import com.jogamp.opengl.util.gl2.GLUT;
 
-import capteur.Capteur;
+import Capteur.Capteur;
 import Model.Mdl;
 
 public class Frame implements GLEventListener {

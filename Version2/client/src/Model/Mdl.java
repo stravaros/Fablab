@@ -3,7 +3,7 @@ package Model;
 import java.util.ArrayList;
 import java.util.Observable;
 
-import capteur.Capteur;
+import Capteur.Capteur;
 import Controler.CtrlMouse;
 import EnvObjet.ObjetGen;
 import EnvObjet.Table;
@@ -25,7 +25,8 @@ public class Mdl extends Observable {
 	private Capteur tabCapteurFixe[];
 	private Capteur capteurMouvant;
 	private int nbCapteur;
-	
+	private int nbCapteurServeur;
+		
 	int parametreAnimation=0;
 	
 	private ArrayList <Capteur> listCapteur;
@@ -238,6 +239,22 @@ public class Mdl extends Observable {
 
 	public float getAngleDirection() {
 		return angleDirection;
+	}
+
+	public int getNbCapteur() {
+		return nbCapteur;
+	}
+
+	public void setNbCapteur(int nbCapteur) {
+		this.nbCapteur = nbCapteur;
+	}
+
+	public int getNbCapteurServeur() {
+		return nbCapteurServeur;
+	}
+
+	public void setNbCapteurServeur(int nbCapteurServeur) {
+		this.nbCapteurServeur = nbCapteurServeur;
 	}
 
 

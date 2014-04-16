@@ -1,4 +1,4 @@
-package capteur;
+package Capteur;
 
 public class Capteur {
 
