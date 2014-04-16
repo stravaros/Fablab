@@ -75,11 +75,24 @@ public class MainAPP extends JFrame implements Observer {
 		
 		JPanel pan = new FrameMenu(mdl);
 	//	add(cv);
-		JSplitPane js = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pan, cv);
-		
+		JSplitPane js = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pan, cv)
+		{
+		    private final int location = 200;//largeur du JFrameMenu
+		    {
+		        setDividerLocation( location );
+		    }
+		    @Override
+		    public int getDividerLocation() {
+		        return location ;
+		    }
+		    @Override
+		    public int getLastDividerLocation() {
+		        return location ;
+		    }
+		};
 		//js.setDividerSize(100);
-		js.setResizeWeight(0.3);
-		add(js, BorderLayout.CENTER);
+	//	js.setResizeWeight(0.3);
+		add(js);
 		js.setOneTouchExpandable(false);
 	
 		
@@ -218,7 +231,7 @@ public class MainAPP extends JFrame implements Observer {
 	}
 	
 	public class InitWindow  implements ActionListener {
-		JPanel panel = new JPanel(new GridLayout(2,2));
+		JPanel panel = new JPanel(new GridLayout(1,2));
 		JFrame frame = new JFrame("Initialisation detection");
 
 		
@@ -230,18 +243,24 @@ public class MainAPP extends JFrame implements Observer {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JPanel panelStatus = new JPanel(new GridLayout(0, 1));
-			Border borderStatus = BorderFactory.createTitledBorder("Status");
-			panelStatus.setBorder(borderStatus);
-		    ButtonGroup Status = new ButtonGroup();
-			panel.add(panelStatus);
-			
 			JPanel panelConfig = new JPanel(new GridLayout(0, 1));
 			Border borderConfig = BorderFactory.createTitledBorder("Configuration");
 			panelConfig.setBorder(borderConfig);
 		    ButtonGroup Config = new ButtonGroup();
 			panel.add(panelConfig);
 			
+			
+			JPanel panelStatus = new JPanel(new GridLayout(1, 1));
+			Border borderStatus = BorderFactory.createTitledBorder("Status");
+			panelStatus.setBorder(borderStatus);
+		    ButtonGroup Status = new ButtonGroup();
+		    JTextArea text = new JTextArea();
+		    panelStatus.add(text);
+		    text.setEditable(false);
+		    text.append("initialisation...");
+			panel.add(panelStatus);
+			
+		
 			
 			frame.add(panel);
 			frame.setVisible(true);
