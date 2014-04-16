@@ -38,7 +38,7 @@ import javax.swing.border.Border;
 
 import com.jogamp.newt.event.KeyEvent;
 
-import capteur.Capteur;
+import Capteur.Capteur;
 import Controler.CtrlKeyboard;
 import Controler.CtrlMouse;
 import Model.Mdl;

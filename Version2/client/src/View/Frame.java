@@ -15,7 +15,7 @@ import com.jogamp.opengl.util.gl2.GLUT;
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureIO;
 
-import capteur.Capteur;
+import Capteur.Capteur;
 import Model.Mdl;
 
 public class Frame implements GLEventListener {
