@@ -23,7 +23,7 @@ public class CtrlMouse implements MouseListener, MouseMotionListener{
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		System.err.println("MouseMoved");
+		//System.err.println("MouseMoved");
 		mdl.moveDragged(arg0.getX(), arg0.getY(), buttonPressed);
 		
 	}
@@ -31,7 +31,7 @@ public class CtrlMouse implements MouseListener, MouseMotionListener{
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		System.err.println("MouseMoved");
+		//System.err.println("MouseMoved");
 		mdl.moveMouse(arg0.getX(), arg0.getY(), buttonPressed);
 	}
 
@@ -57,7 +57,7 @@ public class CtrlMouse implements MouseListener, MouseMotionListener{
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		System.err.println("Mouse Pressed : "+arg0.getX()+" "+arg0.getY());
+		//System.err.println("Mouse Pressed : "+arg0.getX()+" "+arg0.getY());
 		if (arg0.getButton()==MouseEvent.BUTTON1)
 			buttonPressed[LEFT_BTN] =true;
 		if (arg0.getButton()==MouseEvent.BUTTON2)
@@ -74,7 +74,7 @@ public class CtrlMouse implements MouseListener, MouseMotionListener{
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		System.err.println("Mouse Pressed : "+arg0.getX()+" "+arg0.getY());
+		//System.err.println("Mouse Pressed : "+arg0.getX()+" "+arg0.getY());
 		if (arg0.getButton()==MouseEvent.BUTTON1)
 			buttonPressed[LEFT_BTN] =false;
 		if (arg0.getButton()==MouseEvent.BUTTON2)

@@ -28,7 +28,12 @@ public class Frame implements GLEventListener {
 	double largeur;
 	float taille = (float) 0.5;
 	Texture identifiant_texture;
+	Texture text_mur;
 	File bois = new File("ressources/textures/bois.jpg") ;
+	File mur = new File("ressources/textures/mur.jpg") ;
+	File table = new File("ressources/textures/table.jpg") ;
+	
+
 
 	public Frame(GLAutoDrawable gld, Mdl m) {
 		this.drawable = gld;
@@ -36,24 +41,17 @@ public class Frame implements GLEventListener {
 		this.longueur = 20;
 		this.largeur = 20;
 		
+		
 	}
 
 	// IMPLEMENTE ELENVENTLISTENER
 	@Override
 	public void display(GLAutoDrawable arg0) {
 		// TODO Auto-generated method stub
-		final GL2 gl = drawable.getGL().getGL2();
-		GLUgl2 glu = new GLUgl2(); //INSTANCIATION GLU
-		GLUT glut = new GLUT();	//INSTANCIATION GLUT
 		
-		try {
-			identifiant_texture = TextureIO.newTexture(bois, true);
-			identifiant_texture.enable(gl);
-			identifiant_texture.bind(gl);
-		} catch (GLException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		};
+		
+		final GL2 gl= drawable.getGL().getGL2();
+		
 		
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);  
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
@@ -115,8 +113,20 @@ public class Frame implements GLEventListener {
 	
 
 	public void fond (GL2 gl){
-	//	float mat_diffuse[] = {0.0f,255.0f,0.0f,1.0f};
-		//gl.glMaterialfv(GL2.GL_FRONT,  GL2.GL_DIFFUSE, mat_diffuse, 0);
+		try {
+			identifiant_texture = TextureIO.newTexture(bois, true);
+			identifiant_texture.enable(gl);
+			identifiant_texture.bind(gl);
+			
+			/*text_mur = TextureIO.newTexture(mur, true);
+			text_mur.enable(gl);
+			text_mur.bind(gl);*/
+		} catch (GLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+		
+		gl.glEnable(GL2.GL_TEXTURE_2D);
 		gl.glBegin(GL2.GL_QUADS);
 		gl.glColor3d(1, 1, 1); // set the color of the quad
 			gl.glTexCoord2d(0, 0); 		gl.glVertex3d(-longueur, -largeur, 0); // Top Left
@@ -128,15 +138,78 @@ public class Frame implements GLEventListener {
 			  // glVertex3i(10,10,-1);
 			   //glVertex3i(-10,10,-1);
 		gl.glEnd();
+		gl.glDisable(GL2.GL_TEXTURE_2D);
 	}
 	
 	public void mur (GL2 gl){
-		float mat_diffuse[] = {0.0f,255.0f,255.0f,1.0f};
-		gl.glMaterialfv(GL2.GL_FRONT,  GL2.GL_DIFFUSE, mat_diffuse, 0);
-		cubeLongeur(gl, longueur, largeur);
+		try {
+			identifiant_texture = TextureIO.newTexture(mur, true);
+			identifiant_texture.enable(gl);
+			identifiant_texture.bind(gl);
+			
+			/*text_mur = TextureIO.newTexture(mur, true);
+			text_mur.enable(gl);
+			text_mur.bind(gl);*/
+		} catch (GLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+		
+		gl.glEnable(GL2.GL_TEXTURE_2D);
+		gl.glBegin(GL2.GL_QUADS);
+		gl.glDisable (GL2.GL_CULL_FACE ) ;
+			gl.glColor3d(1, 1, 1); // set the color of the quad
+			gl.glTexCoord2d(0, 0); gl.glVertex3d(-longueur, -largeur, 0); 		
+			gl.glTexCoord2d(1, 0); gl.glVertex3d(-longueur, -largeur, 10);		
+			gl.glTexCoord2d(1, 1); gl.glVertex3d(-longueur, largeur, 10); 	
+			gl.glTexCoord2d(0, 1); gl.glVertex3d(-longueur, largeur, 0);  
+			    // glVertex3i(-10,-10,-1);
+			   // glVertex3i(10,-10,-1);
+			  // glVertex3i(10,10,-1);
+			   //glVertex3i(-10,10,-1);
+		gl.glEnd();
+		
+		gl.glBegin(GL2.GL_QUADS);
+			gl.glColor3d(1, 1, 1); // set the color of the quad
+			gl.glTexCoord2d(0, 0); gl.glVertex3d(-longueur, -largeur, 0); 		
+			gl.glTexCoord2d(1, 0); gl.glVertex3d(-longueur, -largeur, 10);		
+			gl.glTexCoord2d(1, 1); gl.glVertex3d(longueur, -largeur, 10); 	
+			gl.glTexCoord2d(0, 1); gl.glVertex3d(longueur, -largeur, 0);  
+			    // glVertex3i(-10,-10,-1);
+			   // glVertex3i(10,-10,-1);
+			  // glVertex3i(10,10,-1);
+			   //glVertex3i(-10,10,-1);
+		gl.glEnd();
+	
+		gl.glBegin(GL2.GL_QUADS);
+			gl.glColor3d(1, 1, 1); // set the color of the quad
+			gl.glTexCoord2d(0, 0); gl.glVertex3d(longueur, largeur, 0); 		
+			gl.glTexCoord2d(1, 0); gl.glVertex3d(longueur, largeur, 10);		
+			gl.glTexCoord2d(1, 1); gl.glVertex3d(-longueur, largeur, 10); 	
+			gl.glTexCoord2d(0, 1); gl.glVertex3d(-longueur, largeur, 0);  
+			    // glVertex3i(-10,-10,-1);
+			   // glVertex3i(10,-10,-1);
+			  // glVertex3i(10,10,-1);
+			   //glVertex3i(-10,10,-1);
+		gl.glEnd();
+
+		gl.glBegin(GL2.GL_QUADS);
+			gl.glColor3d(1, 1, 1); // set the color of the quad
+			gl.glTexCoord2d(0, 0); gl.glVertex3d(longueur, -largeur, 0); 		
+			gl.glTexCoord2d(1, 0); gl.glVertex3d(longueur, -largeur, 10);		
+			gl.glTexCoord2d(1, 1); gl.glVertex3d(longueur, largeur, 10); 	
+			gl.glTexCoord2d(0, 1); gl.glVertex3d(longueur, largeur, 0);  
+			    // glVertex3i(-10,-10,-1);
+			   // glVertex3i(10,-10,-1);
+			  // glVertex3i(10,10,-1);
+			   //glVertex3i(-10,10,-1);
+		gl.glEnd();
+		gl.glDisable(GL2.GL_TEXTURE_2D);
+		
+		/*cubeLongeur(gl, longueur, largeur);
 		cubeLongeur(gl, longueur, -largeur);
 		cubeLargeur(gl, longueur, largeur);
-		cubeLargeur(gl, -longueur, largeur);
+		cubeLargeur(gl, -longueur, largeur);*/
 	}
 	
 	private void capteur (GL2 gl){
@@ -152,16 +225,28 @@ public class Frame implements GLEventListener {
 	
 	
 	public void table (GL2 gl){
-	//	float mat_diffuse[] = {255.0f,0.0f,0.0f,1.0f};
-		//gl.glMaterialfv(GL2.GL_FRONT,  GL2.GL_DIFFUSE, mat_diffuse, 0);
+		try {
+			identifiant_texture = TextureIO.newTexture(table, true);
+			identifiant_texture.enable(gl);
+			identifiant_texture.bind(gl);
+			
+			/*text_mur = TextureIO.newTexture(mur, true);
+			text_mur.enable(gl);
+			text_mur.bind(gl);*/
+		} catch (GLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+		gl.glEnable(GL2.GL_TEXTURE_2D);
 		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3f(1, 0, 0); // set the color of the quad
+		gl.glColor3f(1, 1, 1); // set the color of the quad
 		
-			gl.glVertex3d(0, 0, 2); // Top Left
-			gl.glVertex3d(0, 8, 2); // Top Right
-			gl.glVertex3d(8, 8, 2); // Bottom Right
-			gl.glVertex3d(8, 0, 2); // Bottom Left
+		gl.glTexCoord2d(0, 0); gl.glVertex3d(0, 0, 2); // Top Left
+		gl.glTexCoord2d(1, 0); gl.glVertex3d(8, 0, 2); // Top Right
+		gl.glTexCoord2d(1, 1); gl.glVertex3d(8, 8, 2); // Bottom Right
+		gl.glTexCoord2d(0, 1); gl.glVertex3d(0, 8, 2); // Bottom Left
 		gl.glEnd();
+		gl.glEnable(GL2.GL_TEXTURE_2D);
 		
 		//pied1
 		gl.glBegin(GL2.GL_QUADS);
@@ -266,7 +351,7 @@ public class Frame implements GLEventListener {
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();
 		gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-		gl.glEnable(GL2.GL_TEXTURE_2D);
+		
 		/*float mat_ambient[] = {0.2f,0.2f,0.2f,0.2f};
 		float mat_diffuse[] = {1.0f,1.0f,1.0f,1.0f};
 		float mat_specular[] = {1.0f,1.0f,1.0f,1.0f};

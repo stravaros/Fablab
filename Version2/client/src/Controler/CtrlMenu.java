@@ -21,14 +21,14 @@ public class CtrlMenu implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("coucou "+e.getActionCommand());
+		//System.out.println("coucou "+e.getActionCommand());
 		switch (e.getActionCommand()){
 			case  "Create sensor" :
 				mdl.addCapteur( fm.getSensorX(), fm.getSensorY());
 				break;
 			
 			case  "Create objet" :
-				System.out.println(fm.getCurrentElement());
+				//System.out.println(fm.getCurrentElement());
 				mdl.addTable(0, 0); //changer coord
 				break;
 			

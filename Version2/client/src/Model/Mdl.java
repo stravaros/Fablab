@@ -61,13 +61,13 @@ public class Mdl extends Observable {
 	//QUAND ON BOUGE LA SOURIS EN CLIQUANT
 	public void moveDragged (int newMouseX, int newMouseY, boolean buttonPressed []){
 		if(buttonPressed[CtrlMouse.LEFT_BTN]){ //CLIQUE GAUCHE
-			System.err.println("modif elev et azim");
+			//System.err.println("modif elev et azim");
 			angleElevation+=vitesse/5.0*(newMouseY-mouseY);
 			angleAzimuth+=vitesse/5.0*(newMouseX-mouseX);
 		}
 		
 		if(buttonPressed[CtrlMouse.MIDDLE_BTN]){ //CLIQUE CENTRE
-			System.err.println("modif dist");
+			//System.err.println("modif dist");
 			distance+=vitesse*(newMouseY-mouseY);
 		}
 		
@@ -76,7 +76,7 @@ public class Mdl extends Observable {
 			mouseY=newMouseY;
 			notifyChanges();
 		}
-		System.out.println("angle "+angleAzimuth+" "+angleElevation);
+		//System.out.println("angle "+angleAzimuth+" "+angleElevation);
 		
 	}
 	
@@ -159,7 +159,7 @@ public class Mdl extends Observable {
 	
 	private void notifyChanges() {
 		// TODO Auto-generated method stub
-		System.err.println("notification...");
+		//System.err.println("notification...");
 		setChanged();
 		notifyObservers();
 	}

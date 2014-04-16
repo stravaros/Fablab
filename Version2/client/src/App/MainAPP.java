@@ -106,7 +106,7 @@ public class MainAPP extends JFrame implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		System.err.println("MISE A JOUR ECRAN");
+		//System.err.println("MISE A JOUR ECRAN");
 		cv.repaint();
 		
 	}
