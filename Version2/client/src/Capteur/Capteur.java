@@ -35,29 +35,6 @@ public class Capteur {
 		return coordoneeY;
 	}
 
-	//a supprimer
-	public boolean setCoordoneeY(double distance, double angle, double largeur) {
-		coordoneeY =  (distance * Math.sin(Math.PI * angle / 180.0));
-		if (coordoneeY <= largeur / 2 && coordoneeY >= -largeur / 2) {
-			return true;
-		} else {
-			System.out.println("Largeur erronée : Capteur hors de la pièce");
-			System.out.println("Rentrez à nouveaux les valeurs");
-			return false;
-		}
-	}
-
-	public boolean setCoordoneeX(double distance, double angle, double longueur) {
-		this.coordoneeX = (distance * (Math.cos(Math.PI * angle / 180.0)));
-		if (coordoneeX <= longueur / 2 && coordoneeX >= -longueur / 2) {
-			return true;
-		} else {
-			System.out.println("Longueur erronée : Capteur hors de la pièce");
-			System.out.println("Rentrez à nouveaux les valeurs");
-			return false;
-		}
-	}
-
 	public int getNumero() {
 		return numero;
 	}
