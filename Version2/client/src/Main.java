@@ -22,58 +22,18 @@ public class Main {
 		
 		// / TODO Supprimer les commenatire et enlever les = des attributs
 		InetAddress serveur = InetAddress.getByName(argv[0]);
-		int nombreCapteurFixe = 3;
-		Capteur tabCapteurFixe[];
-		double longueur = 40;
-		double largeur = 40;
-	
-
-		/*
-		 * System.out.println("Taille de la pièce : \n ");
-		 * System.out.println("La longueur (en m) \n "); longueur =
-		 * in.nextInt(); System.out.println("La largeur (en m) \n "); largeur =
-		 * in.nextInt();
-		 * 
-		 * System.out.println("Combien de capteur \n "); nombreCapteur =
-		 * in.nextInt();
-		 */
-
-		tabCapteurFixe = new Capteur[nombreCapteurFixe];
-		Capteur capteurMouvement = new Capteur(2, 0); // Initialise le recepteur
-														// il est le capteur 0
-		// Les autres capteurs sont entre 1 et nombreCapteurFixe + 1
 		
 
-		
-		for (int i = 0; i < nombreCapteurFixe; i++) {
-			tabCapteurFixe[i] = new Capteur(1, i + 1);
-			System.out.println("Le capteur est un recepteur");
-			System.out
-					.println("Entrer les coordonnées polaires du points (la distance et l'angle par rapport au centre de la classe");
-			System.out.println("Tous d'abord la distance");
-			boolean coordoneeCorect = false;
-			while (coordoneeCorect == false) {
-				double distance = in.nextDouble();
-				System.out.println("Puis l'angle");
-				double angle = in.nextDouble();
-				coordoneeCorect = tabCapteurFixe[i].setCoordoneeX(distance,
-						angle, longueur);
-				coordoneeCorect = tabCapteurFixe[i].setCoordoneeY(distance,
-						angle, largeur);
-			}
-		}
-		
-		/////////////////////////////////////
-		//TODO A decomenter
-		MainAPP app = new MainAPP(tabCapteurFixe, capteurMouvement,longueur / 2, largeur / 2);
+		MainAPP app = new MainAPP();
 		app.setVisible(true);
-		////////////////////////////////////
 		
 		String data = "Init";
 		int length;
 		byte buffer[] = data.getBytes();
 		
-		length = data.length();
+		//Recupere nombre de capteur et metre a jour une variable
+		
+	/*	length = data.length();
 		socket = new DatagramSocket();
 		DatagramPacket donneesEmises = new DatagramPacket(buffer, length,
 				serveur, length);
@@ -181,6 +141,6 @@ public class Main {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
+		}*/
 	}
 }

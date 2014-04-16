@@ -14,18 +14,18 @@ import Model.Mdl;
 public class Frame implements GLEventListener {
 
 	final int[] texId = new int[1];
-	Mdl mdl;
+	private Mdl mdl;
 	GLAutoDrawable drawable;
 	GLUquadric qobj;
 	double longueur;
 	double largeur;
 	float taille = (float) 0.5;
 
-	public Frame(GLAutoDrawable gld, Mdl m, double longueur, double largeur) {
+	public Frame(GLAutoDrawable gld, Mdl m) {
 		this.drawable = gld;
 		this.mdl = m;
-		this.longueur = longueur;
-		this.largeur = largeur;
+		this.longueur = 20;
+		this.largeur = 20;
 	}
 
 	// IMPLEMENTE ELENVENTLISTENER
@@ -39,19 +39,15 @@ public class Frame implements GLEventListener {
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);  
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();     /* réinitialiation de la matrice de GL_MODELVIEW */
-		  
+
 
 		gl.glTranslatef(0.0f, 0.0f, -mdl.getDistance());
+		gl.glTranslatef(0.0f, mdl.getHauteur(), 0.0f);
 		gl.glRotatef(mdl.getAngleElevation(), 1.0f, 0.0f, 0.0f);
 		gl.glRotatef(mdl.getAngleAzimuth(), 0.0f, 1.0f, 0.0f);
+		gl.glRotatef(mdl.getAngleDirection(), 0.0f, 0.0f, 1.0f);
 		
-		// gl.glRotatef(mdl, arg1, arg2, arg3)
-
-		// glut.glutSolidTeapot(5); /* dessin d'une théière */
-
-		// ///////////////
-
-
+		
 		//capteurfixe(gl);
 		//capteurmouvant(gl);
 		fond(gl);
@@ -59,12 +55,12 @@ public class Frame implements GLEventListener {
 		//glut.glutSolidCube(5);
 		table (gl);
 		chaise (gl);
-		/*float mat_diffuse[] = {255.0f,1.0f,1.0f,1.0f};
-		gl.glMaterialfv(GL2.GL_FRONT,  GL2.GL_DIFFUSE, mat_diffuse, 0);
-		glut.glutSolidTeapot(5);*/
+		capteur(gl);
+		//glut.glutSolidTeapot(4);
+		
 	}
 
-	private void capteurfixe(GL2 gl) {
+	/*private void capteurfixe(GL2 gl) {
 			Capteur capteur = mdl.getCapteurMouvant();
 			gl.glBegin(GL2.GL_QUADS);
 			gl.glColor3d(1, 1, 0); // set the color of the quad
@@ -95,13 +91,15 @@ public class Frame implements GLEventListener {
 			gl.glEnd();
 		}
 		
-	}
+	}*/
+	
+	
 
 	public void fond (GL2 gl){
-		float mat_diffuse[] = {1.0f,1.0f,1.0f,1.0f};
-		gl.glMaterialfv(GL2.GL_FRONT,  GL2.GL_DIFFUSE, mat_diffuse, 0);
+	//	float mat_diffuse[] = {0.0f,255.0f,0.0f,1.0f};
+		//gl.glMaterialfv(GL2.GL_FRONT,  GL2.GL_DIFFUSE, mat_diffuse, 0);
 		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(1, 1, 1); // set the color of the quad
+		gl.glColor3d(0, 0, 1); // set the color of the quad
 			gl.glVertex3d(-longueur+1, largeur, 0); // Top Left
 			gl.glVertex3d(longueur, largeur, 0); // Top Right
 			gl.glVertex3d(longueur, -largeur+1, 0); // Bottom Right
@@ -118,11 +116,23 @@ public class Frame implements GLEventListener {
 		cubeLargeur(gl, -longueur, largeur);
 	}
 	
+	private void capteur (GL2 gl){
+		for (int i =0; i<mdl.getTabCapteur().size();i++){
+			gl.glBegin(GL2.GL_TRIANGLES);
+			gl.glColor3d(1, 1, 0); // set the color of the quad
+				gl.glVertex3d(mdl.getTabCapteur().get(i).getCoordoneeX(), mdl.getTabCapteur().get(i).getCoordoneeY()-2, 2); // Top Left
+				gl.glVertex3d(mdl.getTabCapteur().get(i).getCoordoneeX(), mdl.getTabCapteur().get(i).getCoordoneeY(), 4); // Top Right
+				gl.glVertex3d(mdl.getTabCapteur().get(i).getCoordoneeX(), mdl.getTabCapteur().get(i).getCoordoneeY()+2, 2); // Bottom Right
+			gl.glEnd();
+		}
+	}
+	
+	
 	public void table (GL2 gl){
-		float mat_diffuse[] = {255.0f,1.0f,1.0f,1.0f};
-		gl.glMaterialfv(GL2.GL_FRONT,  GL2.GL_DIFFUSE, mat_diffuse, 0);
+	//	float mat_diffuse[] = {255.0f,0.0f,0.0f,1.0f};
+		//gl.glMaterialfv(GL2.GL_FRONT,  GL2.GL_DIFFUSE, mat_diffuse, 0);
 		gl.glBegin(GL2.GL_QUADS);
-		//gl.glColor3f(0, 1, 0); // set the color of the quad
+		gl.glColor3f(1, 0, 0); // set the color of the quad
 		
 			gl.glVertex3d(0, 0, 2); // Top Left
 			gl.glVertex3d(0, 8, 2); // Top Right
@@ -196,25 +206,6 @@ public class Frame implements GLEventListener {
 			gl.glVertex3d(6, -3, 1); // Bottom Right
 			gl.glVertex3d(6, -2, 1); // Bottom Left
 		gl.glEnd();
-		/*
-		//pied3
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(1, 0, 0); // set the color of the quad
-			gl.glVertex3d(8, 0, 0); // Top Left
-			gl.glVertex3d(7, 0, 0); // Top Right
-			gl.glVertex3d(7, 0, 1); // Bottom Right
-			gl.glVertex3d(8, 0, 1); // Bottom Left
-		gl.glEnd();
-		
-		//pied4
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(1, 0, 0); // set the color of the quad
-			gl.glVertex3d(8, 8, 0); // Top Left
-			gl.glVertex3d(7, 8, 0); // Top Right
-			gl.glVertex3d(7, 8, 1); // Bottom Right
-			gl.glVertex3d(8, 8, 1); // Bottom Left
-		gl.glEnd();*/
-	
 	}
 	
 	@Override
@@ -251,24 +242,27 @@ public class Frame implements GLEventListener {
 		glu.gluPerspective(45.0f, (float)width/(float)height, 0.1, 200.0);
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();
-		float mat_ambient[] = {0.2f,0.2f,0.2f,0.2f};
+		gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		/*float mat_ambient[] = {0.2f,0.2f,0.2f,0.2f};
 		float mat_diffuse[] = {1.0f,1.0f,1.0f,1.0f};
 		float mat_specular[] = {1.0f,1.0f,1.0f,1.0f};
 		float mat_shininess = 110.0f;
-		float light_position[] = {0f,0f,300f,0.0f};
+		float light_position[]={0f, 0f, 300f, 0.0f};
 		float model_ambient[] = {0.2f,0.2f,0.2f,1.0f};
 		
-		gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		
 		
 		gl.glMaterialfv(GL2.GL_FRONT,  GL2.GL_AMBIENT, mat_ambient, 0);
 		gl.glMaterialfv(GL2.GL_FRONT,  GL2.GL_DIFFUSE, mat_diffuse, 0);
 		gl.glMaterialfv(GL2.GL_FRONT,  GL2.GL_SPECULAR, mat_specular, 0);
 		gl.glMaterialf(GL2.GL_FRONT,  GL2.GL_SHININESS, mat_shininess);
+		
 		gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, light_position, 0);
+		
 		gl.glLightModelfv(GL2.GL_LIGHT_MODEL_AMBIENT, model_ambient, 0);
 		gl.glEnable(GL2.GL_LIGHTING);
 		gl.glEnable(GL2.GL_LIGHT0);
-		gl.glEnable(GL2.GL_DEPTH_TEST);
+		gl.glEnable(GL2.GL_DEPTH_TEST);*/
 	//	gl.glShadeModel(GL2.GL_SMOOTH);
 
 

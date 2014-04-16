@@ -3,26 +3,43 @@ package App;
 
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.imageio.ImageIO;
 import javax.media.opengl.awt.GLCanvas;
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.border.Border;
 
 import com.jogamp.newt.event.KeyEvent;
 
 import capteur.Capteur;
+import Controler.CtrlKeyboard;
 import Controler.CtrlMouse;
 import Model.Mdl;
 import View.Frame;
@@ -35,14 +52,14 @@ public class MainAPP extends JFrame implements Observer {
 	private static GLCanvas cv =null;
 
 	
-	public MainAPP( Capteur tabCapteurFixe[], Capteur capteurMouvant, double longueur, double largeur){
+	public MainAPP(){
 		createMenu();
 		
 		cv=new GLCanvas(); //CREATION D'UN CANVAS
-		Mdl mdl= new Mdl(tabCapteurFixe,capteurMouvant);
+		Mdl mdl= new Mdl();
 		
 		mdl.addObserver(this);
-		Frame fr = new Frame (cv, mdl, longueur, largeur); //FENETRE
+		Frame fr = new Frame (cv, mdl); //FENETRE
 		cv.addGLEventListener(fr);
 		setSize(800, 600);
 		
@@ -51,10 +68,12 @@ public class MainAPP extends JFrame implements Observer {
 		MyWindowAdapter winAdt = new MyWindowAdapter();
 		addWindowListener(winAdt);
 		CtrlMouse ctrlM = new CtrlMouse(mdl);
+		CtrlKeyboard ctrlK = new CtrlKeyboard(mdl);
 		cv.addMouseMotionListener(ctrlM);
 		cv.addMouseListener(ctrlM);		
+		cv.addKeyListener(ctrlK);
 		
-		JPanel pan = new FrameMenu();
+		JPanel pan = new FrameMenu(mdl);
 	//	add(cv);
 		JSplitPane js = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pan, cv);
 		
@@ -98,15 +117,16 @@ public class MainAPP extends JFrame implements Observer {
 		menuBar.add(menu);
 
 		//a group of JMenuItems
-		menuItem = new JMenuItem("A text-only menu item",
+		menuItem = new JMenuItem("New detection",
 		                         KeyEvent.VK_T);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(
 		        KeyEvent.VK_1, ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
 		        "This doesn't really do anything");
+		menuItem.addActionListener(new InitWindow());
 		menu.add(menuItem);
 
-		menuItem = new JMenuItem("Both text and icon",
+		/*menuItem = new JMenuItem("Both text and icon",
 		                         new ImageIcon("images/middle.gif"));
 		menuItem.setMnemonic(KeyEvent.VK_B);
 		menu.add(menuItem);
@@ -151,15 +171,81 @@ public class MainAPP extends JFrame implements Observer {
 
 		menuItem = new JMenuItem("Another item");
 		submenu.add(menuItem);
-		menu.add(submenu);
+		menu.add(submenu);*/
 
 		//Build second menu in the menu bar.
-		menu = new JMenu("Another Menu");
+		menu = new JMenu("Help");
+		menuItem = new JMenuItem ("About visualisation FabLab");
+		menuItem.addActionListener(new AboutWindow());
+		menu.add(menuItem);
 		menu.setMnemonic(KeyEvent.VK_N);
 		menu.getAccessibleContext().setAccessibleDescription(
 		        "This menu does nothing");
+		
 		menuBar.add(menu);
 
 		this.setJMenuBar(menuBar);
+	}
+	
+	public class AboutWindow  implements ActionListener {
+		ImageIcon grassIcon = new ImageIcon("ressources/logo_ensimag3.png"); 
+		JPanel panel = new JPanel(new GridLayout(2,1));
+		JFrame frame = new JFrame("About Visualisation FabLab");
+		JLabel labelText = new JLabel();
+		JLabel labelImage ;
+		
+		public AboutWindow() {
+			frame.setResizable(false);
+			frame.setSize(new Dimension(400, 300));
+		}
+
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			labelImage = new JLabel(grassIcon);
+			
+			String text = "Projet Fablab réalisé par :\n A1,\n A2, \n A3\n, A4,\n\n Version :";
+
+			
+			panel.add(labelImage);
+			panel.add(labelText);
+			
+			frame.add(panel);
+			frame.pack();
+			frame.setVisible(true);
+		}
+
+	}
+	
+	public class InitWindow  implements ActionListener {
+		JPanel panel = new JPanel(new GridLayout(2,2));
+		JFrame frame = new JFrame("Initialisation detection");
+
+		
+		public InitWindow() {
+			frame.setResizable(false);
+			frame.setSize(new Dimension(400, 300));
+		}
+
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JPanel panelStatus = new JPanel(new GridLayout(0, 1));
+			Border borderStatus = BorderFactory.createTitledBorder("Status");
+			panelStatus.setBorder(borderStatus);
+		    ButtonGroup Status = new ButtonGroup();
+			panel.add(panelStatus);
+			
+			JPanel panelConfig = new JPanel(new GridLayout(0, 1));
+			Border borderConfig = BorderFactory.createTitledBorder("Configuration");
+			panelConfig.setBorder(borderConfig);
+		    ButtonGroup Config = new ButtonGroup();
+			panel.add(panelConfig);
+			
+			
+			frame.add(panel);
+			frame.setVisible(true);
+		}
+
 	}
 }

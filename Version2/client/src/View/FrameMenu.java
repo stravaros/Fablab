@@ -4,33 +4,113 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu.Separator;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
+import javax.swing.*;
+import javax.swing.border.Border;
+
+import Controler.CtrlMenu;
+import Model.Mdl;
 
 public class FrameMenu extends JPanel{
 	
-	public FrameMenu () {
-		super(new GridBagLayout());
-		JButton jb = new JButton ("Button1");
-		jb.setSize(150, 50);
-        jb.setMaximumSize(jb.getSize());
-        jb.setPreferredSize(new Dimension(150,50));
-        this.add(jb);
-        
-        JSeparator sp = new JSeparator(SwingConstants.HORIZONTAL);
-        
-        this.add(sp);
-        
+	private Mdl mdl;
+	private JTextField jtfX;
+	private JTextField jtfY;
+	private JComboBox choice;
+	
+	public FrameMenu (Mdl m) {
+		super(new GridLayout(4,1));
 		
-		JButton jbb = new JButton ("Button2");
-		jbb.setSize(150, 50);
-        jbb.setMaximumSize(jbb.getSize());
-        jbb.setPreferredSize(new Dimension(150,50));
-		this.add(jbb);
+		mdl = m;
+		
+		
+		//Placer camera
+		JPanel panel = new JPanel(new GridLayout(0, 1));
+	    Border border = BorderFactory.createTitledBorder("Sensor set");
+	    panel.setBorder(border);
+	    ButtonGroup group = new ButtonGroup();
+	    
+	    //POS X
+	    jtfX = new JTextField("Valeur par défaut");
+	    panel.add(jtfX);
+	    
+	    //POS Y
+	    jtfY = new JTextField("Valeur par défaut");
+	    panel.add(jtfY);
+	    JSeparator sp = new JSeparator(SwingConstants.HORIZONTAL);
+	    panel.add(sp);
+	    
+	    AbstractButton abstract1 = new JButton("Create sensor");
+	    abstract1.addActionListener(new CtrlMenu(mdl, this));
+	    panel.add(abstract1);
+	    group.add(abstract1);
+	    abstract1.addActionListener(new CtrlMenu(mdl, this));
+	    this.add(panel, BorderLayout.CENTER);
+	
+	  //Placer meuble
+		JPanel panelMeuble = new JPanel(new GridLayout(0, 1));
+		Border borderMeuble = BorderFactory.createTitledBorder("Objet set");
+		panelMeuble.setBorder(borderMeuble);
+	    ButtonGroup groupMeuble = new ButtonGroup();
+		    
+	    String[] items = {"table", "little table", "television", "light"};
+	   choice = new JComboBox<>(items);
+	    panelMeuble.add(choice);
+	    
+		    //POS X
+		JTextField meubleX = new JTextField("Valeur par défaut");
+		panelMeuble.add(meubleX);
+		    
+		    //POS Y
+		JTextField meubleY = new JTextField("Valeur par défaut");
+		panelMeuble.add(meubleY);
+	    JSeparator meubleSp = new JSeparator(SwingConstants.HORIZONTAL);
+	    panel.add(meubleSp);
+		    
+	    AbstractButton meuble1 = new JButton("Create objet");
+	    panelMeuble.add(meuble1);
+		groupMeuble.add(meuble1);
+		meuble1.addActionListener(new CtrlMenu(mdl, this));
+	    this.add(panelMeuble, BorderLayout.CENTER);
+	    
+	    
+	  //camera choice
+  		JPanel panelCamera = new JPanel(new GridLayout(0, 1));
+  		Border borderCamera = BorderFactory.createTitledBorder("Camera set");
+  		panelCamera.setBorder(borderCamera);
+  	    ButtonGroup groupCamera = new ButtonGroup();
+
+  		    
+		AbstractButton Camera1 = new JButton("Camera 1");
+		panelCamera.add(Camera1);
+		panelCamera.add(Camera1);
+			
+		AbstractButton Camera2 = new JButton("Camera 2");
+		panelCamera.add(Camera2);
+		groupCamera.add(Camera2);
+		
+		AbstractButton Camera3 = new JButton("Camera 3");
+		panelCamera.add(Camera3);
+		groupCamera.add(Camera3);
+		
+		Camera1.addActionListener(new CtrlMenu(mdl, this));
+		Camera2.addActionListener(new CtrlMenu(mdl, this));
+		Camera3.addActionListener(new CtrlMenu(mdl, this));
+  		    
+  	    this.add(panelCamera, BorderLayout.CENTER);
+	    
+	}
+	
+	public int getSensorX(){
+		return Integer.parseInt(jtfX.getText());
 	}
 
+	public int getSensorY() {
+		return Integer.parseInt(jtfY.getText());
+	}
+	
+	public String getCurrentElement(){
+		return choice.getSelectedItem().toString();
+	}
 }

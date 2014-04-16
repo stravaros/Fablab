@@ -7,6 +7,13 @@ public class Capteur {
 	private int type;
 	private int numero;
 
+	public Capteur(int type, int numero, int X, int Y) {
+		this.type = type;
+		this.numero=numero;
+		this.coordoneeX = X;
+		this.coordoneeY = Y;
+	}
+	
 	public Capteur(int type, int numero) {
 		this.type = type;
 		this.numero=numero;
@@ -28,6 +35,7 @@ public class Capteur {
 		return coordoneeY;
 	}
 
+	//a supprimer
 	public boolean setCoordoneeY(double distance, double angle, double largeur) {
 		coordoneeY =  (distance * Math.sin(Math.PI * angle / 180.0));
 		if (coordoneeY <= largeur / 2 && coordoneeY >= -largeur / 2) {

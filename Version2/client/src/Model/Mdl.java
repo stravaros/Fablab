@@ -1,16 +1,21 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.Observable;
 
 import capteur.Capteur;
 import Controler.CtrlMouse;
+import EnvObjet.ObjetGen;
+import EnvObjet.Table;
 
 public class Mdl extends Observable {
 	
 	private float angleElevation;
 	private float angleAzimuth;
+	private float angleDirection;
 	
 	private float distance;
+	private float hauteur;
 	
 	private int mouseX;
 	private int mouseY;
@@ -19,22 +24,40 @@ public class Mdl extends Observable {
 	
 	private Capteur tabCapteurFixe[];
 	private Capteur capteurMouvant;
+	private int nbCapteur;
 	
 	int parametreAnimation=0;
 	
-	public Mdl(Capteur tabCapteurFixe[], Capteur capteurMouvant){
-		setAngleElevation(270.0f);
+	private ArrayList <Capteur> listCapteur;
+	private ArrayList <ObjetGen> listObjet;
+	
+	public Mdl(){
+		setAngleElevation(0.0f);
 		setAngleAzimuth(0.0f);
 		
 		setVitesse(1);
 		setDistance(50);
+		setHauteur(0);
+		setAngleDirection(0);
 		
 		setMouseX(0);
 		setMouseY(0);
-		this.setTabCapteurFixe(tabCapteurFixe);
-		this.setCapteurMouvant(capteurMouvant);
+		listCapteur = new ArrayList <Capteur> ();
+		listObjet = new ArrayList <ObjetGen> ();
+		/*this.setTabCapteurFixe(tabCapteurFixe);
+		this.setCapteurMouvant(capteurMouvant);*/
 	}
 	
+	private void setAngleDirection(int i) {
+		angleDirection = i;
+		
+	}
+
+	private void setHauteur(int i) {
+		hauteur = i;
+		
+	}
+
 	//QUAND ON BOUGE LA SOURIS EN CLIQUANT
 	public void moveDragged (int newMouseX, int newMouseY, boolean buttonPressed []){
 		if(buttonPressed[CtrlMouse.LEFT_BTN]){ //CLIQUE GAUCHE
@@ -53,6 +76,7 @@ public class Mdl extends Observable {
 			mouseY=newMouseY;
 			notifyChanges();
 		}
+		System.out.println("angle "+angleAzimuth+" "+angleElevation);
 		
 	}
 	
@@ -60,6 +84,77 @@ public class Mdl extends Observable {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	//quand on change la camera
+	public void setSensor (){
+		//il faut un attribut frameMenu pour choper les valeurs des champs pour la position
+		notifyChanges();
+	}
+	
+	//quand on change la camera
+	public void createObjet (int id){
+		//il faut un attribut frameMenu pour choper les valeurs des champs et le type de meuble
+		notifyChanges();
+	}
+	
+	//quand on change la camera
+	public void changeCamera (int id){
+		switch (id) {
+		case 0:
+			angleElevation = 0;
+			angleAzimuth = 0;
+			distance =50;
+			angleDirection = 0;
+			hauteur =0;
+			break;
+		case 1:
+			angleElevation = -90.0f;
+			angleAzimuth = 0;
+			distance =15;
+			hauteur = -3.0f;
+			angleDirection = 0;
+			break;
+		case 2:
+			angleElevation = -45.0f;
+			angleAzimuth = 0;
+			distance =60;
+			hauteur = 5.0f;
+			angleDirection = -45;
+			break;
+		}
+		notifyChanges();
+	}
+	
+	public void left (){
+		angleDirection --;
+		notifyChanges();
+	}
+	
+	public void up (){
+		distance --;
+		notifyChanges();
+	}
+	
+	public void right (){
+		angleDirection ++;
+		notifyChanges();
+	}
+	
+	public void down (){
+		distance ++;
+		notifyChanges();
+	}
+	
+	public void addCapteur (int posX, int posY){
+		this.listCapteur.add(new Capteur(0, 0, posX, posY));
+		notifyChanges();
+	}
+	
+	public void addTable (int posX, int posY){
+		listObjet.add(new Table( posX, posY));
+		notifyChanges();
+	}
+	
 	
 	
 	private void notifyChanges() {
@@ -121,8 +216,8 @@ public class Mdl extends Observable {
 		
 	}
 
-	public Capteur[] getTabCapteurFixe() {
-		return tabCapteurFixe;
+	public ArrayList<Capteur> getTabCapteur() {
+		return listCapteur;
 	}
 
 	public void setTabCapteurFixe(Capteur tabCapteurFixe[]) {
@@ -135,6 +230,14 @@ public class Mdl extends Observable {
 
 	public void setCapteurMouvant(Capteur capteurMouvant) {
 		this.capteurMouvant = capteurMouvant;
+	}
+
+	public float getHauteur() {
+		return hauteur;
+	}
+
+	public float getAngleDirection() {
+		return angleDirection;
 	}
 
 
