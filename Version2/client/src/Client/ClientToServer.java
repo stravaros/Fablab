@@ -1,5 +1,6 @@
 package Client;
 
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -12,7 +13,7 @@ import Capteur.Capteur;
 public class ClientToServer {
 	Scanner in;
 	final static int port = 9632;
-	final static int taille = 1024;
+	private int taille;
 	byte buffer[];
 	String donnees;
 	private DatagramSocket socket;
@@ -23,6 +24,7 @@ public class ClientToServer {
 		this.in = new Scanner(System.in);
 		this.buffer = new byte[taille];
 		this.donnees = "";
+		this.taille = 1024;
 	}
 
 	public int lancement(int nbCapteur) {
@@ -86,7 +88,6 @@ public class ClientToServer {
 			System.out.println("Transmission capteur "
 					+ listCapteur.get(i).getNumero());
 		}
-
 		try {
 			data = "Fin ";
 			length = data.length();
@@ -107,8 +108,24 @@ public class ClientToServer {
 
 	}
 
-	public void lectureXY() {
-		//TODO attention il faudra faire un while ou trouver un truc pour ecouter
+	public void lectureXY(Capteur capteurMouvant) throws ExceptionSingularite {
+		String delims = "[ ]+";
+		String[] tokens = null;
+		DatagramPacket paquet = new DatagramPacket(buffer, buffer.length);
+		try {
+			socket.receive(paquet);
+			taille = paquet.getLength();
+			donnees = new String(paquet.getData(), 0, taille);
+			tokens = donnees.split(delims);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (tokens[0].equals("X")) {
+			capteurMouvant.setCoordoneeX(Double.parseDouble(tokens[1]));
+			capteurMouvant.setCoordoneeY(Double.parseDouble(tokens[3]));
+		} else if (tokens[0].equals("Matrice")) {
+			System.out.println("Matrice singuliere");
+			throw new ExceptionSingularite("Matrice singuliere");
+		}
 	}
-	
 }
