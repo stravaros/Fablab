@@ -7,8 +7,11 @@ public class Capteur {
 	private int type;
 	private int numero;
 
-	public Capteur() {
-		
+	public Capteur(double coordoneeXCar, double coordoneeYCar, int type, int numero ) {
+		this.coordoneeXCar=coordoneeXCar;
+		this.coordoneeYCar=coordoneeYCar;
+		this.type=type;
+		this.numero=numero;
 	}
 
 	public int getType() {
