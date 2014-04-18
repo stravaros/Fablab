@@ -25,28 +25,7 @@ public class FrameMenu extends JPanel{
 		mdl = m;
 		
 		
-		//Placer camera
-		JPanel panel = new JPanel(new GridLayout(0, 1));
-	    Border border = BorderFactory.createTitledBorder("Sensor set");
-	    panel.setBorder(border);
-	    ButtonGroup group = new ButtonGroup();
-	    
-	    //POS X
-	    jtfX = new JTextField("Valeur par défaut");
-	    panel.add(jtfX);
-	    
-	    //POS Y
-	    jtfY = new JTextField("Valeur par défaut");
-	    panel.add(jtfY);
-	    JSeparator sp = new JSeparator(SwingConstants.HORIZONTAL);
-	    panel.add(sp);
-	    
-	    AbstractButton abstract1 = new JButton("Create sensor");
-	    abstract1.addActionListener(new CtrlMenu(mdl, this));
-	    panel.add(abstract1);
-	    group.add(abstract1);
-	    abstract1.addActionListener(new CtrlMenu(mdl, this));
-	    this.add(panel, BorderLayout.CENTER);
+		JPanel panel = new JPanel(new GridLayout(0,1));
 	
 	  //Placer meuble
 		JPanel panelMeuble = new JPanel(new GridLayout(0, 1));
@@ -55,14 +34,14 @@ public class FrameMenu extends JPanel{
 	    ButtonGroup groupMeuble = new ButtonGroup();
 		    
 	    String[] items = {"table", "little table", "television", "light"};
-	   choice = new JComboBox<>(items);
+	    choice = new JComboBox<>(items);
 	    panelMeuble.add(choice);
 	    
-		    //POS X
+	    //POS X
 		JTextField meubleX = new JTextField("Valeur par défaut");
 		panelMeuble.add(meubleX);
 		    
-		    //POS Y
+		//POS Y
 		JTextField meubleY = new JTextField("Valeur par défaut");
 		panelMeuble.add(meubleY);
 	    JSeparator meubleSp = new JSeparator(SwingConstants.HORIZONTAL);
@@ -75,7 +54,7 @@ public class FrameMenu extends JPanel{
 	    this.add(panelMeuble, BorderLayout.CENTER);
 	    
 	    
-	  //camera choice
+	    //camera choice
   		JPanel panelCamera = new JPanel(new GridLayout(0, 1));
   		Border borderCamera = BorderFactory.createTitledBorder("Camera set");
   		panelCamera.setBorder(borderCamera);

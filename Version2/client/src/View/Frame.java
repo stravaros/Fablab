@@ -27,21 +27,21 @@ public class Frame implements GLEventListener {
 	double longueur;
 	double largeur;
 	float taille = (float) 0.5;
-	Texture identifiant_texture;
+	Texture text_fond;
 	Texture text_mur;
-	File bois = new File("ressources/textures/bois.jpg") ;
-	File mur = new File("ressources/textures/mur.jpg") ;
-	File table = new File("ressources/textures/table.jpg") ;
+	Texture text_table;
+	Texture text_fenetre;
+	File bois = new File("ressources/textures/parquet_comp.jpg") ;
+	File mur = new File("ressources/textures/mur_comp.jpg") ;
+	File table = new File("ressources/textures/table_comp.jpg") ;
+	File fenetre = new File("ressources/textures/fenetre.jpg") ;
 	
-
 
 	public Frame(GLAutoDrawable gld, Mdl m) {
 		this.drawable = gld;
 		this.mdl = m;
 		this.longueur = 20;
 		this.largeur = 20;
-		
-		
 	}
 
 	// IMPLEMENTE ELENVENTLISTENER
@@ -49,33 +49,42 @@ public class Frame implements GLEventListener {
 	public void display(GLAutoDrawable arg0) {
 		// TODO Auto-generated method stub
 		
-		
 		final GL2 gl= drawable.getGL().getGL2();
+		GLUT glut = new GLUT();	//INSTANCIATION GLUT
+		try {
+			text_fond = TextureIO.newTexture(bois, true);
+			text_mur = TextureIO.newTexture(mur, true);
+			text_table= TextureIO.newTexture(table, true);
+			text_fenetre= TextureIO.newTexture(fenetre, true);
+		} catch (GLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);  
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();     /* réinitialiation de la matrice de GL_MODELVIEW */
-
+		
 
 		gl.glTranslatef(0.0f, 0.0f, -mdl.getDistance());
 		gl.glTranslatef(0.0f, mdl.getHauteur(), 0.0f);
 		gl.glRotatef(mdl.getAngleElevation(), 1.0f, 0.0f, 0.0f);
 		gl.glRotatef(mdl.getAngleAzimuth(), 0.0f, 1.0f, 0.0f);
 		gl.glRotatef(mdl.getAngleDirection(), 0.0f, 0.0f, 1.0f);
+		gl.glEnable(GL2.GL_TEXTURE_2D);
 		
-		
-		//capteurfixe(gl);
-		//capteurmouvant(gl);
 		fond(gl);
 		mur(gl);
-		//glut.glutSolidCube(5);
-		table (gl);
+		table (gl, glut);
 		chaise (gl);
 		capteur(gl);
-		//glut.glutSolidTeapot(4);
-		
+		meuble (gl);
+
+		gl.glDisable(GL2.GL_TEXTURE_2D);
 	}
+	
+
 
 	/*private void capteurfixe(GL2 gl) {
 			Capteur capteur = mdl.getCapteurMouvant();
@@ -114,59 +123,39 @@ public class Frame implements GLEventListener {
 
 	public void fond (GL2 gl){
 		try {
-			identifiant_texture = TextureIO.newTexture(bois, true);
-			identifiant_texture.enable(gl);
-			identifiant_texture.bind(gl);
-			
-			/*text_mur = TextureIO.newTexture(mur, true);
-			text_mur.enable(gl);
-			text_mur.bind(gl);*/
-		} catch (GLException | IOException e) {
+			text_fond.enable(gl);
+			text_fond.bind(gl);
+		} catch (GLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		};
-		
-		gl.glEnable(GL2.GL_TEXTURE_2D);
+
 		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(1, 1, 1); // set the color of the quad
-			gl.glTexCoord2d(0, 0); 		gl.glVertex3d(-longueur, -largeur, 0); // Top Left
-			gl.glTexCoord2d(1, 0);		gl.glVertex3d(longueur, -largeur, 0); // Top Right
-			gl.glTexCoord2d(1, 1); 	gl.glVertex3d(longueur, largeur, 0); // Bottom Right
-			gl.glTexCoord2d(0, 1);  	gl.glVertex3d(-longueur, largeur, 0); // Bottom Left
-			    // glVertex3i(-10,-10,-1);
-			   // glVertex3i(10,-10,-1);
-			  // glVertex3i(10,10,-1);
-			   //glVertex3i(-10,10,-1);
-		gl.glEnd();
-		gl.glDisable(GL2.GL_TEXTURE_2D);
+			gl.glColor4d(1, 1, 1, 1); // set the color of the quad,,
+				gl.glTexCoord2d(0, 0); 		gl.glVertex3d(-longueur, -largeur, 0); // Top Left
+				gl.glTexCoord2d(1, 0);		gl.glVertex3d(longueur, -largeur, 0); // Top Right
+				gl.glTexCoord2d(1, 1); 	gl.glVertex3d(longueur, largeur, 0); // Bottom Right
+				gl.glTexCoord2d(0, 1);  	gl.glVertex3d(-longueur, largeur, 0); // Bottom Left
+			gl.glEnd();
+
 	}
 	
 	public void mur (GL2 gl){
 		try {
-			identifiant_texture = TextureIO.newTexture(mur, true);
-			identifiant_texture.enable(gl);
-			identifiant_texture.bind(gl);
-			
-			/*text_mur = TextureIO.newTexture(mur, true);
 			text_mur.enable(gl);
-			text_mur.bind(gl);*/
-		} catch (GLException | IOException e) {
+			text_mur.bind(gl);
+			
+		} catch (GLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		};
 		
-		gl.glEnable(GL2.GL_TEXTURE_2D);
 		gl.glBegin(GL2.GL_QUADS);
-		gl.glDisable (GL2.GL_CULL_FACE ) ;
 			gl.glColor3d(1, 1, 1); // set the color of the quad
 			gl.glTexCoord2d(0, 0); gl.glVertex3d(-longueur, -largeur, 0); 		
 			gl.glTexCoord2d(1, 0); gl.glVertex3d(-longueur, -largeur, 10);		
 			gl.glTexCoord2d(1, 1); gl.glVertex3d(-longueur, largeur, 10); 	
 			gl.glTexCoord2d(0, 1); gl.glVertex3d(-longueur, largeur, 0);  
-			    // glVertex3i(-10,-10,-1);
-			   // glVertex3i(10,-10,-1);
-			  // glVertex3i(10,10,-1);
-			   //glVertex3i(-10,10,-1);
 		gl.glEnd();
 		
 		gl.glBegin(GL2.GL_QUADS);
@@ -175,11 +164,8 @@ public class Frame implements GLEventListener {
 			gl.glTexCoord2d(1, 0); gl.glVertex3d(-longueur, -largeur, 10);		
 			gl.glTexCoord2d(1, 1); gl.glVertex3d(longueur, -largeur, 10); 	
 			gl.glTexCoord2d(0, 1); gl.glVertex3d(longueur, -largeur, 0);  
-			    // glVertex3i(-10,-10,-1);
-			   // glVertex3i(10,-10,-1);
-			  // glVertex3i(10,10,-1);
-			   //glVertex3i(-10,10,-1);
 		gl.glEnd();
+		
 	
 		gl.glBegin(GL2.GL_QUADS);
 			gl.glColor3d(1, 1, 1); // set the color of the quad
@@ -187,10 +173,6 @@ public class Frame implements GLEventListener {
 			gl.glTexCoord2d(1, 0); gl.glVertex3d(longueur, largeur, 10);		
 			gl.glTexCoord2d(1, 1); gl.glVertex3d(-longueur, largeur, 10); 	
 			gl.glTexCoord2d(0, 1); gl.glVertex3d(-longueur, largeur, 0);  
-			    // glVertex3i(-10,-10,-1);
-			   // glVertex3i(10,-10,-1);
-			  // glVertex3i(10,10,-1);
-			   //glVertex3i(-10,10,-1);
 		gl.glEnd();
 
 		gl.glBegin(GL2.GL_QUADS);
@@ -199,17 +181,27 @@ public class Frame implements GLEventListener {
 			gl.glTexCoord2d(1, 0); gl.glVertex3d(longueur, -largeur, 10);		
 			gl.glTexCoord2d(1, 1); gl.glVertex3d(longueur, largeur, 10); 	
 			gl.glTexCoord2d(0, 1); gl.glVertex3d(longueur, largeur, 0);  
-			    // glVertex3i(-10,-10,-1);
-			   // glVertex3i(10,-10,-1);
-			  // glVertex3i(10,10,-1);
-			   //glVertex3i(-10,10,-1);
 		gl.glEnd();
-		gl.glDisable(GL2.GL_TEXTURE_2D);
 		
-		/*cubeLongeur(gl, longueur, largeur);
-		cubeLongeur(gl, longueur, -largeur);
-		cubeLargeur(gl, longueur, largeur);
-		cubeLargeur(gl, -longueur, largeur);*/
+		text_fenetre.enable(gl);
+		text_fenetre.bind(gl);
+		
+		
+		gl.glBegin(GL2.GL_QUADS);//fenetre
+		gl.glColor3d(1, 0, 0); // set the color of the quad
+			gl.glVertex3d(-longueur, -largeur/2-1, 2); 		
+			gl.glVertex3d(-longueur, -largeur/2-1, 8);		
+			gl.glVertex3d(-longueur, largeur/3+1, 8); 	
+			 gl.glVertex3d(-longueur, largeur/3+1, 2);  
+		gl.glEnd();
+		
+		gl.glBegin(GL2.GL_QUADS);//fenetre
+		gl.glColor3d(1, 1, 1); // set the color of the quad
+			gl.glTexCoord2d(0, 0); gl.glVertex3d(-longueur, -largeur/2, 3); 		
+			gl.glTexCoord2d(0, 1); gl.glVertex3d(-longueur, -largeur/2, 7);		
+			gl.glTexCoord2d(1, 1); gl.glVertex3d(-longueur, largeur/3, 7); 	
+			gl.glTexCoord2d(1, 0); gl.glVertex3d(-longueur, largeur/3, 3);  
+		gl.glEnd();
 	}
 	
 	private void capteur (GL2 gl){
@@ -224,20 +216,15 @@ public class Frame implements GLEventListener {
 	}
 	
 	
-	public void table (GL2 gl){
+	public void table (GL2 gl, GLUT glut){
 		try {
-			identifiant_texture = TextureIO.newTexture(table, true);
-			identifiant_texture.enable(gl);
-			identifiant_texture.bind(gl);
 			
-			/*text_mur = TextureIO.newTexture(mur, true);
-			text_mur.enable(gl);
-			text_mur.bind(gl);*/
-		} catch (GLException | IOException e) {
+			text_table.enable(gl);
+			text_table.bind(gl);
+		} catch (GLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		};
-		gl.glEnable(GL2.GL_TEXTURE_2D);
 		gl.glBegin(GL2.GL_QUADS);
 		gl.glColor3f(1, 1, 1); // set the color of the quad
 		
@@ -250,7 +237,6 @@ public class Frame implements GLEventListener {
 		
 		//pied1
 		gl.glBegin(GL2.GL_QUADS);
-		//gl.glColor3d(1, 1, 0); // set the color of the quad
 			gl.glVertex3d(0, 0, 0); // Top Left
 			gl.glVertex3d(1, 0, 0); // Top Right
 			gl.glVertex3d(1, 0, 2); // Bottom Right
@@ -259,7 +245,6 @@ public class Frame implements GLEventListener {
 		
 		//pied2
 		gl.glBegin(GL2.GL_QUADS);
-	//	gl.glColor3d(1, 1, 0); // set the color of the quad
 			gl.glVertex3d(0, 8, 0); // Top Left
 			gl.glVertex3d(1, 8, 0); // Top Right
 			gl.glVertex3d(1, 8, 2); // Bottom Right
@@ -268,7 +253,6 @@ public class Frame implements GLEventListener {
 		
 		//pied3
 		gl.glBegin(GL2.GL_QUADS);
-	//	gl.glColor3d(1, 1, 0); // set the color of the quad
 			gl.glVertex3d(8, 0, 0); // Top Left
 			gl.glVertex3d(7, 0, 0); // Top Right
 			gl.glVertex3d(7, 0, 2); // Bottom Right
@@ -277,18 +261,24 @@ public class Frame implements GLEventListener {
 		
 		//pied4
 		gl.glBegin(GL2.GL_QUADS);
-	//	gl.glColor3d(1, 1, 0); // set the color of the quad
 			gl.glVertex3d(8, 8, 0); // Top Left
 			gl.glVertex3d(7, 8, 0); // Top Right
 			gl.glVertex3d(7, 8, 2); // Bottom Right
 			gl.glVertex3d(8, 8, 2); // Bottom Left
 		gl.glEnd();
-	
+		
+		gl.glPushMatrix();
+		gl.glRotatef(90f ,1f, 0f, 0f);
+		gl.glTranslatef(4f ,3f, -4f); //(x ,z,y)
+		gl.glColor3d(0, 1, 0);
+	    glut.glutSolidTeapot(1.5);     // middle teapot
+	    gl.glPopMatrix();
+		
+		
+		
 	}
 	
 	public void chaise (GL2 gl){
-		float mat_diffuse[] = {.0f,1.0f,255.0f,1.0f};
-		gl.glMaterialfv(GL2.GL_FRONT,  GL2.GL_DIFFUSE, mat_diffuse, 0);
 		gl.glBegin(GL2.GL_QUADS);
 		gl.glColor3d(1, 0, 0); // set the color of the quad
 			gl.glVertex3d(3, -2, 1); // Top Left
@@ -306,7 +296,7 @@ public class Frame implements GLEventListener {
 			gl.glVertex3d(3, -2, 1); // Bottom Left
 		gl.glEnd();
 		
-	//pied2
+		//pied2
 		gl.glBegin(GL2.GL_QUADS);
 		gl.glColor3d(1, 0, 0); // set the color of the quad
 			gl.glVertex3d(6, -2, 0); // Top Left
@@ -314,6 +304,66 @@ public class Frame implements GLEventListener {
 			gl.glVertex3d(6, -3, 1); // Bottom Right
 			gl.glVertex3d(6, -2, 1); // Bottom Left
 		gl.glEnd();
+	}
+	
+	public void meuble (GL2 gl){		
+		//vertical
+		gl.glBegin(GL2.GL_QUADS);
+		gl.glColor3d(0, 0, 1); // set the color of the quad
+			gl.glVertex3d(-10, 20, 0); // Top Left
+			gl.glVertex3d(-10, 15, 0); // Top Right
+			gl.glVertex3d(-10, 15, 10); // Bottom Right
+			gl.glVertex3d(-10, 20, 10); // Bottom Left
+		gl.glEnd();
+		
+		gl.glBegin(GL2.GL_QUADS);
+		gl.glColor3d(0, 1, 1); // set the color of the quad
+			gl.glVertex3d(-5, 20, 0); // Top Left
+			gl.glVertex3d(-5, 15, 0); // Top Right
+			gl.glVertex3d(-5, 15, 10); // Bottom Right
+			gl.glVertex3d(-5, 20, 10); // Bottom Left
+		gl.glEnd();
+		
+		gl.glBegin(GL2.GL_QUADS);
+		gl.glColor3d(0, 1, 0); // set the color of the quad
+			gl.glVertex3d(5, 20, 0); // Top Left
+			gl.glVertex3d(5, 15, 0); // Top Right
+			gl.glVertex3d(5, 15, 10); // Bottom Right
+			gl.glVertex3d(5, 20, 10); // Bottom Left
+		gl.glEnd();
+		
+		gl.glBegin(GL2.GL_QUADS);
+		gl.glColor3d(0, 0, 1); // set the color of the quad
+			gl.glVertex3d(10, 20, 0); // Top Left
+			gl.glVertex3d(10, 15, 0); // Top Right
+			gl.glVertex3d(10, 15, 10); // Bottom Right
+			gl.glVertex3d(10, 20, 10); // Bottom Left
+		gl.glEnd();
+		
+		//horizontal
+		gl.glBegin(GL2.GL_QUADS);
+		gl.glColor3d(0, 0, 1); // set the color of the quad
+			gl.glVertex3d(-10, 20, 0); // Top Left
+			gl.glVertex3d(10, 20, 0); // Top Right
+			gl.glVertex3d(10, 15, 0); // Bottom Right
+			gl.glVertex3d(-10, 15, 0); // Bottom Left
+		gl.glEnd();
+		
+		gl.glBegin(GL2.GL_QUADS);
+		gl.glColor3d(0, 0, 1); // set the color of the quad
+			gl.glVertex3d(-10, 20, 5); // Top Left
+			gl.glVertex3d(10, 20, 5); // Top Right
+			gl.glVertex3d(10, 15, 5); // Bottom Right
+			gl.glVertex3d(-10, 15, 5); // Bottom Left
+		gl.glEnd();
+		
+		gl.glBegin(GL2.GL_QUADS);
+		gl.glColor3d(0, 0, 1); // set the color of the quad
+			gl.glVertex3d(-10, 20, 10); // Top Left
+			gl.glVertex3d(10, 20, 10); // Top Right
+			gl.glVertex3d(10, 15, 10); // Bottom Right
+			gl.glVertex3d(-10, 15, 10); // Bottom Left
+		gl.glEnd();	
 	}
 	
 	@Override
@@ -327,7 +377,6 @@ public class Frame implements GLEventListener {
 		// TODO Auto-generated method stub
 				final GL2 gl = glDrawable.getGL().getGL2();
 				//GLUgl2 glu = new GLUgl2();
-				
 				initViewProjection(drawable, 0, 0, 500, 500);
 				gl.glColor3f(0.0f, 200.0f, 0.0f);
 				gl.glLineWidth(1);	
@@ -373,105 +422,8 @@ public class Frame implements GLEventListener {
 		gl.glEnable(GL2.GL_LIGHT0);
 		gl.glEnable(GL2.GL_DEPTH_TEST);*/
 	//	gl.glShadeModel(GL2.GL_SMOOTH);
-
-
-
-		
+	
 	}
 
-	static void cubeLongeur(GL2 gl, double i, double j) {
-		gl.glColor3d(0, 1, 0);
-		/* draws the sides of a unit cube (0,0,0)-(1,1,1) */
-		gl.glBegin(GL2.GL_POLYGON);/* f1: front */
-		gl.glNormal3f(-1.0f, 0.0f, 0.0f);
-			gl.glVertex3d(-i, -j, 0.0f);
-			gl.glVertex3d(-i, -j, 3.0f);
-			gl.glVertex3d(i, -j, 3.0f);
-			gl.glVertex3d(i, -j, 0.0f);
-		gl.glEnd();
-		gl.glBegin(GL2.GL_POLYGON);/* f2: bottom */
-		gl.glNormal3f(-2.0f, 0.0f, -1.0f);
-			gl.glVertex3d(-i, -j, 0.0f);
-			gl.glVertex3d(i, -j, 0.0f);
-			gl.glVertex3d(i, -j + 1.0f, 0.0f);
-			gl.glVertex3d(-i, -j + 1.0f, 0.0f);
-		gl.glEnd();
-		gl.glBegin(GL2.GL_POLYGON);/* f3:back */
-		gl.glNormal3f(1.0f, 0.0f, 0.0f);
-			gl.glVertex3d(-i, -j + 1.0f, 0.0f);
-			gl.glVertex3d(i, -j + 1.0f, 3.0f);
-			gl.glVertex3d(-i, -j + 1.0f, 3.0f);
-			gl.glVertex3d(-i, -j + 1.0f, 0.0f);
-		gl.glEnd();
-		gl.glBegin(GL2.GL_POLYGON);/* f4: top */
-		gl.glNormal3f(0.0f, 0.0f, 1.0f);
-			gl.glVertex3d(i, -j + 1.0f, 3.0f);
-			gl.glVertex3d(i, -j, 3.0f);
-			gl.glVertex3d(-i, -j, 3.0f);
-			gl.glVertex3d(-i, -j + 1.0f, 3.0f);
-		gl.glEnd();
-		gl.glBegin(GL2.GL_POLYGON);/* f5: left */
-		gl.glNormal3f(0.0f, 1.0f, 0.0f);
-			gl.glVertex3d(-i, -j, 0.0f);
-			gl.glVertex3d(-i, -j + 1.0f, 0.0f);
-			gl.glVertex3d(-i, -j + 1.0f, 3.0f);
-			gl.glVertex3d(-i, -j, 3.0f);
-		gl.glEnd();
-		gl.glBegin(GL2.GL_POLYGON);/* f6: right */
-		gl.glNormal3f(0.0f, -1.0f, 0.0f);
-			gl.glVertex3d(i, -j, 0.0f);
-			gl.glVertex3d(i, -j, 3.0f);
-			gl.glVertex3d(i, -j + 1.0f, 3.0f);
-			gl.glVertex3d(i, -j + 1.0f, 0.0f);
-		gl.glEnd();
-	}
-
-	static void cubeLargeur(GL2 gl, double i, double j) {
-		gl.glColor3d(0, 1, 0);
-
-		/* draws the sides of a unit cube (0,0,0)-(1,1,1) */
-		gl.glBegin(GL2.GL_POLYGON);/* f1: front */
-		gl.glNormal3f(-1.0f, 0.0f, 0.0f);
-			gl.glVertex3d(i, -j, 0.0f);
-			gl.glVertex3d(i, -j, 1.0f);
-			gl.glVertex3d(i + 1, -j, 1.0f);
-			gl.glVertex3d(i + 1, -j, 0.0f);
-		gl.glEnd();
-		gl.glBegin(GL2.GL_POLYGON);/* f2: bottom */
-		gl.glNormal3f(0.0f, 0.0f, -1.0f);
-			gl.glVertex3d(i, -j, 0.0f);
-			gl.glVertex3d(i + 1, -j, 0.0f);
-			gl.glVertex3d(i + 1, j + 1, 0.0f);
-			gl.glVertex3d(i, j + 1, 0.0f);
-		gl.glEnd();
-		gl.glBegin(GL2.GL_POLYGON);/* f3:back */
-		gl.glNormal3f(-1.0f, 0.0f, 0.0f);
-			gl.glVertex3d(i, j + 1, 0.0f);
-			gl.glVertex3d(i, j + 1, 1.0f);
-			gl.glVertex3d(i + 1, j + 1, 1.0f);
-			gl.glVertex3d(i + 1, j + 1, 0.0f);
-		gl.glEnd();
-		gl.glBegin(GL2.GL_POLYGON);/* f4: top */
-		gl.glNormal3f(0.0f, 0.0f, 1.0f);
-			gl.glVertex3d(i + 1, j + 1, 1.0f);
-			gl.glVertex3d(i + 1, -j, 1.0f);
-			gl.glVertex3d(i, -j, 1.0f);
-			gl.glVertex3d(i, j + 1, 1.0f);
-		gl.glEnd();
-		gl.glBegin(GL2.GL_POLYGON);/* f5: left */
-		gl.glNormal3f(0.0f, 1.0f, 0.0f);
-			gl.glVertex3d(i, -j, 0.0f);
-			gl.glVertex3d(i, j + 1, 0.0f);
-			gl.glVertex3d(i, j + 1, 1.0f);
-			gl.glVertex3d(i, -j, 1.0f);
-		gl.glEnd();
-		gl.glBegin(GL2.GL_POLYGON);/* f6: right */
-		gl.glNormal3f(0.0f, -1.0f, 0.0f);
-			gl.glVertex3d(i, -j, 0.0f);
-			gl.glVertex3d(i, -j, 1.0f);
-			gl.glVertex3d(i, j + 1, 1.0f);
-			gl.glVertex3d(i, j + 1, 0.0f);
-		gl.glEnd();
-	}
 
 }

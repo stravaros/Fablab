@@ -17,10 +17,12 @@ import java.util.Observer;
 
 import javax.imageio.ImageIO;
 import javax.media.opengl.awt.GLCanvas;
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -30,16 +32,19 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
 import com.jogamp.newt.event.KeyEvent;
 
 import Capteur.Capteur;
 import Controler.CtrlKeyboard;
+import Controler.CtrlMenu;
 import Controler.CtrlMouse;
 import Model.Mdl;
 import View.Frame;
@@ -61,7 +66,7 @@ public class MainAPP extends JFrame implements Observer {
 		mdl.addObserver(this);
 		Frame fr = new Frame (cv, mdl); //FENETRE
 		cv.addGLEventListener(fr);
-		setSize(800, 600);
+		this.setSize(800, 600);
 		
 		
 		
@@ -200,7 +205,7 @@ public class MainAPP extends JFrame implements Observer {
 		this.setJMenuBar(menuBar);
 	}
 	
-	public class AboutWindow  implements ActionListener {
+	public class AboutWindow  implements ActionListener { //fenetre 'a propos de fablab'
 		ImageIcon grassIcon = new ImageIcon("ressources/logo_ensimag3.png"); 
 		JPanel panel = new JPanel(new GridLayout(2,1));
 		JFrame frame = new JFrame("About Visualisation FabLab");
@@ -218,7 +223,7 @@ public class MainAPP extends JFrame implements Observer {
 			labelImage = new JLabel(grassIcon);
 			
 			String text = "Projet Fablab réalisé par :\n A1,\n A2, \n A3\n, A4,\n\n Version :";
-
+			labelText.setText(text);
 			
 			panel.add(labelImage);
 			panel.add(labelText);
@@ -230,7 +235,7 @@ public class MainAPP extends JFrame implements Observer {
 
 	}
 	
-	public class InitWindow  implements ActionListener {
+	public class InitWindow  implements ActionListener { //fenetre initialisation
 		JPanel panel = new JPanel(new GridLayout(1,2));
 		JFrame frame = new JFrame("Initialisation detection");
 
@@ -247,6 +252,32 @@ public class MainAPP extends JFrame implements Observer {
 			Border borderConfig = BorderFactory.createTitledBorder("Configuration");
 			panelConfig.setBorder(borderConfig);
 		    ButtonGroup Config = new ButtonGroup();
+		    
+		  //Placer camera
+			//JPanel panel = new JPanel(new GridLayout(0, 1));
+		    Border border = BorderFactory.createTitledBorder("Sensor set");
+		    panelConfig.setBorder(border);
+		    ButtonGroup group = new ButtonGroup();
+		    
+		    //POS X
+		    JTextField jtfX = new JTextField("position x");
+		    panelConfig.add(jtfX);
+		    
+		    //POS Y
+		    JTextField jtfY = new JTextField("Valeur par défaut");
+		    panelConfig.add(jtfY);
+		    JSeparator sp = new JSeparator(SwingConstants.HORIZONTAL);
+		    panelConfig.add(sp);
+		    
+		    AbstractButton abstract1 = new JButton("Create sensor");
+		  //  abstract1.addActionListener(new CtrlMenu(mdl, this));
+		    panelConfig.add(abstract1);
+		    group.add(abstract1);
+		  //  abstract1.addActionListener(new CtrlMenu(mdl, this));
+		    frame.add(panelConfig, BorderLayout.CENTER);
+		    
+		    
+		    
 			panel.add(panelConfig);
 			
 			
