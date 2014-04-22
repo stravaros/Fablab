@@ -36,6 +36,7 @@ public class Frame implements GLEventListener {
 	File table = new File("ressources/textures/table_comp.jpg") ;
 	File fenetre = new File("ressources/textures/fenetre.jpg") ;
 	
+	
 
 	public Frame(GLAutoDrawable gld, Mdl m) {
 		this.drawable = gld;
