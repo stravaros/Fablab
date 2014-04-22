@@ -12,7 +12,7 @@ import capteur.Capteur;
 public class Main {
 
 	final static int port = 9632;
-	final static int taille = 1024;
+	static int taille = 1024;
 	static byte buffer[];
 	static double longeur;
 	static double largeur;
