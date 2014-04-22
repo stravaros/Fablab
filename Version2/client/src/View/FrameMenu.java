@@ -15,8 +15,6 @@ import Model.Mdl;
 public class FrameMenu extends JPanel{
 	
 	private Mdl mdl;
-	private JTextField jtfX;
-	private JTextField jtfY;
 	private JComboBox choice;
 	public boolean isActivated=false;
 	
@@ -107,13 +105,6 @@ public class FrameMenu extends JPanel{
 	    
 	}
 	
-	public int getSensorX(){
-		return Integer.parseInt(jtfX.getText());
-	}
-
-	public int getSensorY() {
-		return Integer.parseInt(jtfY.getText());
-	}
 	
 	public String getCurrentElement(){
 		return choice.getSelectedItem().toString();
