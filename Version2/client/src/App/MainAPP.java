@@ -49,19 +49,19 @@ import Controler.CtrlMouse;
 import Model.Mdl;
 import View.Frame;
 import View.FrameMenu;
+import View.InitWindow;
 
 public class MainAPP extends JFrame implements Observer {
 	
 	private static final long serialVersionUID = 9167791876718956063L;
 
 	private static GLCanvas cv =null;
-
+	private Mdl mdl= new Mdl();
 	
 	public MainAPP(){
 		createMenu();
 		
 		cv=new GLCanvas(); //CREATION D'UN CANVAS
-		Mdl mdl= new Mdl();
 		
 		mdl.addObserver(this);
 		Frame fr = new Frame (cv, mdl); //FENETRE
@@ -141,7 +141,14 @@ public class MainAPP extends JFrame implements Observer {
 		        KeyEvent.VK_1, ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
 		        "This doesn't really do anything");
-		menuItem.addActionListener(new InitWindow());
+		menuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				InitWindow.getInstance(mdl);
+				
+			}
+		});
 		menu.add(menuItem);
 
 		/*menuItem = new JMenuItem("Both text and icon",
@@ -205,21 +212,21 @@ public class MainAPP extends JFrame implements Observer {
 		this.setJMenuBar(menuBar);
 	}
 	
-	public class AboutWindow  implements ActionListener { //fenetre 'a propos de fablab'
-		ImageIcon grassIcon = new ImageIcon("ressources/logo_ensimag3.png"); 
-		JPanel panel = new JPanel(new GridLayout(2,1));
-		JFrame frame = new JFrame("About Visualisation FabLab");
-		JLabel labelText = new JLabel();
-		JLabel labelImage ;
-		
-		public AboutWindow() {
-			frame.setResizable(false);
-			frame.setSize(new Dimension(400, 300));
-		}
+	public static final class AboutWindow  implements ActionListener { //fenetre 'a propos de fablab'
+		private static final AboutWindow aboutWindow = new AboutWindow();
+		JPanel panel;
+		JFrame frame;
 
 		
-		@Override
-		public void actionPerformed(ActionEvent e) {
+		private AboutWindow() {
+			ImageIcon grassIcon = new ImageIcon("ressources/logo_ensimag3.png"); 
+
+			panel = new JPanel(new GridLayout(2,1));
+			frame = new JFrame("About Visualisation FabLab");
+			frame.setResizable(false);
+			frame.setSize(new Dimension(400, 300));
+			JLabel labelText = new JLabel();
+			JLabel labelImage ;
 			labelImage = new JLabel(grassIcon);
 			
 			String text = "Projet Fablab réalisé par :\n A1,\n A2, \n A3\n, A4,\n\n Version :";
@@ -230,72 +237,19 @@ public class MainAPP extends JFrame implements Observer {
 			
 			frame.add(panel);
 			frame.pack();
-			frame.setVisible(true);
-		}
-
-	}
-	
-	public class InitWindow  implements ActionListener { //fenetre initialisation
-		JPanel panel = new JPanel(new GridLayout(1,2));
-		JFrame frame = new JFrame("Initialisation detection");
-
-		
-		public InitWindow() {
-			frame.setResizable(false);
-			frame.setSize(new Dimension(400, 300));
 		}
 
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JPanel panelConfig = new JPanel(new GridLayout(0, 1));
-			Border borderConfig = BorderFactory.createTitledBorder("Configuration");
-			panelConfig.setBorder(borderConfig);
-		    ButtonGroup Config = new ButtonGroup();
-		    
-		  //Placer camera
-			//JPanel panel = new JPanel(new GridLayout(0, 1));
-		    Border border = BorderFactory.createTitledBorder("Sensor set");
-		    panelConfig.setBorder(border);
-		    ButtonGroup group = new ButtonGroup();
-		    
-		    //POS X
-		    JTextField jtfX = new JTextField("position x");
-		    panelConfig.add(jtfX);
-		    
-		    //POS Y
-		    JTextField jtfY = new JTextField("Valeur par défaut");
-		    panelConfig.add(jtfY);
-		    JSeparator sp = new JSeparator(SwingConstants.HORIZONTAL);
-		    panelConfig.add(sp);
-		    
-		    AbstractButton abstract1 = new JButton("Create sensor");
-		  //  abstract1.addActionListener(new CtrlMenu(mdl, this));
-		    panelConfig.add(abstract1);
-		    group.add(abstract1);
-		  //  abstract1.addActionListener(new CtrlMenu(mdl, this));
-		    frame.add(panelConfig, BorderLayout.CENTER);
-		    
-		    
-		    
-			panel.add(panelConfig);
-			
-			
-			JPanel panelStatus = new JPanel(new GridLayout(1, 1));
-			Border borderStatus = BorderFactory.createTitledBorder("Status");
-			panelStatus.setBorder(borderStatus);
-		    ButtonGroup Status = new ButtonGroup();
-		    JTextArea text = new JTextArea();
-		    panelStatus.add(text);
-		    text.setEditable(false);
-		    text.append("initialisation...");
-			panel.add(panelStatus);
-			
-		
-			
-			frame.add(panel);
 			frame.setVisible(true);
+		}
+		
+		public AboutWindow getInstance() {
+				return aboutWindow;
 		}
 
 	}
+	
+
 }

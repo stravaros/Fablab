@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import Capteur.Capteur;
+import Model.Mdl;
 
 public class ClientToServer {
 	Scanner in;
@@ -18,16 +19,18 @@ public class ClientToServer {
 	String donnees;
 	private DatagramSocket socket;
 	InetAddress adresseServeur;
+	Mdl mdl;
 
-	public ClientToServer(InetAddress adresseServeur) {
+	public ClientToServer(InetAddress adresseServeur, Mdl mdl) {
 		this.adresseServeur = adresseServeur;
 		this.in = new Scanner(System.in);
 		this.buffer = new byte[taille];
 		this.donnees = "";
 		this.taille = 1024;
+		this.mdl = mdl;
 	}
 
-	public int lancement(int nbCapteur) {
+	public void lancement() {
 		String delims = "[ ]+";
 		String[] tokens;
 		String data = "Lancement";
@@ -53,7 +56,7 @@ public class ClientToServer {
 		}
 		donnees = new String(donneesRecues.getData(), 0, taille);
 		tokens = donnees.split(delims);
-		return Math.min(Integer.parseInt(tokens[0]), nbCapteur);
+		mdl.setNbCapteurServeur(Integer.parseInt(tokens[0]));
 	}
 
 	public void chargementCapteur(ArrayList<Capteur> listCapteur) {
@@ -108,7 +111,7 @@ public class ClientToServer {
 
 	}
 
-	public void lectureXY(Capteur capteurMouvant) throws ExceptionSingularite {
+	public synchronized void lectureXY(Capteur capteurMouvant) throws ExceptionSingularite {
 		String delims = "[ ]+";
 		String[] tokens = null;
 		DatagramPacket paquet = new DatagramPacket(buffer, buffer.length);
@@ -121,8 +124,7 @@ public class ClientToServer {
 			e.printStackTrace();
 		}
 		if (tokens[0].equals("X")) {
-			capteurMouvant.setCoordoneeX(Double.parseDouble(tokens[1]));
-			capteurMouvant.setCoordoneeY(Double.parseDouble(tokens[3]));
+			mdl.setCoordXY(Double.parseDouble(tokens[1]),Double.parseDouble(tokens[3]));
 		} else if (tokens[0].equals("Matrice")) {
 			System.out.println("Matrice singuliere");
 			throw new ExceptionSingularite("Matrice singuliere");

@@ -42,7 +42,6 @@ public class Main {
 				DatagramPacket envoi = new DatagramPacket(message.getBytes(),
 						message.length(), paquet.getAddress(), paquet.getPort());
 				socket.send(envoi);
-				socket.send(envoi);
 			}
 			if (tokens[0].equals("Capteur")) {
 
@@ -59,7 +58,6 @@ public class Main {
 					DatagramPacket envoi = new DatagramPacket(
 							message.getBytes(), message.length(),
 							paquet.getAddress(), paquet.getPort());
-					socket.send(envoi);
 					socket.send(envoi);
 					// TODO Possible amelioration sur relancer le serveur
 					System.out

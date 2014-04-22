@@ -23,9 +23,6 @@ public class CtrlMenu implements ActionListener {
 		// TODO Auto-generated method stub
 		//System.out.println("coucou "+e.getActionCommand());
 		switch (e.getActionCommand()){
-			case  "Create sensor" :
-				mdl.addCapteur( fm.getSensorX(), fm.getSensorY());
-				break;
 			
 			case  "Create objet" :
 				//System.out.println(fm.getCurrentElement());

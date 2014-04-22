@@ -22,7 +22,6 @@ public class Mdl extends Observable {
 	
 	float vitesse;
 	
-	private Capteur tabCapteurFixe[];
 	private Capteur capteurMouvant;
 	private int nbCapteur;
 	private int nbCapteurServeur;
@@ -45,8 +44,7 @@ public class Mdl extends Observable {
 		setMouseY(0);
 		listCapteur = new ArrayList <Capteur> ();
 		listObjet = new ArrayList <ObjetGen> ();
-		/*this.setTabCapteurFixe(tabCapteurFixe);
-		this.setCapteurMouvant(capteurMouvant);*/
+
 	}
 	
 	private void setAngleDirection(int i) {
@@ -221,9 +219,6 @@ public class Mdl extends Observable {
 		return listCapteur;
 	}
 
-	public void setTabCapteurFixe(Capteur tabCapteurFixe[]) {
-		this.tabCapteurFixe = tabCapteurFixe;
-	}
 
 	public Capteur getCapteurMouvant() {
 		return capteurMouvant;
@@ -257,6 +252,11 @@ public class Mdl extends Observable {
 		this.nbCapteurServeur = nbCapteurServeur;
 	}
 
+	public void setCoordXY(double x, double y) {
+			capteurMouvant.setCoordoneeX(x);
+			capteurMouvant.setCoordoneeY(y);
+			notifyChanges();
+	}
 
 	
 	
