@@ -26,7 +26,7 @@ public class Mdl extends Observable {
 	
 	private Capteur capteurMouvant;
 	private int nbCapteur;
-	private int nbCapteurServeur;
+	private int nbCapteurServeur = 3;
 		
 	int parametreAnimation=0;
 	
