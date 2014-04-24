@@ -58,7 +58,7 @@ public class CtrlMenu implements MouseListener {
 		System.out.println("coucou "+((JButton)(e.getSource())).getText());
 				switch (((JButton)(e.getSource())).getText()){
 					case  "Create sensor" :
-						mdl.addCapteur( fm.getSensorX(), fm.getSensorY());
+					//	mdl.addCapteur( fm.getSensorX(), fm.getSensorY());
 						break;
 					
 					case  "Create objet" :

@@ -19,6 +19,8 @@ public class Mdl extends Observable {
 	
 	private int mouseX;
 	private int mouseY;
+	private int mouseXMax;
+	private int mouseYMax;
 	
 	float vitesse;
 	
@@ -42,11 +44,14 @@ public class Mdl extends Observable {
 		
 		setMouseX(0);
 		setMouseY(0);
+		setMouseXMax(0);
+		setMouseYMax(0);
 		listCapteur = new ArrayList <Capteur> ();
 		listObjet = new ArrayList <ObjetGen> ();
 
 	}
 	
+
 	private void setAngleDirection(int i) {
 		angleDirection = i;
 		
@@ -75,12 +80,16 @@ public class Mdl extends Observable {
 			mouseY=newMouseY;
 			notifyChanges();
 		}
-		//System.out.println("angle "+angleAzimuth+" "+angleElevation);
+		System.out.println("souris "+mouseX+" "+mouseY);
 		
 	}
 	
 	public void moveMouse(int newMouseX, int newMouseY, boolean[] buttonPressed) {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	public void drawTable (){
 		
 	}
 	
@@ -258,6 +267,13 @@ public class Mdl extends Observable {
 			notifyChanges();
 	}
 
-	
+
+	public void setMouseYMax(int i) {
+		mouseYMax = i;
+	}
+
+	public void setMouseXMax(int i) {
+		mouseXMax = i;
+	}
 	
 }

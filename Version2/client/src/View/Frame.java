@@ -50,7 +50,7 @@ public class Frame implements GLEventListener {
 	public void display(GLAutoDrawable arg0) {
 		// TODO Auto-generated method stub
 		
-		final GL2 gl= drawable.getGL().getGL2();
+		GL2 gl = drawable.getGL().getGL2();
 		GLUT glut = new GLUT();	//INSTANCIATION GLUT
 		try {
 			text_fond = TextureIO.newTexture(bois, true);
@@ -83,7 +83,49 @@ public class Frame implements GLEventListener {
 		meuble (gl);
 
 		gl.glDisable(GL2.GL_TEXTURE_2D);
+		
+		getMousePosition(gl);
 	}
+	
+	public void getMousePosition(GL2 gl){
+		int x = mdl.getMouseX();
+		int y = mdl.getMouseY();
+
+
+	    int viewport[] = new int[4];
+	    double mvmatrix[] = new double[16];
+	    double projmatrix[] = new double[16];
+	    int realy = 0;// GL y coord pos
+	    double wcoord[] = new double[4];// wx, wy, wz;// returned xyz coords
+		
+		/* note viewport[3] is height of window in pixels */
+	    gl.glMatrixMode(GL2.GL_MODELVIEW);
+		
+		gl.glGetIntegerv(GL2.GL_VIEWPORT, viewport, 0);
+        gl.glGetDoublev(GL2.GL_MODELVIEW_MATRIX, mvmatrix, 0);
+        gl.glGetDoublev(GL2.GL_PROJECTION_MATRIX, projmatrix, 0);
+        realy = viewport[3] - (int) y - 1;
+        System.out.println("Coordinates at cursor are (" + x + ", " + realy);
+        GLU glu = new GLU();
+        
+		glu.gluUnProject((double) x, (double) realy, 0.0, //
+            mvmatrix, 0,
+            projmatrix, 0, 
+            viewport, 0, 
+            wcoord , 0);
+        System.out.println("World coords at z=0.0 are ( " //
+                           + wcoord[0] + ", " + wcoord[1] + ", " + wcoord[2]
+                           + ")");
+        glu.gluUnProject((double) x, (double) realy, 1.0, //
+            mvmatrix, 0,
+            projmatrix, 0,
+            viewport, 0, 
+            wcoord, 0);
+        System.out.println("World coords at z=1.0 are (" //
+                           + wcoord[0] + ", " + wcoord[1] + ", " + wcoord[2]
+                           + ")");	
+        System.out.println(mdl.getAngleAzimuth()+" "+mdl.getAngleDirection()+" "+mdl.getHauteur()+" "+mdl.getDistance());
+	}	
 	
 
 
@@ -389,6 +431,10 @@ public class Frame implements GLEventListener {
 	public void reshape(GLAutoDrawable glDrawable, int x, int y, int width, int height) {
 		// TODO Auto-generated method stub
 		//x et y non utile
+		//System.out.println("taille "+width+" "+height+" "+x+" "+y);
+		//update of width and height 3d frame
+		mdl.setMouseYMax(width);
+		mdl.setMouseXMax(height);
 		initViewProjection(glDrawable, x, y, width, height);
 	}
 
@@ -397,7 +443,8 @@ public class Frame implements GLEventListener {
 		GLUgl2 glu = new GLUgl2();
 		gl.glMatrixMode(GL2.GL_PROJECTION);
 		gl.glLoadIdentity();
-		glu.gluPerspective(45.0f, (float)width/(float)height, 0.1, 200.0);
+		glu.gluPerspective(50.0f, (float)width/(float)height, 0.1, 200.0);
+		System.out.println("proportion"+(float)width/(float)height);
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();
 		gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
