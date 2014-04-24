@@ -14,9 +14,11 @@ import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -24,6 +26,7 @@ import javax.swing.border.Border;
 
 import com.sun.org.apache.xpath.internal.FoundIndex;
 
+import Capteur.Capteur;
 import Controler.CtrlInitWindow;
 import Model.Mdl;
 
@@ -32,64 +35,91 @@ public final class InitWindow extends JFrame { //fenetre initialisation
 	private static final InitWindow initWindow = new InitWindow();
 	private final JPanel panel;
 	private static JFrame frame;
-	private static Mdl mdl;
+	private  Mdl mdl;
 	private static JTextField jtfX;
 	private static JTextField jtfY;
+	private static JTextField jtfServer;
 
 
 	
+
+
 	private InitWindow() {
-		panel = new JPanel(new GridLayout(1,2));
+		panel = new JPanel(new GridLayout(0,2));
 		frame = new JFrame("Initialisation detection");
 		frame.setResizable(false);
 		frame.setSize(new Dimension(400, 300));
-		JPanel panelConfig = new JPanel(new GridLayout(0, 1));
-		Border borderConfig = BorderFactory.createTitledBorder("Configuration");
-		panelConfig.setBorder(borderConfig);
-	    ButtonGroup Config = new ButtonGroup();
+		
+		JPanel panelServer = new JPanel(new GridLayout(0,1));
+		Border borderServer = BorderFactory.createTitledBorder("Server configuration");
+		panelServer.setBorder(borderServer);
+
+		jtfServer = new JTextField("IP serveur");
+		panelServer.add(jtfServer);
+		jtfServer.addMouseListener(new MouseListener (){
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				jtfServer.setText("");
+			}
+			@Override
+			public void mouseEntered(MouseEvent arg0) {				
+			}
+			@Override
+			public void mouseExited(MouseEvent arg0) {				
+			}
+			@Override
+			public void mousePressed(MouseEvent arg0) {				
+			}
+			@Override
+			public void mouseReleased(MouseEvent arg0) {				
+			}	    	
+	    });
+		
+		panel.add(panelServer);
+		ButtonGroup buttonGroupServer = new ButtonGroup();
+	    AbstractButton startButton = new JButton("Start");
+	    buttonGroupServer.add(startButton);
+	    panelServer.add(startButton);
+	    startButton.addActionListener(new CtrlInitWindow(mdl, this));
+
 	    
-	  //Placer camera
+	    
+		JPanel panelConfig = new JPanel(new GridLayout(0, 1));
+		Border borderConfig = BorderFactory.createTitledBorder("Sensors Configuration");
+		panelConfig.setBorder(borderConfig);
+	    
+	    //Placer camera
 		//JPanel panel = new JPanel(new GridLayout(0, 1));
-	    Border border = BorderFactory.createTitledBorder("Sensor set");
-	    panelConfig.setBorder(border);
+	    //Border border = BorderFactory.createTitledBorder("Sensor set");
+	    // panelConfig.setBorder(border);
 	    ButtonGroup group = new ButtonGroup();
+	    
+	    /*
+	    JComboBox<String> listeCapteur = new JComboBox<String>();
+	    for(int i = 0; i< mdl.getNbCapteurServeur(); i++) {
+	    	listeCapteur.addItem("Capteur " +i);
+	    }*/
 	    
 	    //POS X
 	    jtfX = new JTextField("Position X");
 	    panelConfig.add(jtfX);
 	    jtfX.addMouseListener(new MouseListener (){
-
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				jtfX.setText("");
-				
 			}
-
 			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
+			public void mouseEntered(MouseEvent arg0) {				
 			}
-
 			@Override
-			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
+			public void mouseExited(MouseEvent arg0) {				
 			}
-
 			@Override
-			public void mousePressed(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
+			public void mousePressed(MouseEvent arg0) {				
 			}
-
 			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-	    	
+			public void mouseReleased(MouseEvent arg0) {				
+			}   	
 	    });
 	    
 	    
@@ -97,42 +127,25 @@ public final class InitWindow extends JFrame { //fenetre initialisation
 	    jtfY = new JTextField("Position Y");
 	    panelConfig.add(jtfY);
 	    jtfY.addMouseListener(new MouseListener (){
-
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				jtfY.setText("");
-				
+				jtfY.setText("");			
 			}
-
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
 			}
-
 			@Override
 			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
 			}
-
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
 			}
-
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-	    	
+			}	    	
 	    });
 
-	    JSeparator sp = new JSeparator(SwingConstants.HORIZONTAL);
-	    panelConfig.add(sp);
+
 	    
 	    AbstractButton abstract1 = new JButton("Create sensor");
 	    panelConfig.add(abstract1);
@@ -144,6 +157,8 @@ public final class InitWindow extends JFrame { //fenetre initialisation
 	    
 		panel.add(panelConfig);
 		
+	    JSeparator sp = new JSeparator(SwingConstants.VERTICAL);
+	    panel.add(sp);		
 		
 		JPanel panelStatus = new JPanel(new GridLayout(1, 1));
 		Border borderStatus = BorderFactory.createTitledBorder("Status");
@@ -159,7 +174,7 @@ public final class InitWindow extends JFrame { //fenetre initialisation
 	}
 
 	
-	public static InitWindow getInstance(Mdl m) {
+	public  InitWindow getInstance(Mdl m) {
 		mdl = m;
 		frame.setVisible(true);
 		return initWindow;
@@ -184,5 +199,7 @@ public final class InitWindow extends JFrame { //fenetre initialisation
 		return jtfY;
 	}
 	
-
+	public static JTextField getJtfServer() {
+		return jtfServer;
+	}
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -21,7 +22,8 @@ public class ClientToServer {
 	InetAddress adresseServeur;
 	Mdl mdl;
 
-	public ClientToServer(InetAddress adresseServeur, Mdl mdl) {
+	public ClientToServer(InetAddress adresseServeur, Mdl mdl) throws SocketException {
+		this.socket = new DatagramSocket();
 		this.adresseServeur = adresseServeur;
 		this.in = new Scanner(System.in);
 		this.buffer = new byte[taille];
@@ -32,10 +34,10 @@ public class ClientToServer {
 
 	public void lancement() {
 		String delims = "[ ]+";
-		String[] tokens;
+		String[] tokens = null;
 		String data = "Lancement";
 		int length = data.length();
-		byte buffer[] = data.getBytes();
+		buffer = data.getBytes();
 		DatagramPacket donneesEmises = new DatagramPacket(buffer, length,
 				adresseServeur, port);
 		donneesEmises.setData(buffer);
@@ -56,7 +58,7 @@ public class ClientToServer {
 		}
 		donnees = new String(donneesRecues.getData(), 0, taille);
 		tokens = donnees.split(delims);
-		mdl.setNbCapteurServeur(Integer.parseInt(tokens[0]));
+		mdl.setNbCapteurServeur((int)Double.parseDouble(tokens[1]));
 	}
 
 	public void chargementCapteur(ArrayList<Capteur> listCapteur) {
