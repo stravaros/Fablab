@@ -17,6 +17,8 @@ public class FrameMenu extends JPanel{
 	private Mdl mdl;
 	private JComboBox choice;
 	public boolean isActivated=false;
+	private JTextField posX;
+	private JTextField posY;
 	
 	public FrameMenu (Mdl m) {
 		super(new GridLayout(4,1));
@@ -27,7 +29,12 @@ public class FrameMenu extends JPanel{
 		JPanel panel = new JPanel(new GridLayout(0,1));
 	
 	  //Placer meuble
-		JPanel panelMeuble = new JPanel(new GridLayout(2,2));
+		JPanel panelMeuble = new JPanel(new GridLayout(3,2));
+		posX = new JTextField();
+		posY = new JTextField();
+		panelMeuble.add(posX);
+		panelMeuble.add(posY);
+		
 		Border borderMeuble = BorderFactory.createTitledBorder("Objet set");
 		panelMeuble.setBorder(borderMeuble);
 	    ButtonGroup groupMeuble = new ButtonGroup();
@@ -52,10 +59,10 @@ public class FrameMenu extends JPanel{
 		table.addMouseListener(new CtrlMenu(mdl, this));
 		
 		
-		AbstractButton Other = new JButton("Other");
-	    panelMeuble.add(Other);
-		groupMeuble.add(Other);
-		Other.addMouseListener(new CtrlMenu(mdl, this));
+		AbstractButton TV = new JButton("TV");
+	    panelMeuble.add(TV);
+		groupMeuble.add(TV);
+		TV.addMouseListener(new CtrlMenu(mdl, this));
 	   // this.add(panelMeuble, BorderLayout.CENTER);
 		
 	/*	JSeparator meubleSp = new JSeparator(SwingConstants.HORIZONTAL);
@@ -70,7 +77,7 @@ public class FrameMenu extends JPanel{
 		
 		
 		
-		AbstractButton meuble = new JButton("meuble");
+		AbstractButton meuble = new JButton("Meuble");
 	    panelMeuble.add(meuble);
 		groupMeuble.add(meuble);
 		meuble.addMouseListener(new CtrlMenu(mdl, this));
@@ -96,6 +103,7 @@ public class FrameMenu extends JPanel{
 		AbstractButton Camera3 = new JButton("Camera 3");
 		panelCamera.add(Camera3);
 		groupCamera.add(Camera3);
+
 		
 		Camera1.addMouseListener(new CtrlMenu(mdl, this));
 		Camera2.addMouseListener(new CtrlMenu(mdl, this));
@@ -108,5 +116,33 @@ public class FrameMenu extends JPanel{
 	
 	public String getCurrentElement(){
 		return choice.getSelectedItem().toString();
+	}
+	
+	public String getPosXField(){
+		return posX.getText();
+	}
+
+	public String getPosYField(){
+		return posY.getText();
+	}
+	
+	public int getPosXFieldToInt(){
+		try{
+			int tmp = Integer.parseInt(posX.getText());
+			return tmp;
+		} catch (Exception e){
+			JOptionPane.showMessageDialog(this,"Erreur lors de la saisie de la position pour X","Erreur de saisie",JOptionPane.ERROR_MESSAGE);
+		}
+		return -1;
+	}
+
+	public int getPosYFieldToInt(){
+		try{
+			int tmp = Integer.parseInt(posY.getText());
+			return tmp;
+		} catch (Exception e){
+			JOptionPane.showMessageDialog(this,"Erreur lors de la saisie de la position pour Y","Erreur de saisie",JOptionPane.ERROR_MESSAGE);
+		}
+		return -1;
 	}
 }

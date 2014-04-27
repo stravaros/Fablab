@@ -276,4 +276,8 @@ public class Mdl extends Observable {
 		mouseXMax = i;
 	}
 	
+	public ArrayList<ObjetGen> getListObjet(){
+		return this.listObjet;
+	}
+	
 }

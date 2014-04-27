@@ -8,6 +8,10 @@ import java.awt.event.MouseListener;
 import javax.swing.JButton;
 
 import Capteur.Capteur;
+import EnvObjet.Meuble;
+import EnvObjet.TV;
+import EnvObjet.Table;
+import EnvObjet.Window;
 import Model.Mdl;
 import View.FrameMenu;
 
@@ -57,9 +61,28 @@ public class CtrlMenu implements MouseListener {
 		// TODO Auto-generated method stub
 		System.out.println("coucou "+((JButton)(e.getSource())).getText());
 				switch (((JButton)(e.getSource())).getText()){
-					case  "Create sensor" :
-					//	mdl.addCapteur( fm.getSensorX(), fm.getSensorY());
+					case  "Table" :
+					System.out.println("table");
+					mdl.getListObjet().add(new Table(fm.getPosXFieldToInt(), fm.getPosYFieldToInt()));
 						break;
+						
+					case  "Meuble" :
+						System.out.println("Meuble");
+						mdl.getListObjet().add(new Meuble(fm.getPosXFieldToInt(),fm.getPosYFieldToInt()));
+
+							break;
+							
+					case  "TV" :
+						System.out.println("TV");
+						mdl.getListObjet().add(new TV(fm.getPosXFieldToInt(), fm.getPosYFieldToInt()));
+
+							break;
+							
+					case  "Window" :
+						System.out.println("Window");
+						mdl.getListObjet().add(new Window(fm.getPosXFieldToInt(), fm.getPosYFieldToInt()));
+
+							break;
 					
 					case  "Create objet" :
 						//System.out.println(fm.getCurrentElement());

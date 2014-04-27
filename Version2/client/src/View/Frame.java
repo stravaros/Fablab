@@ -77,14 +77,17 @@ public class Frame implements GLEventListener {
 		
 		fond(gl);
 		mur(gl);
-		table (gl, glut);
+		//table (gl, glut, 0 ,0);
 		chaise (gl);
 		capteur(gl);
 		meuble (gl);
+		
+		for (int i = 0; i<mdl.getListObjet().size(); i++)
+				mdl.getListObjet().get(i).drawObjet(gl, glut, text_table);
 
 		gl.glDisable(GL2.GL_TEXTURE_2D);
 		
-		getMousePosition(gl);
+		//getMousePosition(gl);
 	}
 	
 	public void getMousePosition(GL2 gl){
@@ -258,8 +261,8 @@ public class Frame implements GLEventListener {
 		}
 	}
 	
-	
-	public void table (GL2 gl, GLUT glut){
+/*	
+	public void table (GL2 gl, GLUT glut, int posX, int posY){
 		try {
 			
 			text_table.enable(gl);
@@ -271,43 +274,43 @@ public class Frame implements GLEventListener {
 		gl.glBegin(GL2.GL_QUADS);
 		gl.glColor3f(1, 1, 1); // set the color of the quad
 		
-		gl.glTexCoord2d(0, 0); gl.glVertex3d(0, 0, 2); // Top Left
-		gl.glTexCoord2d(1, 0); gl.glVertex3d(8, 0, 2); // Top Right
-		gl.glTexCoord2d(1, 1); gl.glVertex3d(8, 8, 2); // Bottom Right
-		gl.glTexCoord2d(0, 1); gl.glVertex3d(0, 8, 2); // Bottom Left
+		gl.glTexCoord2d(0, 0); gl.glVertex3d(posX, posY, 2); // Top Left
+		gl.glTexCoord2d(1, 0); gl.glVertex3d(posX + 8, posY, 2); // Top Right
+		gl.glTexCoord2d(1, 1); gl.glVertex3d(posX + 8, posY + 8, 2); // Bottom Right
+		gl.glTexCoord2d(0, 1); gl.glVertex3d(posX, posY + 8, 2); // Bottom Left
 		gl.glEnd();
 		gl.glEnable(GL2.GL_TEXTURE_2D);
 		
 		//pied1
 		gl.glBegin(GL2.GL_QUADS);
-			gl.glVertex3d(0, 0, 0); // Top Left
-			gl.glVertex3d(1, 0, 0); // Top Right
-			gl.glVertex3d(1, 0, 2); // Bottom Right
-			gl.glVertex3d(0, 0, 2); // Bottom Left
+			gl.glVertex3d(posX, posY + 8, 0); // Top Left
+			gl.glVertex3d(posX + 1, posY + 8, 0); // Top Right
+			gl.glVertex3d(posX + 1, posY + 8, 2); // Bottom Right
+			gl.glVertex3d(posX, posY + 8, 2); // Bottom Left
 		gl.glEnd();
 		
 		//pied2
 		gl.glBegin(GL2.GL_QUADS);
-			gl.glVertex3d(0, 8, 0); // Top Left
-			gl.glVertex3d(1, 8, 0); // Top Right
-			gl.glVertex3d(1, 8, 2); // Bottom Right
-			gl.glVertex3d(0, 8, 2); // Bottom Left
+			gl.glVertex3d(posX, posY, 0); // Top Left
+			gl.glVertex3d(posX + 1, posY, 0); // Top Right
+			gl.glVertex3d(posX + 1, posY, 2); // Bottom Right
+			gl.glVertex3d(posX, posY, 2); // Bottom Left
 		gl.glEnd();
 		
 		//pied3
 		gl.glBegin(GL2.GL_QUADS);
-			gl.glVertex3d(8, 0, 0); // Top Left
-			gl.glVertex3d(7, 0, 0); // Top Right
-			gl.glVertex3d(7, 0, 2); // Bottom Right
-			gl.glVertex3d(8, 0, 2); // Bottom Left
+			gl.glVertex3d(posX + 8, posY, 0); // Top Left
+			gl.glVertex3d(posX + 7, posY, 0); // Top Right
+			gl.glVertex3d(posX + 7, posY, 2); // Bottom Right
+			gl.glVertex3d(posX + 8, posY, 2); // Bottom Left
 		gl.glEnd();
 		
 		//pied4
 		gl.glBegin(GL2.GL_QUADS);
-			gl.glVertex3d(8, 8, 0); // Top Left
-			gl.glVertex3d(7, 8, 0); // Top Right
-			gl.glVertex3d(7, 8, 2); // Bottom Right
-			gl.glVertex3d(8, 8, 2); // Bottom Left
+			gl.glVertex3d(posX + 8, posY +8, 0); // Top Left
+			gl.glVertex3d(posX +7, posY +8, 0); // Top Right
+			gl.glVertex3d(posX +7, posY + 8, 2); // Bottom Right
+			gl.glVertex3d(posX + 8, posY +8, 2); // Bottom Left
 		gl.glEnd();
 		
 		gl.glPushMatrix();
@@ -319,7 +322,7 @@ public class Frame implements GLEventListener {
 		
 		
 		
-	}
+	}*/
 	
 	public void chaise (GL2 gl){
 		gl.glBegin(GL2.GL_QUADS);

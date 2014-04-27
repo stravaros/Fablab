@@ -1,6 +1,11 @@
 package EnvObjet;
 
-public class ObjetGen {
+import javax.media.opengl.GL2;
+
+import com.jogamp.opengl.util.gl2.GLUT;
+import com.jogamp.opengl.util.texture.Texture;
+
+public abstract class ObjetGen {
 	protected int posX;
 	protected int posY;
 	protected int rayonAllumage;
@@ -36,5 +41,7 @@ public class ObjetGen {
 	public boolean isOnable (){
 		return isOnable;
 	}
+	
+	public abstract void drawObjet (GL2 gl, GLUT glut,  Texture tex);
 	
 }

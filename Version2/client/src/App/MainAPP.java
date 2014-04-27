@@ -145,7 +145,7 @@ public class MainAPP extends JFrame implements Observer {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				InitWindow.getInstance(mdl);
+				//InitWindow.getInstance(mdl);
 				
 			}
 		});
