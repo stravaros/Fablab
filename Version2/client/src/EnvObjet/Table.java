@@ -65,13 +65,42 @@ public class Table extends ObjetGen {
 			gl.glVertex3d(posX +7, posY + 8, 2); // Bottom Right
 			gl.glVertex3d(posX + 8, posY +8, 2); // Bottom Left
 		gl.glEnd();
-		
+	
+		//dessin de la teapot
 		gl.glPushMatrix();
 		gl.glRotatef(90f ,1f, 0f, 0f);
 		gl.glTranslatef(posX + 4f ,3f, -posY -4f); //(x ,z,y)
 		gl.glColor3d(0, 1, 0);
 	    glut.glutSolidTeapot(1.5);     // middle teapot
 	    gl.glPopMatrix();
+	    
+	    
+	    //dessin de la chaise
+	    gl.glBegin(GL2.GL_QUADS);
+	    gl.glColor3d(1, 0, 0); // set the color of the quad
+			gl.glVertex3d(posX + 3, posY-2, 1); // Top Left
+			gl.glVertex3d(posX + 3, posY-3, 1); // Top Right
+			gl.glVertex3d(posX + 6,posY -3, 1); // Bottom Right
+			gl.glVertex3d(posX + 6, posY-2, 1); // Bottom Left
+		gl.glEnd();
+		
+		//pied1
+		gl.glBegin(GL2.GL_QUADS);
+		gl.glColor3d(1, 0, 0); // set the color of the quad
+			gl.glVertex3d(posX + 3,posY -2, 0); // Top Left
+			gl.glVertex3d( posX + 3,posY -3, 0); // Top Right
+			gl.glVertex3d(posX + 3, posY-3, 1); // Bottom Right
+			gl.glVertex3d(posX + 3,posY -2, 1); // Bottom Left
+		gl.glEnd();
+		
+		//pied2
+		gl.glBegin(GL2.GL_QUADS);
+		gl.glColor3d(1, 0, 0); // set the color of the quad
+			gl.glVertex3d(posX + 6, posY -2, 0); // Top Left
+			gl.glVertex3d(posX + 6,posY -3, 0); // Top Right
+			gl.glVertex3d(posX + 6,posY -3, 1); // Bottom Right
+			gl.glVertex3d(posX + 6,posY -2, 1); // Bottom Left
+		gl.glEnd();
 		
 	}
 }

@@ -81,14 +81,8 @@ public class CtrlMenu implements MouseListener {
 					case  "Window" :
 						System.out.println("Window");
 						mdl.getListObjet().add(new Window(fm.getPosXFieldToInt(), fm.getPosYFieldToInt()));
-
+						
 							break;
-					
-					case  "Create objet" :
-						//System.out.println(fm.getCurrentElement());
-						mdl.addTable(0, 0); //changer coord
-						fm.isActivated = true;
-						break;
 					
 					case  "Camera 1" :
 						mdl.changeCamera(0);
@@ -101,6 +95,7 @@ public class CtrlMenu implements MouseListener {
 						mdl.changeCamera(2);
 						break;
 				}
+				mdl.notifyChanges();
 		
 	}
 

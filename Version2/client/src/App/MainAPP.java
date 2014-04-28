@@ -64,6 +64,7 @@ public class MainAPP extends JFrame implements Observer {
 		cv=new GLCanvas(); //CREATION D'UN CANVAS
 		
 		mdl.addObserver(this);
+		mdl.addCapteur(0, 0);
 		Frame fr = new Frame (cv, mdl); //FENETRE
 		cv.addGLEventListener(fr);
 		this.setSize(800, 600);

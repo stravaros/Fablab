@@ -77,61 +77,16 @@ public class Frame implements GLEventListener {
 		
 		fond(gl);
 		mur(gl);
-		//table (gl, glut, 0 ,0);
-		chaise (gl);
-		capteur(gl);
-		meuble (gl);
-		
+
 		for (int i = 0; i<mdl.getListObjet().size(); i++)
 				mdl.getListObjet().get(i).drawObjet(gl, glut, text_table);
 
+		
 		gl.glDisable(GL2.GL_TEXTURE_2D);
 		
-		//getMousePosition(gl);
+		capteur(gl, glut);
 	}
 	
-	public void getMousePosition(GL2 gl){
-		int x = mdl.getMouseX();
-		int y = mdl.getMouseY();
-
-
-	    int viewport[] = new int[4];
-	    double mvmatrix[] = new double[16];
-	    double projmatrix[] = new double[16];
-	    int realy = 0;// GL y coord pos
-	    double wcoord[] = new double[4];// wx, wy, wz;// returned xyz coords
-		
-		/* note viewport[3] is height of window in pixels */
-	    gl.glMatrixMode(GL2.GL_MODELVIEW);
-		
-		gl.glGetIntegerv(GL2.GL_VIEWPORT, viewport, 0);
-        gl.glGetDoublev(GL2.GL_MODELVIEW_MATRIX, mvmatrix, 0);
-        gl.glGetDoublev(GL2.GL_PROJECTION_MATRIX, projmatrix, 0);
-        realy = viewport[3] - (int) y - 1;
-        System.out.println("Coordinates at cursor are (" + x + ", " + realy);
-        GLU glu = new GLU();
-        
-		glu.gluUnProject((double) x, (double) realy, 0.0, //
-            mvmatrix, 0,
-            projmatrix, 0, 
-            viewport, 0, 
-            wcoord , 0);
-        System.out.println("World coords at z=0.0 are ( " //
-                           + wcoord[0] + ", " + wcoord[1] + ", " + wcoord[2]
-                           + ")");
-        glu.gluUnProject((double) x, (double) realy, 1.0, //
-            mvmatrix, 0,
-            projmatrix, 0,
-            viewport, 0, 
-            wcoord, 0);
-        System.out.println("World coords at z=1.0 are (" //
-                           + wcoord[0] + ", " + wcoord[1] + ", " + wcoord[2]
-                           + ")");	
-        System.out.println(mdl.getAngleAzimuth()+" "+mdl.getAngleDirection()+" "+mdl.getHauteur()+" "+mdl.getDistance());
-	}	
-	
-
-
 	/*private void capteurfixe(GL2 gl) {
 			Capteur capteur = mdl.getCapteurMouvant();
 			gl.glBegin(GL2.GL_QUADS);
@@ -250,166 +205,16 @@ public class Frame implements GLEventListener {
 		gl.glEnd();
 	}
 	
-	private void capteur (GL2 gl){
+	private void capteur (GL2 gl,  GLUT glut){
+	//	gl.glMatrixMode(GL2.GL_MODELVIEW);
+	//	gl.glLoadIdentity();
 		for (int i =0; i<mdl.getTabCapteur().size();i++){
-			gl.glBegin(GL2.GL_TRIANGLES);
-			gl.glColor3d(1, 1, 0); // set the color of the quad
-				gl.glVertex3d(mdl.getTabCapteur().get(i).getCoordoneeX(), mdl.getTabCapteur().get(i).getCoordoneeY()-2, 2); // Top Left
-				gl.glVertex3d(mdl.getTabCapteur().get(i).getCoordoneeX(), mdl.getTabCapteur().get(i).getCoordoneeY(), 4); // Top Right
-				gl.glVertex3d(mdl.getTabCapteur().get(i).getCoordoneeX(), mdl.getTabCapteur().get(i).getCoordoneeY()+2, 2); // Bottom Right
-			gl.glEnd();
+			gl.glPushMatrix();
+			gl.glTranslated(mdl.getTabCapteur().get(i).getCoordoneeX() ,mdl.getTabCapteur().get(i).getCoordoneeY(), 3f ); //(x ,z,y)
+			gl.glColor3d(0, 1, 0);
+		    glut.glutSolidTorus(0.5, 1.5 ,20, 20);    // middle teapot
+		    gl.glPopMatrix();
 		}
-	}
-	
-/*	
-	public void table (GL2 gl, GLUT glut, int posX, int posY){
-		try {
-			
-			text_table.enable(gl);
-			text_table.bind(gl);
-		} catch (GLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		};
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3f(1, 1, 1); // set the color of the quad
-		
-		gl.glTexCoord2d(0, 0); gl.glVertex3d(posX, posY, 2); // Top Left
-		gl.glTexCoord2d(1, 0); gl.glVertex3d(posX + 8, posY, 2); // Top Right
-		gl.glTexCoord2d(1, 1); gl.glVertex3d(posX + 8, posY + 8, 2); // Bottom Right
-		gl.glTexCoord2d(0, 1); gl.glVertex3d(posX, posY + 8, 2); // Bottom Left
-		gl.glEnd();
-		gl.glEnable(GL2.GL_TEXTURE_2D);
-		
-		//pied1
-		gl.glBegin(GL2.GL_QUADS);
-			gl.glVertex3d(posX, posY + 8, 0); // Top Left
-			gl.glVertex3d(posX + 1, posY + 8, 0); // Top Right
-			gl.glVertex3d(posX + 1, posY + 8, 2); // Bottom Right
-			gl.glVertex3d(posX, posY + 8, 2); // Bottom Left
-		gl.glEnd();
-		
-		//pied2
-		gl.glBegin(GL2.GL_QUADS);
-			gl.glVertex3d(posX, posY, 0); // Top Left
-			gl.glVertex3d(posX + 1, posY, 0); // Top Right
-			gl.glVertex3d(posX + 1, posY, 2); // Bottom Right
-			gl.glVertex3d(posX, posY, 2); // Bottom Left
-		gl.glEnd();
-		
-		//pied3
-		gl.glBegin(GL2.GL_QUADS);
-			gl.glVertex3d(posX + 8, posY, 0); // Top Left
-			gl.glVertex3d(posX + 7, posY, 0); // Top Right
-			gl.glVertex3d(posX + 7, posY, 2); // Bottom Right
-			gl.glVertex3d(posX + 8, posY, 2); // Bottom Left
-		gl.glEnd();
-		
-		//pied4
-		gl.glBegin(GL2.GL_QUADS);
-			gl.glVertex3d(posX + 8, posY +8, 0); // Top Left
-			gl.glVertex3d(posX +7, posY +8, 0); // Top Right
-			gl.glVertex3d(posX +7, posY + 8, 2); // Bottom Right
-			gl.glVertex3d(posX + 8, posY +8, 2); // Bottom Left
-		gl.glEnd();
-		
-		gl.glPushMatrix();
-		gl.glRotatef(90f ,1f, 0f, 0f);
-		gl.glTranslatef(4f ,3f, -4f); //(x ,z,y)
-		gl.glColor3d(0, 1, 0);
-	    glut.glutSolidTeapot(1.5);     // middle teapot
-	    gl.glPopMatrix();
-		
-		
-		
-	}*/
-	
-	public void chaise (GL2 gl){
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(1, 0, 0); // set the color of the quad
-			gl.glVertex3d(3, -2, 1); // Top Left
-			gl.glVertex3d(3, -3, 1); // Top Right
-			gl.glVertex3d(6, -3, 1); // Bottom Right
-			gl.glVertex3d(6, -2, 1); // Bottom Left
-		gl.glEnd();
-		
-		//pied1
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(1, 0, 0); // set the color of the quad
-			gl.glVertex3d(3, -2, 0); // Top Left
-			gl.glVertex3d(3, -3, 0); // Top Right
-			gl.glVertex3d(3, -3, 1); // Bottom Right
-			gl.glVertex3d(3, -2, 1); // Bottom Left
-		gl.glEnd();
-		
-		//pied2
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(1, 0, 0); // set the color of the quad
-			gl.glVertex3d(6, -2, 0); // Top Left
-			gl.glVertex3d(6, -3, 0); // Top Right
-			gl.glVertex3d(6, -3, 1); // Bottom Right
-			gl.glVertex3d(6, -2, 1); // Bottom Left
-		gl.glEnd();
-	}
-	
-	public void meuble (GL2 gl){		
-		//vertical
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(0, 0, 1); // set the color of the quad
-			gl.glVertex3d(-10, 20, 0); // Top Left
-			gl.glVertex3d(-10, 15, 0); // Top Right
-			gl.glVertex3d(-10, 15, 10); // Bottom Right
-			gl.glVertex3d(-10, 20, 10); // Bottom Left
-		gl.glEnd();
-		
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(0, 1, 1); // set the color of the quad
-			gl.glVertex3d(-5, 20, 0); // Top Left
-			gl.glVertex3d(-5, 15, 0); // Top Right
-			gl.glVertex3d(-5, 15, 10); // Bottom Right
-			gl.glVertex3d(-5, 20, 10); // Bottom Left
-		gl.glEnd();
-		
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(0, 1, 0); // set the color of the quad
-			gl.glVertex3d(5, 20, 0); // Top Left
-			gl.glVertex3d(5, 15, 0); // Top Right
-			gl.glVertex3d(5, 15, 10); // Bottom Right
-			gl.glVertex3d(5, 20, 10); // Bottom Left
-		gl.glEnd();
-		
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(0, 0, 1); // set the color of the quad
-			gl.glVertex3d(10, 20, 0); // Top Left
-			gl.glVertex3d(10, 15, 0); // Top Right
-			gl.glVertex3d(10, 15, 10); // Bottom Right
-			gl.glVertex3d(10, 20, 10); // Bottom Left
-		gl.glEnd();
-		
-		//horizontal
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(0, 0, 1); // set the color of the quad
-			gl.glVertex3d(-10, 20, 0); // Top Left
-			gl.glVertex3d(10, 20, 0); // Top Right
-			gl.glVertex3d(10, 15, 0); // Bottom Right
-			gl.glVertex3d(-10, 15, 0); // Bottom Left
-		gl.glEnd();
-		
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(0, 0, 1); // set the color of the quad
-			gl.glVertex3d(-10, 20, 5); // Top Left
-			gl.glVertex3d(10, 20, 5); // Top Right
-			gl.glVertex3d(10, 15, 5); // Bottom Right
-			gl.glVertex3d(-10, 15, 5); // Bottom Left
-		gl.glEnd();
-		
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(0, 0, 1); // set the color of the quad
-			gl.glVertex3d(-10, 20, 10); // Top Left
-			gl.glVertex3d(10, 20, 10); // Top Right
-			gl.glVertex3d(10, 15, 10); // Bottom Right
-			gl.glVertex3d(-10, 15, 10); // Bottom Left
-		gl.glEnd();	
 	}
 	
 	@Override

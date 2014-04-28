@@ -157,15 +157,10 @@ public class Mdl extends Observable {
 		this.listCapteur.add(new Capteur(0, 0, posX, posY));
 		notifyChanges();
 	}
-	
-	public void addTable (int posX, int posY){
-		listObjet.add(new Table( posX, posY));
-		notifyChanges();
-	}
+
 	
 	
-	
-	private void notifyChanges() {
+	public void notifyChanges() {
 		// TODO Auto-generated method stub
 		//System.err.println("notification...");
 		setChanged();
