@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.concurrent.Semaphore;
 
 import Client.ClientToServer;
 import Model.Mdl;
@@ -35,7 +36,8 @@ public class CtrlInitWindow implements ActionListener {
 		case  "Start" :
 			System.out.println("coucou "+e.getActionCommand());
 			try {
-				ClientToServer cl = new ClientToServer(InetAddress.getByName(InitWindow.getJtfServer().getText()), mdl);
+				Semaphore sem1 = new Semaphore(1, true);
+				ClientToServer cl = new ClientToServer(InetAddress.getByName(InitWindow.getJtfServer().getText()), mdl, sem1);
 				cl.lancement();
 			} catch (UnknownHostException e1) {
 				System.err.println("Mauvaise adresse serveur");
