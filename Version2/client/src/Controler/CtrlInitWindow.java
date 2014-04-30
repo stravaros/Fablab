@@ -45,7 +45,10 @@ public class CtrlInitWindow implements ActionListener {
 			System.out.println("coucou " + e.getActionCommand());
 			mdl.run();
 			break;
-
+		case "Stop":
+			System.out.println("coucou " + e.getActionCommand());
+			mdl.stop();
+			break;
 		}
 
 	}

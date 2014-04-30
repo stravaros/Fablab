@@ -263,13 +263,23 @@ public class InitWindow extends JFrame implements Observer { // fenetre
 			break;
 		case "sensorListSize":
 			JOptionPane.showMessageDialog(this,
-							"Sensor list as only " +mdl.getListCapteur().size() +" sensors.\nPlease enter at least 3 sensors and re-send.",
+							"Sensor list has only " +mdl.getListCapteur().size() +" sensors.\nPlease enter at least 3 sensors and re-send.",
 							"Error", JOptionPane.ERROR_MESSAGE);
 			break;
 		case "run":
 			JOptionPane.showMessageDialog(this, "Localization started",
 					"Info", JOptionPane.INFORMATION_MESSAGE);
 			text.append("\nLocalization started");
+			bRun.setText("Stop");
+			bRun.setName("Stop");
+			break;
+		case "stop":
+			JOptionPane.showMessageDialog(this, "Localization stopped",
+					"Info", JOptionPane.INFORMATION_MESSAGE);
+			text.append("\nLocalization stopped");
+			bRun.setName("Run");
+			bRun.setVisible(false);
+			break;
 
 		}
 	}

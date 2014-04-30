@@ -18,6 +18,7 @@ public class Mdl extends Observable {
 
 	private boolean connected = false;
 	private ClientToServer cl;
+	private Thread thread;
 
 	private float angleElevation;
 	private float angleAzimuth;
@@ -169,7 +170,7 @@ public class Mdl extends Observable {
 	}
 
 	public void addCapteur(int posX, int posY) {
-		if (posX != -10000 && posY != 10000) {
+		if (posX != -10000 && posY != -10000) {
 			this.listCapteur.add(new Capteur(0, 0, posX, posY));
 			notifyChanges("addCapteur");
 		} else {
@@ -334,8 +335,21 @@ public class Mdl extends Observable {
 	}
 	
 	public void run() {
-		cl.run();
+		
+		thread = new Thread(cl);
+		thread.start();
+		//cl.run();
 		notifyChanges("run");
 	}
+	
+	@SuppressWarnings("deprecation")
+	public void stop() {
+		thread.stop();
+		listCapteur.clear();
+		connected = false;
+		notifyChanges("stop");
+	}
+	
+	
 
 }
