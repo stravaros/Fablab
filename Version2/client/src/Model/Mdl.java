@@ -334,11 +334,13 @@ public class Mdl extends Observable {
 		}
 	}
 	
-	public void run() {
-		
-		thread = new Thread(cl);
-		thread.start();
+	public void run() {		
+		//thread = new Thread(cl);
+		//thread.start();
 		//cl.run();
+		cl.lancementLecture();
+		cl.fin();
+
 		notifyChanges("run");
 	}
 	

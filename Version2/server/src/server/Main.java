@@ -53,13 +53,14 @@ public class Main {
 				String message = "";
 				try {
 				calculMath = new CalculMath(arrayCapteur);
+				Thread.sleep(1000);
 				} catch (ExceptionSingularite e) {
 					message = e.getMessage();
 					DatagramPacket envoi = new DatagramPacket(
 							message.getBytes(), message.length(),
 							paquet.getAddress(), paquet.getPort());
 					socket.send(envoi);
-					// TODO Possible amelioration sur relancer le serveur
+					
 					System.out
 							.println("Probleme pour l'initialisation du serveur");
 					System.exit(-1);
@@ -70,6 +71,7 @@ public class Main {
 					DatagramPacket envoi = new DatagramPacket(
 							message.getBytes(), message.length(),
 							paquet.getAddress(), paquet.getPort());
+					Thread.sleep(10);				
 					socket.send(envoi);
 				}
 			}
