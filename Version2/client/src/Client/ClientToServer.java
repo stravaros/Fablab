@@ -65,7 +65,8 @@ public class ClientToServer implements Runnable {
 		}
 		donnees = new String(donneesRecues.getData(), 0, taille);
 		tokens = donnees.split(delims);
-		mdl.setNbCapteurServeur((int) Double.parseDouble(tokens[1]));
+		System.out.print(tokens);
+		mdl.setNbCapteurServeur((int) Double.parseDouble(tokens[0]));
 	}
 
 	public void chargementCapteur(ArrayList<Capteur> listCapteur) {
@@ -82,6 +83,7 @@ public class ClientToServer implements Runnable {
 						+ listCapteur.get(i).getCoordoneeY();
 				length = data.length();
 				buffer = data.getBytes();
+				System.out.print(data);
 				DatagramPacket donneesEmises = new DatagramPacket(buffer,
 						length);
 				donneesEmises.setAddress(adresseServeur);
@@ -89,7 +91,6 @@ public class ClientToServer implements Runnable {
 				Thread.sleep(10);
 				socket.setSoTimeout(5000);
 				socket.send(donneesEmises);
-				socket.receive(donneesRecues);
 				donnees = new String(donneesRecues.getData(), 0, taille);
 			} catch (SocketTimeoutException ste) {
 				System.out.println("Le delai pour la reponse a expire");

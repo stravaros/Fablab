@@ -38,13 +38,13 @@ public class Main {
 
 			if (tokens[0].equals("Lancement")) {
 				String message = "";
-				message = Integer.toString(nombreCapteur);
+				message = Double.toString((double)nombreCapteur);
 				DatagramPacket envoi = new DatagramPacket(message.getBytes(),
 						message.length(), paquet.getAddress(), paquet.getPort());
 				socket.send(envoi);
 			}
 			if (tokens[0].equals("Capteur")) {
-
+				System.out.print(tokens);
 				arrayCapteur.add(new Capteur(Double.parseDouble(tokens[3]),
 						Double.parseDouble(tokens[5]), 1, Integer
 								.parseInt(tokens[1])));
