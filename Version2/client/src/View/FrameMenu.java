@@ -131,7 +131,7 @@ public class FrameMenu extends JPanel{
 			int tmp = Integer.parseInt(posX.getText());
 			return tmp;
 		} catch (Exception e){
-			JOptionPane.showMessageDialog(this,"Erreur lors de la saisie de la position pour X","Erreur de saisie",JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this,"Invalid X position","Error",JOptionPane.ERROR_MESSAGE);
 		}
 		return -1;
 	}
@@ -141,7 +141,7 @@ public class FrameMenu extends JPanel{
 			int tmp = Integer.parseInt(posY.getText());
 			return tmp;
 		} catch (Exception e){
-			JOptionPane.showMessageDialog(this,"Erreur lors de la saisie de la position pour Y","Erreur de saisie",JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this,"Invalid Y position","Error",JOptionPane.ERROR_MESSAGE);
 		}
 		return -1;
 	}

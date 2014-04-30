@@ -95,7 +95,7 @@ public class CtrlMenu implements MouseListener {
 						mdl.changeCamera(2);
 						break;
 				}
-				mdl.notifyChanges();
+				mdl.notifyChanges("camera");
 		
 	}
 

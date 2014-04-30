@@ -87,7 +87,7 @@ public class ClientToServer implements Runnable {
 				donneesEmises.setAddress(adresseServeur);
 				donneesEmises.setPort(port);
 				Thread.sleep(10);
-				socket.setSoTimeout(30000);
+				socket.setSoTimeout(5000);
 				socket.send(donneesEmises);
 				socket.receive(donneesRecues);
 				donnees = new String(donneesRecues.getData(), 0, taille);

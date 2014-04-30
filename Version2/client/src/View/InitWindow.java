@@ -9,6 +9,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -16,6 +18,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
@@ -30,176 +33,244 @@ import Capteur.Capteur;
 import Controler.CtrlInitWindow;
 import Model.Mdl;
 
-
-public final class InitWindow extends JFrame { //fenetre initialisation
-	private static final InitWindow initWindow = new InitWindow();
-	private final JPanel panel;
+public class InitWindow extends JFrame implements Observer { // fenetre
+																// initialisation
+	private static InitWindow initWindow;
+	private static JPanel panel;
 	private static JFrame frame;
-	private  Mdl mdl;
+	private static Mdl mdl;
+	private static boolean alreadyInstanciated = false;
 	private static JTextField jtfX;
 	private static JTextField jtfY;
 	private static JTextField jtfServer;
-
-
-	
-
+	private static JTextArea text;
+	private static AbstractButton bRun;
 
 	private InitWindow() {
-		panel = new JPanel(new GridLayout(0,2));
-		frame = new JFrame("Initialisation detection");
+		panel = new JPanel(new GridLayout(0, 2));
+		frame = new JFrame("Detection Initialization");
 		frame.setResizable(false);
 		frame.setSize(new Dimension(400, 300));
-		
-		JPanel panelServer = new JPanel(new GridLayout(0,1));
-		Border borderServer = BorderFactory.createTitledBorder("Server configuration");
+
+		JPanel leftPanel = new JPanel(new GridLayout(3, 0));
+		JPanel panelServer = new JPanel(new GridLayout(2, 0));
+		Border borderServer = BorderFactory
+				.createTitledBorder("Server configuration");
 		panelServer.setBorder(borderServer);
 
-		jtfServer = new JTextField("IP serveur");
+		jtfServer = new JTextField("Server Adress");
 		panelServer.add(jtfServer);
-		jtfServer.addMouseListener(new MouseListener (){
+		jtfServer.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				jtfServer.setText("");
 			}
-			@Override
-			public void mouseEntered(MouseEvent arg0) {				
-			}
-			@Override
-			public void mouseExited(MouseEvent arg0) {				
-			}
-			@Override
-			public void mousePressed(MouseEvent arg0) {				
-			}
-			@Override
-			public void mouseReleased(MouseEvent arg0) {				
-			}	    	
-	    });
-		
-		panel.add(panelServer);
-		ButtonGroup buttonGroupServer = new ButtonGroup();
-	    AbstractButton startButton = new JButton("Start");
-	    buttonGroupServer.add(startButton);
-	    panelServer.add(startButton);
-	    startButton.addActionListener(new CtrlInitWindow(mdl, this));
 
-	    
-	    
-		JPanel panelConfig = new JPanel(new GridLayout(0, 1));
-		Border borderConfig = BorderFactory.createTitledBorder("Sensors Configuration");
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+			}
+		});
+
+		AbstractButton startButton = new JButton("Connect");
+		panelServer.add(startButton);
+		startButton.addActionListener(new CtrlInitWindow(mdl, this));
+		leftPanel.add(panelServer);
+
+		JPanel panelConfig = new JPanel(new GridLayout(3, 0));
+		Border borderConfig = BorderFactory
+				.createTitledBorder("Sensors Configuration");
 		panelConfig.setBorder(borderConfig);
-	    
-	    //Placer camera
-		//JPanel panel = new JPanel(new GridLayout(0, 1));
-	    //Border border = BorderFactory.createTitledBorder("Sensor set");
-	    // panelConfig.setBorder(border);
-	    ButtonGroup group = new ButtonGroup();
-	    
-	    /*
-	    JComboBox<String> listeCapteur = new JComboBox<String>();
-	    for(int i = 0; i< mdl.getNbCapteurServeur(); i++) {
-	    	listeCapteur.addItem("Capteur " +i);
-	    }*/
-	    
-	    //POS X
-	    jtfX = new JTextField("Position X");
-	    panelConfig.add(jtfX);
-	    jtfX.addMouseListener(new MouseListener (){
+
+		// POS X
+		jtfX = new JTextField("X Position");
+		panelConfig.add(jtfX);
+		jtfX.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				jtfX.setText("");
 			}
-			@Override
-			public void mouseEntered(MouseEvent arg0) {				
-			}
-			@Override
-			public void mouseExited(MouseEvent arg0) {				
-			}
-			@Override
-			public void mousePressed(MouseEvent arg0) {				
-			}
-			@Override
-			public void mouseReleased(MouseEvent arg0) {				
-			}   	
-	    });
-	    
-	    
-	    //POS Y
-	    jtfY = new JTextField("Position Y");
-	    panelConfig.add(jtfY);
-	    jtfY.addMouseListener(new MouseListener (){
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				jtfY.setText("");			
-			}
+
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
 			}
+
 			@Override
 			public void mouseExited(MouseEvent arg0) {
 			}
+
 			@Override
 			public void mousePressed(MouseEvent arg0) {
 			}
+
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
-			}	    	
-	    });
+			}
+		});
 
+		// POS Y
+		jtfY = new JTextField("Y Position");
+		panelConfig.add(jtfY);
+		jtfY.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				jtfY.setText("");
+			}
 
-	    
-	    AbstractButton abstract1 = new JButton("Create sensor");
-	    panelConfig.add(abstract1);
-	    group.add(abstract1);
-	    abstract1.addActionListener(new CtrlInitWindow(mdl, this));
-	    frame.add(panelConfig, BorderLayout.CENTER);
-	    
-	    
-	    
-		panel.add(panelConfig);
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+			}
+		});
+		AbstractButton bCreate = new JButton("Create sensor");
+		bCreate.addActionListener(new CtrlInitWindow(mdl, this));
+		panelConfig.add(bCreate);
+		AbstractButton bSend = new JButton("Send");
+		bSend.addActionListener(new CtrlInitWindow(mdl, this));
+		panelConfig.add(bSend);
+		leftPanel.add(panelConfig);
 		
-	    JSeparator sp = new JSeparator(SwingConstants.VERTICAL);
-	    panel.add(sp);		
-		
-		JPanel panelStatus = new JPanel(new GridLayout(1, 1));
+		bRun = new JButton("Run");
+		bRun.addActionListener(new CtrlInitWindow(mdl, this));
+		leftPanel.add(bRun);
+		bRun.setVisible(false);
+		panel.add(leftPanel, BorderLayout.CENTER);
+
+		// Panel de droite (texte)
+		JPanel panelStatus = new JPanel(new GridLayout(0, 1));
 		Border borderStatus = BorderFactory.createTitledBorder("Status");
 		panelStatus.setBorder(borderStatus);
-	    ButtonGroup Status = new ButtonGroup();
-	    JTextArea text = new JTextArea();
-	    panelStatus.add(text);
-	    text.setEditable(false);
-	    text.append("initialisation...");
+		text = new JTextArea();
+		panelStatus.add(text);
+		text.setEditable(false);
+		text.append("initialization...");
 		panel.add(panelStatus);
-	
+
 		frame.add(panel);
 	}
 
-	
-	public  InitWindow getInstance(Mdl m) {
-		mdl = m;
+	public static InitWindow getInstance(Mdl m) {
+		if (!alreadyInstanciated) {
+			alreadyInstanciated = true;
+			mdl = m;
+			initWindow = new InitWindow();
+			mdl.addObserver(initWindow);
+		}
 		frame.setVisible(true);
 		return initWindow;
 	}
 
-	
-	public int getSensorX(){
-		return Integer.parseInt(jtfX.getText());
+	public int getSensorX() {
+		try {
+			return Integer.parseInt(jtfX.getText());
+		} catch (NumberFormatException ex) {
+			JOptionPane.showMessageDialog(this,
+					"Invalid X value. \n Please retype.", "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		return -10000;
 	}
 
 	public int getSensorY() {
-		return Integer.parseInt(jtfY.getText());
+		try {
+			return Integer.parseInt(jtfY.getText());
+		} catch (NumberFormatException ex) {
+			JOptionPane.showMessageDialog(this,
+					"Invalid Y value. \n Please retype.", "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		return -10000;
 	}
-
 
 	public JTextField getJtfX() {
 		return jtfX;
 	}
 
-
 	public JTextField getJtfY() {
 		return jtfY;
 	}
-	
+
 	public static JTextField getJtfServer() {
 		return jtfServer;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		switch ((String) (arg)) {
+		case "addCapteur":
+			JOptionPane.showMessageDialog(this, "Sensor successfully added",
+					"Info", JOptionPane.INFORMATION_MESSAGE);
+			text.append("\nSensor successfully added");
+			break;
+		case "pbAddCapteur":
+			JOptionPane.showMessageDialog(this, "Sensor not added", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			break;
+		case "pbConnection":
+			JOptionPane
+					.showMessageDialog(
+							this,
+							"Server connection impossible.\n Please check server adress validity",
+							"Error", JOptionPane.ERROR_MESSAGE);
+			break;
+		case "send":
+			JOptionPane.showMessageDialog(this, "Data sent to the server",
+					"Info", JOptionPane.INFORMATION_MESSAGE);
+			text.append("\nData sent to the server");
+			bRun.setVisible(true);
+			
+
+			break;
+		case "notConnected":
+			JOptionPane
+					.showMessageDialog(
+							this,
+							"Client not connected to the server.\n Please type a valid server adress and press START",
+							"Error", JOptionPane.ERROR_MESSAGE);
+			break;
+		case "nbCapteurServeur":
+			JOptionPane.showMessageDialog(this, "Server connection successful",
+					"Info", JOptionPane.INFORMATION_MESSAGE);
+			text.append("\nConnected to the server\nServer sensor number: "
+					+ mdl.getNbCapteurServeur());
+			break;
+		case "alreadyConnected":
+			JOptionPane.showMessageDialog(this,
+					"Client already connected to the server", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			break;
+		case "sensorListSize":
+			JOptionPane.showMessageDialog(this,
+							"Sensor list as only " +mdl.getListCapteur().size() +" sensors.\nPlease enter at least 3 sensors and re-send.",
+							"Error", JOptionPane.ERROR_MESSAGE);
+			break;
+		case "run":
+			JOptionPane.showMessageDialog(this, "Localization started",
+					"Info", JOptionPane.INFORMATION_MESSAGE);
+			text.append("\nLocalization started");
+
+		}
 	}
 }
