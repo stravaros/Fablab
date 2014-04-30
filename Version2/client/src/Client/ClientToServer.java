@@ -101,6 +101,15 @@ public class ClientToServer implements Runnable {
 			System.out.println("Transmission capteur "
 					+ listCapteur.get(i).getNumero());
 		}
+	}
+
+	public void fin() {
+		String data;
+		int length;
+		byte buffer[];
+
+		DatagramPacket donneesRecues = new DatagramPacket(new byte[taille],
+				taille);
 		try {
 			data = "Fin ";
 			length = data.length();
@@ -121,23 +130,31 @@ public class ClientToServer implements Runnable {
 
 	}
 
-	public synchronized void lectureXY() throws ExceptionSingularite, InterruptedException {
+	public synchronized void lectureXY() throws ExceptionSingularite,
+			InterruptedException {
 		String delims = "[ ]+";
 		String[] tokens = null;
 		DatagramPacket paquet = new DatagramPacket(buffer, buffer.length);
 		try {
+			
+			
+			Thread.sleep(10);
 			socket.receive(paquet);
+			
+			
 			taille = paquet.getLength();
 			donnees = new String(paquet.getData(), 0, taille);
-			tokens = donnees.split(delims);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		tokens = donnees.split(delims);
 		if (tokens[0].equals("X")) {
+			System.out.println(donnees);
 			sem1.acquire();
 			mdl.setCoordXY(Double.parseDouble(tokens[1]),
 					Double.parseDouble(tokens[3]));
 			sem1.release();
+
 		} else if (tokens[0].equals("Matrice")) {
 			System.out.println("Matrice singuliere");
 			throw new ExceptionSingularite("Matrice singuliere");
@@ -154,6 +171,7 @@ public class ClientToServer implements Runnable {
 		while (true) {
 			try {
 				lectureXY();
+
 			} catch (ExceptionSingularite e) {
 				System.out.println("Erreur : Matrice singulière");
 				System.exit(-1);
@@ -161,9 +179,6 @@ public class ClientToServer implements Runnable {
 				System.out.println("Erreur : Partage de données (sémaphore)");
 				System.exit(-1);
 			}
-
 		}
-
 	}
-
 }

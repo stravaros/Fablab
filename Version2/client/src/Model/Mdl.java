@@ -334,7 +334,8 @@ public class Mdl extends Observable {
 	}
 	
 	public void run() {
-		cl.run();
+		cl.fin();
+		cl.lancementLecture();
 		notifyChanges("run");
 	}
 
