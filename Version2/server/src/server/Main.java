@@ -38,7 +38,8 @@ public class Main {
 
 			if (tokens[0].equals("Lancement")) {
 				String message = "";
-				message = Double.toString((double)nombreCapteur);
+				message = Integer.toString(nombreCapteur);
+				System.out.print(message);
 				DatagramPacket envoi = new DatagramPacket(message.getBytes(),
 						message.length(), paquet.getAddress(), paquet.getPort());
 				socket.send(envoi);
