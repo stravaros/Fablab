@@ -66,7 +66,7 @@ public class ClientToServer implements Runnable {
 		donnees = new String(donneesRecues.getData(), 0, taille);
 		tokens = donnees.split(delims);
 		
-		mdl.setNbCapteurServeur((int)  Double.parseDouble(tokens[1]));
+		mdl.setNbCapteurServeur((int)Double.parseDouble(tokens[0]));
 	}
 
 	public void chargementCapteur(ArrayList<Capteur> listCapteur) {
