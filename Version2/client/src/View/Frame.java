@@ -31,10 +31,12 @@ public class Frame implements GLEventListener {
 	Texture text_mur;
 	Texture text_table;
 	Texture text_fenetre;
+	Texture text_tv;
 	File bois = new File("ressources/textures/parquet_comp.jpg") ;
 	File mur = new File("ressources/textures/mur_comp.jpg") ;
 	File table = new File("ressources/textures/table_comp.jpg") ;
 	File fenetre = new File("ressources/textures/fenetre.jpg") ;
+	File tv = new File("ressources/textures/tv.jpg") ;
 	
 
 	public Frame(GLAutoDrawable gld, Mdl m) {
@@ -49,13 +51,14 @@ public class Frame implements GLEventListener {
 	public void display(GLAutoDrawable arg0) {
 		// TODO Auto-generated method stub
 		
-		final GL2 gl= drawable.getGL().getGL2();
+		GL2 gl = drawable.getGL().getGL2();
 		GLUT glut = new GLUT();	//INSTANCIATION GLUT
 		try {
 			text_fond = TextureIO.newTexture(bois, true);
 			text_mur = TextureIO.newTexture(mur, true);
 			text_table= TextureIO.newTexture(table, true);
 			text_fenetre= TextureIO.newTexture(fenetre, true);
+			text_tv= TextureIO.newTexture(tv, true);
 		} catch (GLException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -76,16 +79,16 @@ public class Frame implements GLEventListener {
 		
 		fond(gl);
 		mur(gl);
-		table (gl, glut);
-		chaise (gl);
-		capteur(gl);
-		meuble (gl);
 
+		for (int i = 0; i<mdl.getListObjet().size(); i++)
+				mdl.getListObjet().get(i).drawObjet(gl, glut, text_table);
+
+		
 		gl.glDisable(GL2.GL_TEXTURE_2D);
+		
+		capteur(gl, glut);
 	}
 	
-
-
 	/*private void capteurfixe(GL2 gl) {
 			Capteur capteur = mdl.getCapteurMouvant();
 			gl.glBegin(GL2.GL_QUADS);
@@ -204,166 +207,16 @@ public class Frame implements GLEventListener {
 		gl.glEnd();
 	}
 	
-	private void capteur (GL2 gl){
+	private void capteur (GL2 gl,  GLUT glut){
+	//	gl.glMatrixMode(GL2.GL_MODELVIEW);
+	//	gl.glLoadIdentity();
 		for (int i =0; i<mdl.getTabCapteur().size();i++){
-			gl.glBegin(GL2.GL_TRIANGLES);
-			gl.glColor3d(1, 1, 0); // set the color of the quad
-				gl.glVertex3d(mdl.getTabCapteur().get(i).getCoordoneeX(), mdl.getTabCapteur().get(i).getCoordoneeY()-2, 2); // Top Left
-				gl.glVertex3d(mdl.getTabCapteur().get(i).getCoordoneeX(), mdl.getTabCapteur().get(i).getCoordoneeY(), 4); // Top Right
-				gl.glVertex3d(mdl.getTabCapteur().get(i).getCoordoneeX(), mdl.getTabCapteur().get(i).getCoordoneeY()+2, 2); // Bottom Right
-			gl.glEnd();
+			gl.glPushMatrix();
+			gl.glTranslated(mdl.getTabCapteur().get(i).getCoordoneeX() ,mdl.getTabCapteur().get(i).getCoordoneeY(), 3f ); //(x ,z,y)
+			gl.glColor3d(0, 1, 0);
+		    glut.glutSolidTorus(0.5, 1.5 ,20, 20);    // middle teapot
+		    gl.glPopMatrix();
 		}
-	}
-	
-	
-	public void table (GL2 gl, GLUT glut){
-		try {
-			
-			text_table.enable(gl);
-			text_table.bind(gl);
-		} catch (GLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		};
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3f(1, 1, 1); // set the color of the quad
-		
-		gl.glTexCoord2d(0, 0); gl.glVertex3d(0, 0, 2); // Top Left
-		gl.glTexCoord2d(1, 0); gl.glVertex3d(8, 0, 2); // Top Right
-		gl.glTexCoord2d(1, 1); gl.glVertex3d(8, 8, 2); // Bottom Right
-		gl.glTexCoord2d(0, 1); gl.glVertex3d(0, 8, 2); // Bottom Left
-		gl.glEnd();
-		gl.glEnable(GL2.GL_TEXTURE_2D);
-		
-		//pied1
-		gl.glBegin(GL2.GL_QUADS);
-			gl.glVertex3d(0, 0, 0); // Top Left
-			gl.glVertex3d(1, 0, 0); // Top Right
-			gl.glVertex3d(1, 0, 2); // Bottom Right
-			gl.glVertex3d(0, 0, 2); // Bottom Left
-		gl.glEnd();
-		
-		//pied2
-		gl.glBegin(GL2.GL_QUADS);
-			gl.glVertex3d(0, 8, 0); // Top Left
-			gl.glVertex3d(1, 8, 0); // Top Right
-			gl.glVertex3d(1, 8, 2); // Bottom Right
-			gl.glVertex3d(0, 8, 2); // Bottom Left
-		gl.glEnd();
-		
-		//pied3
-		gl.glBegin(GL2.GL_QUADS);
-			gl.glVertex3d(8, 0, 0); // Top Left
-			gl.glVertex3d(7, 0, 0); // Top Right
-			gl.glVertex3d(7, 0, 2); // Bottom Right
-			gl.glVertex3d(8, 0, 2); // Bottom Left
-		gl.glEnd();
-		
-		//pied4
-		gl.glBegin(GL2.GL_QUADS);
-			gl.glVertex3d(8, 8, 0); // Top Left
-			gl.glVertex3d(7, 8, 0); // Top Right
-			gl.glVertex3d(7, 8, 2); // Bottom Right
-			gl.glVertex3d(8, 8, 2); // Bottom Left
-		gl.glEnd();
-		
-		gl.glPushMatrix();
-		gl.glRotatef(90f ,1f, 0f, 0f);
-		gl.glTranslatef(4f ,3f, -4f); //(x ,z,y)
-		gl.glColor3d(0, 1, 0);
-	    glut.glutSolidTeapot(1.5);     // middle teapot
-	    gl.glPopMatrix();
-		
-		
-		
-	}
-	
-	public void chaise (GL2 gl){
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(1, 0, 0); // set the color of the quad
-			gl.glVertex3d(3, -2, 1); // Top Left
-			gl.glVertex3d(3, -3, 1); // Top Right
-			gl.glVertex3d(6, -3, 1); // Bottom Right
-			gl.glVertex3d(6, -2, 1); // Bottom Left
-		gl.glEnd();
-		
-		//pied1
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(1, 0, 0); // set the color of the quad
-			gl.glVertex3d(3, -2, 0); // Top Left
-			gl.glVertex3d(3, -3, 0); // Top Right
-			gl.glVertex3d(3, -3, 1); // Bottom Right
-			gl.glVertex3d(3, -2, 1); // Bottom Left
-		gl.glEnd();
-		
-		//pied2
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(1, 0, 0); // set the color of the quad
-			gl.glVertex3d(6, -2, 0); // Top Left
-			gl.glVertex3d(6, -3, 0); // Top Right
-			gl.glVertex3d(6, -3, 1); // Bottom Right
-			gl.glVertex3d(6, -2, 1); // Bottom Left
-		gl.glEnd();
-	}
-	
-	public void meuble (GL2 gl){		
-		//vertical
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(0, 0, 1); // set the color of the quad
-			gl.glVertex3d(-10, 20, 0); // Top Left
-			gl.glVertex3d(-10, 15, 0); // Top Right
-			gl.glVertex3d(-10, 15, 10); // Bottom Right
-			gl.glVertex3d(-10, 20, 10); // Bottom Left
-		gl.glEnd();
-		
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(0, 1, 1); // set the color of the quad
-			gl.glVertex3d(-5, 20, 0); // Top Left
-			gl.glVertex3d(-5, 15, 0); // Top Right
-			gl.glVertex3d(-5, 15, 10); // Bottom Right
-			gl.glVertex3d(-5, 20, 10); // Bottom Left
-		gl.glEnd();
-		
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(0, 1, 0); // set the color of the quad
-			gl.glVertex3d(5, 20, 0); // Top Left
-			gl.glVertex3d(5, 15, 0); // Top Right
-			gl.glVertex3d(5, 15, 10); // Bottom Right
-			gl.glVertex3d(5, 20, 10); // Bottom Left
-		gl.glEnd();
-		
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(0, 0, 1); // set the color of the quad
-			gl.glVertex3d(10, 20, 0); // Top Left
-			gl.glVertex3d(10, 15, 0); // Top Right
-			gl.glVertex3d(10, 15, 10); // Bottom Right
-			gl.glVertex3d(10, 20, 10); // Bottom Left
-		gl.glEnd();
-		
-		//horizontal
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(0, 0, 1); // set the color of the quad
-			gl.glVertex3d(-10, 20, 0); // Top Left
-			gl.glVertex3d(10, 20, 0); // Top Right
-			gl.glVertex3d(10, 15, 0); // Bottom Right
-			gl.glVertex3d(-10, 15, 0); // Bottom Left
-		gl.glEnd();
-		
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(0, 0, 1); // set the color of the quad
-			gl.glVertex3d(-10, 20, 5); // Top Left
-			gl.glVertex3d(10, 20, 5); // Top Right
-			gl.glVertex3d(10, 15, 5); // Bottom Right
-			gl.glVertex3d(-10, 15, 5); // Bottom Left
-		gl.glEnd();
-		
-		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3d(0, 0, 1); // set the color of the quad
-			gl.glVertex3d(-10, 20, 10); // Top Left
-			gl.glVertex3d(10, 20, 10); // Top Right
-			gl.glVertex3d(10, 15, 10); // Bottom Right
-			gl.glVertex3d(-10, 15, 10); // Bottom Left
-		gl.glEnd();	
 	}
 	
 	@Override
@@ -388,6 +241,10 @@ public class Frame implements GLEventListener {
 	public void reshape(GLAutoDrawable glDrawable, int x, int y, int width, int height) {
 		// TODO Auto-generated method stub
 		//x et y non utile
+		//System.out.println("taille "+width+" "+height+" "+x+" "+y);
+		//update of width and height 3d frame
+		mdl.setMouseYMax(width);
+		mdl.setMouseXMax(height);
 		initViewProjection(glDrawable, x, y, width, height);
 	}
 
@@ -396,7 +253,8 @@ public class Frame implements GLEventListener {
 		GLUgl2 glu = new GLUgl2();
 		gl.glMatrixMode(GL2.GL_PROJECTION);
 		gl.glLoadIdentity();
-		glu.gluPerspective(45.0f, (float)width/(float)height, 0.1, 200.0);
+		glu.gluPerspective(50.0f, (float)width/(float)height, 0.1, 200.0);
+		System.out.println("proportion"+(float)width/(float)height);
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();
 		gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);

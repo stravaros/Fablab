@@ -12,7 +12,7 @@ import capteur.Capteur;
 public class Main {
 
 	final static int port = 9632;
-	final static int taille = 1024;
+	static int taille = 1024;
 	static byte buffer[];
 	static double longeur;
 	static double largeur;
@@ -39,13 +39,13 @@ public class Main {
 			if (tokens[0].equals("Lancement")) {
 				String message = "";
 				message = Integer.toString(nombreCapteur);
+				System.out.print(message);
 				DatagramPacket envoi = new DatagramPacket(message.getBytes(),
 						message.length(), paquet.getAddress(), paquet.getPort());
 				socket.send(envoi);
-				socket.send(envoi);
 			}
 			if (tokens[0].equals("Capteur")) {
-
+				System.out.print(tokens);
 				arrayCapteur.add(new Capteur(Double.parseDouble(tokens[3]),
 						Double.parseDouble(tokens[5]), 1, Integer
 								.parseInt(tokens[1])));
@@ -54,14 +54,14 @@ public class Main {
 				String message = "";
 				try {
 				calculMath = new CalculMath(arrayCapteur);
+				Thread.sleep(1000);
 				} catch (ExceptionSingularite e) {
 					message = e.getMessage();
 					DatagramPacket envoi = new DatagramPacket(
 							message.getBytes(), message.length(),
 							paquet.getAddress(), paquet.getPort());
 					socket.send(envoi);
-					socket.send(envoi);
-					// TODO Possible amelioration sur relancer le serveur
+					
 					System.out
 							.println("Probleme pour l'initialisation du serveur");
 					System.exit(-1);
@@ -72,6 +72,7 @@ public class Main {
 					DatagramPacket envoi = new DatagramPacket(
 							message.getBytes(), message.length(),
 							paquet.getAddress(), paquet.getPort());
+					Thread.sleep(10);				
 					socket.send(envoi);
 				}
 			}

@@ -1,7 +1,5 @@
 package App;
 
-
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -30,6 +28,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSeparator;
@@ -49,253 +48,194 @@ import Controler.CtrlMouse;
 import Model.Mdl;
 import View.Frame;
 import View.FrameMenu;
+import View.InitWindow;
 
 public class MainAPP extends JFrame implements Observer {
-	
+
 	private static final long serialVersionUID = 9167791876718956063L;
 
-	private static GLCanvas cv =null;
+	private static GLCanvas cv = null;
+	private Mdl mdl = new Mdl();
 
-	
-	public MainAPP(){
+	public MainAPP() {
 		createMenu();
-		
-		cv=new GLCanvas(); //CREATION D'UN CANVAS
-		Mdl mdl= new Mdl();
-		
+
+		cv = new GLCanvas(); // CREATION D'UN CANVAS
+
 		mdl.addObserver(this);
-		Frame fr = new Frame (cv, mdl); //FENETRE
+		mdl.addCapteur(0, 0);
+		Frame fr = new Frame(cv, mdl); // FENETRE
 		cv.addGLEventListener(fr);
 		this.setSize(800, 600);
-		
-		
-		
+
 		MyWindowAdapter winAdt = new MyWindowAdapter();
 		addWindowListener(winAdt);
 		CtrlMouse ctrlM = new CtrlMouse(mdl);
 		CtrlKeyboard ctrlK = new CtrlKeyboard(mdl);
 		cv.addMouseMotionListener(ctrlM);
-		cv.addMouseListener(ctrlM);		
+		cv.addMouseListener(ctrlM);
 		cv.addKeyListener(ctrlK);
-		
+
 		JPanel pan = new FrameMenu(mdl);
-	//	add(cv);
-		JSplitPane js = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pan, cv)
-		{
-		    private final int location = 200;//largeur du JFrameMenu
-		    {
-		        setDividerLocation( location );
-		    }
-		    @Override
-		    public int getDividerLocation() {
-		        return location ;
-		    }
-		    @Override
-		    public int getLastDividerLocation() {
-		        return location ;
-		    }
+		// add(cv);
+		JSplitPane js = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pan, cv) {
+			private final int location = 200;// largeur du JFrameMenu
+			{
+				setDividerLocation(location);
+			}
+
+			@Override
+			public int getDividerLocation() {
+				return location;
+			}
+
+			@Override
+			public int getLastDividerLocation() {
+				return location;
+			}
 		};
-		//js.setDividerSize(100);
-	//	js.setResizeWeight(0.3);
+		// js.setDividerSize(100);
+		// js.setResizeWeight(0.3);
 		add(js);
 		js.setOneTouchExpandable(false);
-	
-		
+
 	}
 
-	//GETTER
+	// GETTER
 	public static GLCanvas getCv() {
 		return cv;
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		//System.err.println("MISE A JOUR ECRAN");
-		cv.repaint();
-		
+		String s = (String)(arg);
+		if(s.equals("camera") || s.equals("addCapteur"))
+			cv.repaint();
 	}
-	
-	public void createMenu (){
-		//Where the GUI is created:
+
+	public void createMenu() {
+		// Where the GUI is created:
 		JMenuBar menuBar;
 		JMenu menu, submenu;
 		JMenuItem menuItem;
 		JRadioButtonMenuItem rbMenuItem;
 		JCheckBoxMenuItem cbMenuItem;
 
-		//Create the menu bar.
+		// Create the menu bar.
 		menuBar = new JMenuBar();
 
-		//Build the first menu.
-		menu = new JMenu("A Menu");
+		// Build the first menu.
+		menu = new JMenu("Configuration");
 		menu.setMnemonic(KeyEvent.VK_A);
 		menu.getAccessibleContext().setAccessibleDescription(
-		        "The only menu in this program that has menu items");
+				"The only menu in this program that has menu items");
 		menuBar.add(menu);
 
-		//a group of JMenuItems
-		menuItem = new JMenuItem("New detection",
-		                         KeyEvent.VK_T);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(
-		        KeyEvent.VK_1, ActionEvent.ALT_MASK));
+		// a group of JMenuItems
+		menuItem = new JMenuItem("New detection", KeyEvent.VK_T);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1,
+				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
-		        "This doesn't really do anything");
-		menuItem.addActionListener(new InitWindow());
+				"This doesn't really do anything");
+		menuItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				InitWindow.getInstance(mdl);
+
+			}
+		});
 		menu.add(menuItem);
 
-		/*menuItem = new JMenuItem("Both text and icon",
-		                         new ImageIcon("images/middle.gif"));
-		menuItem.setMnemonic(KeyEvent.VK_B);
-		menu.add(menuItem);
+		/*
+		 * menuItem = new JMenuItem("Both text and icon", new
+		 * ImageIcon("images/middle.gif")); menuItem.setMnemonic(KeyEvent.VK_B);
+		 * menu.add(menuItem);
+		 * 
+		 * menuItem = new JMenuItem(new ImageIcon("images/middle.gif"));
+		 * menuItem.setMnemonic(KeyEvent.VK_D); menu.add(menuItem);
+		 * 
+		 * //a group of radio button menu items menu.addSeparator(); ButtonGroup
+		 * group = new ButtonGroup(); rbMenuItem = new
+		 * JRadioButtonMenuItem("A radio button menu item");
+		 * rbMenuItem.setSelected(true); rbMenuItem.setMnemonic(KeyEvent.VK_R);
+		 * group.add(rbMenuItem); menu.add(rbMenuItem);
+		 * 
+		 * rbMenuItem = new JRadioButtonMenuItem("Another one");
+		 * rbMenuItem.setMnemonic(KeyEvent.VK_O); group.add(rbMenuItem);
+		 * menu.add(rbMenuItem);
+		 * 
+		 * //a group of check box menu items menu.addSeparator(); cbMenuItem =
+		 * new JCheckBoxMenuItem("A check box menu item");
+		 * cbMenuItem.setMnemonic(KeyEvent.VK_C); menu.add(cbMenuItem);
+		 * 
+		 * cbMenuItem = new JCheckBoxMenuItem("Another one");
+		 * cbMenuItem.setMnemonic(KeyEvent.VK_H); menu.add(cbMenuItem);
+		 * 
+		 * //a submenu menu.addSeparator(); submenu = new JMenu("A submenu");
+		 * submenu.setMnemonic(KeyEvent.VK_S);
+		 * 
+		 * menuItem = new JMenuItem("An item in the submenu");
+		 * menuItem.setAccelerator(KeyStroke.getKeyStroke( KeyEvent.VK_2,
+		 * ActionEvent.ALT_MASK)); submenu.add(menuItem);
+		 * 
+		 * menuItem = new JMenuItem("Another item"); submenu.add(menuItem);
+		 * menu.add(submenu);
+		 */
 
-		menuItem = new JMenuItem(new ImageIcon("images/middle.gif"));
-		menuItem.setMnemonic(KeyEvent.VK_D);
-		menu.add(menuItem);
-
-		//a group of radio button menu items
-		menu.addSeparator();
-		ButtonGroup group = new ButtonGroup();
-		rbMenuItem = new JRadioButtonMenuItem("A radio button menu item");
-		rbMenuItem.setSelected(true);
-		rbMenuItem.setMnemonic(KeyEvent.VK_R);
-		group.add(rbMenuItem);
-		menu.add(rbMenuItem);
-
-		rbMenuItem = new JRadioButtonMenuItem("Another one");
-		rbMenuItem.setMnemonic(KeyEvent.VK_O);
-		group.add(rbMenuItem);
-		menu.add(rbMenuItem);
-
-		//a group of check box menu items
-		menu.addSeparator();
-		cbMenuItem = new JCheckBoxMenuItem("A check box menu item");
-		cbMenuItem.setMnemonic(KeyEvent.VK_C);
-		menu.add(cbMenuItem);
-
-		cbMenuItem = new JCheckBoxMenuItem("Another one");
-		cbMenuItem.setMnemonic(KeyEvent.VK_H);
-		menu.add(cbMenuItem);
-
-		//a submenu
-		menu.addSeparator();
-		submenu = new JMenu("A submenu");
-		submenu.setMnemonic(KeyEvent.VK_S);
-
-		menuItem = new JMenuItem("An item in the submenu");
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(
-		        KeyEvent.VK_2, ActionEvent.ALT_MASK));
-		submenu.add(menuItem);
-
-		menuItem = new JMenuItem("Another item");
-		submenu.add(menuItem);
-		menu.add(submenu);*/
-
-		//Build second menu in the menu bar.
+		// Build second menu in the menu bar.
 		menu = new JMenu("Help");
-		menuItem = new JMenuItem ("About visualisation FabLab");
+		menuItem = new JMenuItem("About visualisation FabLab");
 		menuItem.addActionListener(new AboutWindow());
 		menu.add(menuItem);
 		menu.setMnemonic(KeyEvent.VK_N);
 		menu.getAccessibleContext().setAccessibleDescription(
-		        "This menu does nothing");
-		
+				"This menu does nothing");
+
 		menuBar.add(menu);
 
 		this.setJMenuBar(menuBar);
 	}
-	
-	public class AboutWindow  implements ActionListener { //fenetre 'a propos de fablab'
-		ImageIcon grassIcon = new ImageIcon("ressources/logo_ensimag3.png"); 
-		JPanel panel = new JPanel(new GridLayout(2,1));
-		JFrame frame = new JFrame("About Visualisation FabLab");
-		JLabel labelText = new JLabel();
-		JLabel labelImage ;
-		
-		public AboutWindow() {
+
+	public static final class AboutWindow implements ActionListener { // fenetre
+																		// 'a
+																		// propos
+																		// de
+																		// fablab'
+		private static final AboutWindow aboutWindow = new AboutWindow();
+		JPanel panel;
+		JFrame frame;
+
+		private AboutWindow() {
+			ImageIcon grassIcon = new ImageIcon("ressources/logo_ensimag3.png");
+
+			panel = new JPanel(new GridLayout(2, 1));
+			frame = new JFrame("About Visualisation FabLab");
 			frame.setResizable(false);
 			frame.setSize(new Dimension(400, 300));
-		}
-
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
+			JLabel labelText = new JLabel();
+			JLabel labelImage;
 			labelImage = new JLabel(grassIcon);
-			
-			String text = "Projet Fablab réalisé par :\n A1,\n A2, \n A3\n, A4,\n\n Version :";
+
+			String text = "Projet Fablab réalisé par : LA TEAM LBF";
 			labelText.setText(text);
-			
+
 			panel.add(labelImage);
 			panel.add(labelText);
-			
+
 			frame.add(panel);
 			frame.pack();
-			frame.setVisible(true);
 		}
 
-	}
-	
-	public class InitWindow  implements ActionListener { //fenetre initialisation
-		JPanel panel = new JPanel(new GridLayout(1,2));
-		JFrame frame = new JFrame("Initialisation detection");
-
-		
-		public InitWindow() {
-			frame.setResizable(false);
-			frame.setSize(new Dimension(400, 300));
-		}
-
-		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JPanel panelConfig = new JPanel(new GridLayout(0, 1));
-			Border borderConfig = BorderFactory.createTitledBorder("Configuration");
-			panelConfig.setBorder(borderConfig);
-		    ButtonGroup Config = new ButtonGroup();
-		    
-		  //Placer camera
-			//JPanel panel = new JPanel(new GridLayout(0, 1));
-		    Border border = BorderFactory.createTitledBorder("Sensor set");
-		    panelConfig.setBorder(border);
-		    ButtonGroup group = new ButtonGroup();
-		    
-		    //POS X
-		    JTextField jtfX = new JTextField("position x");
-		    panelConfig.add(jtfX);
-		    
-		    //POS Y
-		    JTextField jtfY = new JTextField("Valeur par défaut");
-		    panelConfig.add(jtfY);
-		    JSeparator sp = new JSeparator(SwingConstants.HORIZONTAL);
-		    panelConfig.add(sp);
-		    
-		    AbstractButton abstract1 = new JButton("Create sensor");
-		  //  abstract1.addActionListener(new CtrlMenu(mdl, this));
-		    panelConfig.add(abstract1);
-		    group.add(abstract1);
-		  //  abstract1.addActionListener(new CtrlMenu(mdl, this));
-		    frame.add(panelConfig, BorderLayout.CENTER);
-		    
-		    
-		    
-			panel.add(panelConfig);
-			
-			
-			JPanel panelStatus = new JPanel(new GridLayout(1, 1));
-			Border borderStatus = BorderFactory.createTitledBorder("Status");
-			panelStatus.setBorder(borderStatus);
-		    ButtonGroup Status = new ButtonGroup();
-		    JTextArea text = new JTextArea();
-		    panelStatus.add(text);
-		    text.setEditable(false);
-		    text.append("initialisation...");
-			panel.add(panelStatus);
-			
-		
-			
-			frame.add(panel);
 			frame.setVisible(true);
 		}
 
+		public AboutWindow getInstance() {
+			return aboutWindow;
+		}
+
 	}
+
 }
