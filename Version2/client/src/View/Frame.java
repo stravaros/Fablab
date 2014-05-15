@@ -217,6 +217,14 @@ public class Frame implements GLEventListener {
 		    glut.glutSolidTorus(0.5, 1.5 ,20, 20);    // middle teapot
 		    gl.glPopMatrix();
 		}
+		
+		gl.glPushMatrix();
+		gl.glTranslated(mdl.getCapteurMouvant().getCoordoneeX() ,mdl.getCapteurMouvant().getCoordoneeY(), 3f ); //(x ,z,y)
+		gl.glColor3d(0, 1, 1);
+	    glut.glutSolidTorus(0.5, 1.5 ,20, 20);    // middle teapot
+	    gl.glPopMatrix();
+		
+		
 	}
 	
 	@Override
