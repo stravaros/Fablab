@@ -4,8 +4,12 @@ import java.util.ArrayList;
 
 import Jama.*;
 import capteur.Capteur;
+import commxbee.*; 
 
 public final class CalculMath {
+	// Communication avec les xBee
+	private ReceptionXBee xbeeReception;
+	
 	// Tableau de capteur avec leurs coordonnées
 	private ArrayList<Capteur> tabCapteur;
 
@@ -42,8 +46,10 @@ public final class CalculMath {
 
 		for (int i = 0; i < tabCapteur.size() - 1; i++) {
 			for (int j = i + 1; j < tabCapteur.size(); j++) {
-				tabRayons[indiceLigne] = RSSI[j] * RSSI[j] * K * K - RSSI[i]
-						* RSSI[i] * K * K;
+				/*tabRayons[indiceLigne] = RSSI[j] * RSSI[j] * K * K - RSSI[i]
+						* RSSI[i] * K * K;*/
+				tabRayons[indiceLigne] = xbeeReception.getRSSI(j) * xbeeReception.getRSSI(j) * K * K - xbeeReception.getRSSI(i)
+				* xbeeReception.getRSSI(i) * K * K;
 				indiceLigne++;
 			}
 		}
@@ -61,8 +67,10 @@ public final class CalculMath {
 	 * @param tabCapteur
 	 * @throws ExceptionSingularite
 	 */
-	public CalculMath(ArrayList<Capteur> tabCapteur) throws ExceptionSingularite {
+	public CalculMath(ArrayList<Capteur> tabCapteur, ReceptionXBee xbeeReception) throws ExceptionSingularite {
 		this.tabCapteur = tabCapteur;
+		this.xbeeReception = xbeeReception;
+		
 		int nbLignes = tabCapteur.size() * (tabCapteur.size() - 1) / 2;
 		if (tabCapteur.size() > 1) {
 			System.out.println("tab size " + tabCapteur.size());
@@ -119,7 +127,7 @@ public final class CalculMath {
 		tabCapteur.add(new Capteur(10,0,1,1));
 		tabCapteur.add(new Capteur(-10,0,1,2));
 
-		CalculMath math = new CalculMath(tabCapteur);
+		CalculMath math = new CalculMath(tabCapteur,null);
 		System.out.println("Position: x=" + math.getPosition()[0]);
 		System.out.println("Position: y=" + math.getPosition()[1]);
 

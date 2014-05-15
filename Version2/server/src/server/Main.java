@@ -4,6 +4,7 @@ import java.net.*;
 import java.util.ArrayList;
 
 import com.sun.xml.internal.bind.v2.runtime.ElementBeanInfoImpl;
+import commxbee.ReceptionXBee;
 
 import calculMath.CalculMath;
 import calculMath.ExceptionSingularite;
@@ -20,13 +21,17 @@ public class Main {
 	private static DatagramSocket socket;
 	private static CalculMath calculMath;
 	static int nombreCapteur = 10;
+	private static ReceptionXBee xBeeReception;
+	
 
 	public static void main(String argv[]) throws Exception {
 		socket = new DatagramSocket(port);
 		buffer  = new byte[taille];
 		String donnees = "";
 		arrayCapteur = new ArrayList<Capteur>();
-		System.out.println("Lancement du serveur");
+		xBeeReception = new ReceptionXBee();
+
+		System.out.println("Lancement du serveur");		
 		//TODO INITIALISATION DU NOMBRE DE CAPTEUR DU SERVEUR ET DES CAPTEURS
 		while (true) {
 			DatagramPacket paquet = new DatagramPacket(buffer, buffer.length);
@@ -53,7 +58,8 @@ public class Main {
 			if (tokens[0].equals("Fin")) {
 				String message = "";
 				try {
-				calculMath = new CalculMath(arrayCapteur);
+				xBeeReception.run();
+				calculMath = new CalculMath(arrayCapteur,xBeeReception);
 				Thread.sleep(1000);
 				} catch (ExceptionSingularite e) {
 					message = e.getMessage();

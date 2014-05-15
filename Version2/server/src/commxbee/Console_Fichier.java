@@ -8,7 +8,7 @@ package commxbee;
  *
  * @author thibeaua
  */
-public class Console extends Thread{
+public class Console_Fichier extends Thread{
     private Communicator_Console com = null;
     private ReceptionXBee machine = null;
     
@@ -40,7 +40,7 @@ public class Console extends Thread{
     }       
     
     public static void main(String args[]) {
-          Console c = new Console();
+          Console_Fichier c = new Console_Fichier();
           c.start();
     }
     
