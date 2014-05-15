@@ -31,11 +31,12 @@ public class Frame implements GLEventListener {
 	Texture text_mur;
 	Texture text_table;
 	Texture text_fenetre;
+	Texture text_tv;
 	File bois = new File("ressources/textures/parquet_comp.jpg") ;
 	File mur = new File("ressources/textures/mur_comp.jpg") ;
 	File table = new File("ressources/textures/table_comp.jpg") ;
 	File fenetre = new File("ressources/textures/fenetre.jpg") ;
-	
+	File tv = new File("ressources/textures/tv.jpg") ;
 	
 
 	public Frame(GLAutoDrawable gld, Mdl m) {
@@ -57,6 +58,7 @@ public class Frame implements GLEventListener {
 			text_mur = TextureIO.newTexture(mur, true);
 			text_table= TextureIO.newTexture(table, true);
 			text_fenetre= TextureIO.newTexture(fenetre, true);
+			text_tv= TextureIO.newTexture(tv, true);
 		} catch (GLException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

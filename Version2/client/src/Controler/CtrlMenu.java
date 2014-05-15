@@ -8,9 +8,12 @@ import java.awt.event.MouseListener;
 import javax.swing.JButton;
 
 import Capteur.Capteur;
+import EnvObjet.Meuble;
+import EnvObjet.TV;
 //import EnvObjet.Meuble;
 //import EnvObjet.TV;
 import EnvObjet.Table;
+import EnvObjet.Window;
 //import EnvObjet.Window;
 import Model.Mdl;
 import View.FrameMenu;
@@ -66,7 +69,7 @@ public class CtrlMenu implements MouseListener {
 					mdl.getListObjet().add(new Table(fm.getPosXFieldToInt(), fm.getPosYFieldToInt()));
 						break;
 						
-		/*			case  "Meuble" :
+					case  "Meuble" :
 						System.out.println("Meuble");
 						mdl.getListObjet().add(new Meuble(fm.getPosXFieldToInt(),fm.getPosYFieldToInt()));
 
@@ -83,7 +86,7 @@ public class CtrlMenu implements MouseListener {
 						mdl.getListObjet().add(new Window(fm.getPosXFieldToInt(), fm.getPosYFieldToInt()));
 						
 							break;
-					*/
+				
 					case  "Camera 1" :
 						mdl.changeCamera(0);
 						break;
