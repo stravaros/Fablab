@@ -60,7 +60,7 @@ public class Mdl extends Observable {
 		setMouseYMax(0);
 		listCapteur = new ArrayList<Capteur>();
 		listObjet = new ArrayList<ObjetGen>();
-		capteurMouvant = new Capteur(3, 3);
+		capteurMouvant = new Capteur(3);
 
 	}
 
@@ -171,7 +171,7 @@ public class Mdl extends Observable {
 
 	public void addCapteur(int posX, int posY) {
 		if (posX != -10000 && posY != -10000) {
-			this.listCapteur.add(new Capteur(0, 0, posX, posY));
+			this.listCapteur.add(new Capteur(0, posX, posY));
 			notifyChanges("addCapteur");
 		} else {
 			notifyChanges("pbAddCapteur");

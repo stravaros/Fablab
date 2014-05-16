@@ -41,7 +41,7 @@ public final class CalculMath {
 		int indiceLigne = 0;
 
 		// VALEURS DE RSSI EN DUR
-		double[] RSSI = { 20, 20, 20 };
+		//double[] RSSI = { 20, 20, 20 };
 		//double[] RSSI = { 10, 22, 22 };
 
 		for (int i = 0; i < tabCapteur.size() - 1; i++) {
@@ -57,7 +57,6 @@ public final class CalculMath {
 		Matrix matrixRayon = new Matrix(tabRayons, tabCapteur.size()
 				* (tabCapteur.size() - 1) / 2);
 		position = constMatrix.times(matrixRayon.plus(matrixC));
-		System.out.println("MATH: POSX "+position.getColumnPackedCopy()[0] + " POSY "+position.getColumnPackedCopy()[1]);
 		return position.getColumnPackedCopy();
 	}
 
@@ -74,14 +73,12 @@ public final class CalculMath {
 		
 		int nbLignes = tabCapteur.size() * (tabCapteur.size() - 1) / 2;
 		if (tabCapteur.size() > 1) {
-			System.out.println("tab size " + tabCapteur.size());
 			// Initialisation de la matrice H
 			tabH = new double[nbLignes][2];
 			int indiceLigne = 0;
 			for (int i = 0; i < tabCapteur.size() - 1; i++) {
 				for (int j = i + 1; j < tabCapteur.size(); j++) {
 					// PB tabCapteur[i] null pointer exception
-					System.out.println("INDICE I: " + i + " INDICE J: " + j);
 					tabH[indiceLigne][0] = 2 * (tabCapteur.get(i)
 							.getCoordoneeXCar() - tabCapteur.get(j)
 							.getCoordoneeXCar());
@@ -124,9 +121,9 @@ public final class CalculMath {
 		ArrayList<Capteur> tabCapteur = new ArrayList<Capteur>();
 
 		// Situation 1
-		tabCapteur.add(new Capteur(0,10,1,0));
-		tabCapteur.add(new Capteur(10,0,1,1));
-		tabCapteur.add(new Capteur(-10,0,1,2));
+		tabCapteur.add(new Capteur(0,10,0));
+		tabCapteur.add(new Capteur(10,0,1));
+		tabCapteur.add(new Capteur(-10,0,2));
 
 		CalculMath math = new CalculMath(tabCapteur,null);
 		System.out.println("Position: x=" + math.getPosition()[0]);

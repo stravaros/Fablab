@@ -34,7 +34,7 @@ public class ClientToServer implements Runnable {
 		this.in = new Scanner(System.in);
 		this.buffer = new byte[taille];
 		this.donnees = "";
-		this.taille = 1024;
+		this.taille = 2048*1000;
 		this.mdl = mdl;
 		this.sem1 = sem1;
 	}
@@ -130,25 +130,25 @@ public class ClientToServer implements Runnable {
 
 	}
 
-	public synchronized void lectureXY() throws ExceptionSingularite,
+	public void lectureXY() throws ExceptionSingularite,
 			InterruptedException {
 		String delims = "[ ]+";
 		String[] tokens = null;
+		System.out.println("plop3");
 		DatagramPacket paquet = new DatagramPacket(buffer, buffer.length);
-		try {
-			
-			
-			Thread.sleep(10);
+		try {		
+			Thread.sleep(1000);
 			socket.receive(paquet);
-			
-			
 			taille = paquet.getLength();
 			donnees = new String(paquet.getData(), 0, taille);
+			tokens = donnees.split(delims);
+			System.out.println("plop4");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		tokens = donnees.split(delims);
+		System.out.println("plop5");
 		if (tokens[0].equals("X")) {
+			System.out.println("plop6");
 			System.out.println("Coordonnees");
 			System.out.println(donnees);
 			sem1.acquire();
@@ -156,10 +156,12 @@ public class ClientToServer implements Runnable {
 					Double.parseDouble(tokens[3]));
 			sem1.release();
 			
+			
 		} else if (tokens[0].equals("Matrice")) {
 			System.out.println("Matrice singuliere");
 			throw new ExceptionSingularite("Matrice singuliere");
 		}
+		
 	}
 
 	public void lancementLecture() {
@@ -170,8 +172,9 @@ public class ClientToServer implements Runnable {
 	@Override
 	public void run() {
 		while (true) {
-			try {
+			try {System.out.println("plop1");
 				lectureXY();
+				System.out.println("plop2");
 
 			} catch (ExceptionSingularite e) {
 				System.out.println("Erreur : Matrice singulière");

@@ -3,7 +3,6 @@ package server;
 import java.net.*;
 import java.util.ArrayList;
 
-import com.sun.xml.internal.bind.v2.runtime.ElementBeanInfoImpl;
 import commxbee.ReceptionXBee;
 
 import calculMath.CalculMath;
@@ -32,8 +31,7 @@ public class Main {
 		xBeeReception = new ReceptionXBee();
 
 		System.out.println("Lancement du serveur");		
-		//TODO INITIALISATION DU NOMBRE DE CAPTEUR DU SERVEUR ET DES CAPTEURS
-		while (true) {
+				while (true) {
 			DatagramPacket paquet = new DatagramPacket(buffer, buffer.length);
 			socket.receive(paquet);
 			taille = paquet.getLength();
@@ -44,14 +42,13 @@ public class Main {
 			if (tokens[0].equals("Lancement")) {
 				String message = "";
 				message = Integer.toString(nombreCapteur);
-				System.out.println("nb Capteur "+message);
 				DatagramPacket envoi = new DatagramPacket(message.getBytes(),
 						message.length(), paquet.getAddress(), paquet.getPort());
 				socket.send(envoi);
 			}
 			if (tokens[0].equals("Capteur")) {
 				arrayCapteur.add(new Capteur(Double.parseDouble(tokens[3]),
-						Double.parseDouble(tokens[5]), 1, Integer
+						Double.parseDouble(tokens[5]),Integer
 								.parseInt(tokens[1])));
 			}
 			if (tokens[0].equals("Fin")) {
@@ -59,7 +56,6 @@ public class Main {
 				try {
 				calculMath = new CalculMath(arrayCapteur,xBeeReception);
 				xBeeReception.lancementReception();
-				//Thread.sleep(1000);
 				} catch (ExceptionSingularite e) {
 					message = e.getMessage();
 					DatagramPacket envoi = new DatagramPacket(
@@ -73,7 +69,7 @@ public class Main {
 				while (true) {
 					double[] pos = calculMath.getPosition();
 					message = "X " + (int)(pos[0]) + " Y " + (int)(pos[1]);
-					//message = "X 1.0 Y 2.0";
+					
 
 					System.out.println("POSITION: "+message);
 					DatagramPacket envoi = new DatagramPacket(

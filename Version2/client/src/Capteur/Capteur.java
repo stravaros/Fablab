@@ -4,27 +4,16 @@ public class Capteur {
 
 	private double coordoneeX;
 	private double coordoneeY;
-	private int type;
 	private int numero;
 
-	public Capteur(int type, int numero, int X, int Y) {
-		this.type = type;
+	public Capteur(int numero, int X, int Y) {
 		this.numero=numero;
 		this.coordoneeX = X;
 		this.coordoneeY = Y;
 	}
 	
-	public Capteur(int type, int numero) {
-		this.type = type;
+	public Capteur(int numero) {
 		this.numero=numero;
-	}
-
-	public int getType() {
-		return type;
-	}
-
-	public void setType(int type) {
-		this.type = type;
 	}
 
 	public double getCoordoneeX() {
