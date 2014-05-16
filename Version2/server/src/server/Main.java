@@ -13,7 +13,7 @@ import capteur.Capteur;
 public class Main {
 
 	final static int port = 9632;
-	static int taille = 1024;
+	static int taille = 2048*1000;
 	static byte buffer[];
 	static double longeur;
 	static double largeur;
@@ -44,13 +44,12 @@ public class Main {
 			if (tokens[0].equals("Lancement")) {
 				String message = "";
 				message = Integer.toString(nombreCapteur);
-				System.out.print(message);
+				System.out.println("nb Capteur "+message);
 				DatagramPacket envoi = new DatagramPacket(message.getBytes(),
 						message.length(), paquet.getAddress(), paquet.getPort());
 				socket.send(envoi);
 			}
 			if (tokens[0].equals("Capteur")) {
-				System.out.print(tokens);
 				arrayCapteur.add(new Capteur(Double.parseDouble(tokens[3]),
 						Double.parseDouble(tokens[5]), 1, Integer
 								.parseInt(tokens[1])));
@@ -58,9 +57,9 @@ public class Main {
 			if (tokens[0].equals("Fin")) {
 				String message = "";
 				try {
-				xBeeReception.run();
 				calculMath = new CalculMath(arrayCapteur,xBeeReception);
-				Thread.sleep(1000);
+				xBeeReception.lancementReception();
+				//Thread.sleep(1000);
 				} catch (ExceptionSingularite e) {
 					message = e.getMessage();
 					DatagramPacket envoi = new DatagramPacket(
@@ -68,17 +67,19 @@ public class Main {
 							paquet.getAddress(), paquet.getPort());
 					socket.send(envoi);
 					
-					System.out
-							.println("Probleme pour l'initialisation du serveur");
+					System.out.println("Probleme pour l'initialisation du serveur");
 					System.exit(-1);
 				}
 				while (true) {
 					double[] pos = calculMath.getPosition();
-					message = "X " + pos[0] + " Y " + pos[1];
+					message = "X " + (int)(pos[0]) + " Y " + (int)(pos[1]);
+					//message = "X 1.0 Y 2.0";
+
+					System.out.println("POSITION: "+message);
 					DatagramPacket envoi = new DatagramPacket(
 							message.getBytes(), message.length(),
 							paquet.getAddress(), paquet.getPort());
-					Thread.sleep(10);				
+					Thread.sleep(1000);				
 					socket.send(envoi);
 				}
 			}

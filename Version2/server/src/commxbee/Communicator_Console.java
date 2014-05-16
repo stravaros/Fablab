@@ -71,6 +71,9 @@ public class Communicator_Console implements SerialPortEventListener {
     public void searchForPorts() {
         int i = 0;
         System.out.println("\nPorts dispos :");
+
+        //System.setProperty("gnu.io.rxtx.SerialPorts", "/dev/ttyUSB0");
+
         ports = CommPortIdentifier.getPortIdentifiers();
 
         while (ports.hasMoreElements()) {

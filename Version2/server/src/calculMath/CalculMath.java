@@ -14,7 +14,7 @@ public final class CalculMath {
 	private ArrayList<Capteur> tabCapteur;
 
 	// Coefficient de "proportionnalité" RSSI/rayon (distance)
-	private final static double K = 0.5;
+	private final static double K = 1/6.0;
 
 	// Tableau et matrice H
 	private double[][] tabH;
@@ -50,13 +50,14 @@ public final class CalculMath {
 						* RSSI[i] * K * K;*/
 				tabRayons[indiceLigne] = xbeeReception.getRSSI(j) * xbeeReception.getRSSI(j) * K * K - xbeeReception.getRSSI(i)
 				* xbeeReception.getRSSI(i) * K * K;
+				System.out.println("RSSI " +j + " " +xbeeReception.getRSSI(j) +" RSSI " +i +" " +xbeeReception.getRSSI(i));
 				indiceLigne++;
 			}
 		}
 		Matrix matrixRayon = new Matrix(tabRayons, tabCapteur.size()
 				* (tabCapteur.size() - 1) / 2);
 		position = constMatrix.times(matrixRayon.plus(matrixC));
-
+		System.out.println("MATH: POSX "+position.getColumnPackedCopy()[0] + " POSY "+position.getColumnPackedCopy()[1]);
 		return position.getColumnPackedCopy();
 	}
 

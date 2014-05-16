@@ -6,6 +6,9 @@ package commxbee;
 
 import static commxbee.Communicator_Console.DASH_ASCII;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  *
  * @author thibeaua
@@ -36,8 +39,13 @@ public class ReceptionXBee extends Thread{
         }
     }
     
-    public int getRSSI(int c){
-        return(rssi[c]);
+    public double getRSSI(int c){
+        return((double)rssi[c]);
+    }
+    
+    public void lancementReception() {
+    	ExecutorService exect = Executors.newFixedThreadPool(1);
+		exect.execute(this);
     }
     
     @Override
