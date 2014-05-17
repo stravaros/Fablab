@@ -75,54 +75,18 @@ public class Frame implements GLEventListener {
 		gl.glRotatef(mdl.getAngleElevation(), 1.0f, 0.0f, 0.0f);
 		gl.glRotatef(mdl.getAngleAzimuth(), 0.0f, 1.0f, 0.0f);
 		gl.glRotatef(mdl.getAngleDirection(), 0.0f, 0.0f, 1.0f);
-		gl.glEnable(GL2.GL_TEXTURE_2D);
 		
+		//DESSIN DE LA SCENNE
+		gl.glEnable(GL2.GL_TEXTURE_2D);
 		fond(gl);
 		mur(gl);
-
 		for (int i = 0; i<mdl.getListObjet().size(); i++)
 				mdl.getListObjet().get(i).drawObjet(gl, glut, text_table);
-
-		
 		gl.glDisable(GL2.GL_TEXTURE_2D);
 		
+		//DESSIN DU CAPTEUR
 		capteur(gl, glut);
 	}
-	
-	/*private void capteurfixe(GL2 gl) {
-			Capteur capteur = mdl.getCapteurMouvant();
-			gl.glBegin(GL2.GL_QUADS);
-			gl.glColor3d(1, 1, 0); // set the color of the quad
-				gl.glVertex3d(-taille+mdl.getCapteurMouvant().getCoordoneeX(), taille+mdl.getCapteurMouvant().getCoordoneeY(), 0.5); // Top Left
-				gl.glVertex3d(taille+mdl.getCapteurMouvant().getCoordoneeX(), taille+mdl.getCapteurMouvant().getCoordoneeY(), 0.5); // Top Right
-				gl.glVertex3d(taille+mdl.getCapteurMouvant().getCoordoneeX(), -taille+mdl.getCapteurMouvant().getCoordoneeY(), 0.5); // Bottom Right
-				gl.glVertex3d(-taille+mdl.getCapteurMouvant().getCoordoneeX(), -taille+mdl.getCapteurMouvant().getCoordoneeY(), 0.5); // Bottom Left
-			gl.glEnd();	
-	}
-
-	public void capteurmouvant(GL2 gl) {
-		for (int i = 0; i < mdl.getTabCapteurFixe().length; i++) {
-			gl.glBegin(GL2.GL_QUADS);
-			gl.glColor3d(0, 0, 1); // set the color of the quad
-				gl.glVertex3d(-taille + mdl.getTabCapteurFixe()[i].getCoordoneeX(),
-						taille + mdl.getTabCapteurFixe()[i].getCoordoneeY(), 0.5); // Top
-																					// Left
-				gl.glVertex3d(taille + mdl.getTabCapteurFixe()[i].getCoordoneeX(),
-						taille + mdl.getTabCapteurFixe()[i].getCoordoneeY(), 0.5); // Top
-																					// Right
-				gl.glVertex3d(taille + mdl.getTabCapteurFixe()[i].getCoordoneeX(),
-						-taille + mdl.getTabCapteurFixe()[i].getCoordoneeY(), 0.5); // Bottom
-																					// Right
-				gl.glVertex3d(-taille + mdl.getTabCapteurFixe()[i].getCoordoneeX(),
-						-taille + mdl.getTabCapteurFixe()[i].getCoordoneeY(), 0.5); // Bottom
-																					// Left
-			// Done Drawing The Quad
-			gl.glEnd();
-		}
-		
-	}*/
-	
-	
 
 	public void fond (GL2 gl){
 		try {
@@ -208,13 +172,12 @@ public class Frame implements GLEventListener {
 	}
 	
 	private void capteur (GL2 gl,  GLUT glut){
-	//	gl.glMatrixMode(GL2.GL_MODELVIEW);
-	//	gl.glLoadIdentity();
 		for (int i =0; i<mdl.getTabCapteur().size();i++){
 			gl.glPushMatrix();
 			gl.glTranslated(mdl.getTabCapteur().get(i).getCoordoneeX() ,mdl.getTabCapteur().get(i).getCoordoneeY(), 3f ); //(x ,z,y)
+			gl.glScalef(2, 2, 2);
 			gl.glColor3d(0, 1, 0);
-		    glut.glutSolidTorus(0.5, 1.5 ,20, 20);    // middle teapot
+		    glut.glutSolidOctahedron();    
 		    gl.glPopMatrix();
 		}
 		
@@ -223,8 +186,7 @@ public class Frame implements GLEventListener {
 		gl.glColor3d(0, 1, 1);
 	    glut.glutSolidTorus(0.5, 1.5 ,20, 20);    // middle teapot
 	    gl.glPopMatrix();
-		
-		
+
 	}
 	
 	@Override
@@ -242,7 +204,6 @@ public class Frame implements GLEventListener {
 				gl.glColor3f(0.0f, 200.0f, 0.0f);
 				gl.glLineWidth(1);	
 
-		
 	}
 
 	@Override
@@ -267,6 +228,7 @@ public class Frame implements GLEventListener {
 		gl.glLoadIdentity();
 		gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		
+		//POUR RAJOUTER DE LA LUMIERE
 		/*float mat_ambient[] = {0.2f,0.2f,0.2f,0.2f};
 		float mat_diffuse[] = {1.0f,1.0f,1.0f,1.0f};
 		float mat_specular[] = {1.0f,1.0f,1.0f,1.0f};

@@ -8,23 +8,9 @@ import com.jogamp.opengl.util.texture.Texture;
 public abstract class ObjetGen {
 	protected int posX;
 	protected int posY;
-	protected int rayonAllumage;
+	protected int rayonAllumage = 3;
 	protected boolean isOnable;
-	
-	public ObjetGen (int X, int Y){
-		posX = X;
-		posY = Y;
-		isOnable = false;
-		rayonAllumage = 0;
-		
-	}
-	
-	public ObjetGen (int X, int Y, int allumage){
-		posX = X;
-		posY = Y;
-		rayonAllumage = allumage;
-		isOnable = true;
-	}
+	protected String orientation;
 	
 	public int getPosX(){
 		return posX;
@@ -36,6 +22,10 @@ public abstract class ObjetGen {
 	
 	public int getRayonAllumage (){
 		return rayonAllumage;
+	}
+	
+	public String getOrientation (){
+		return orientation;
 	}
 	
 	public boolean isOnable (){

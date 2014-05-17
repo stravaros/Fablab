@@ -9,11 +9,12 @@ import javax.swing.JButton;
 
 import Capteur.Capteur;
 import EnvObjet.Meuble;
+import EnvObjet.Sofa;
 import EnvObjet.TV;
 //import EnvObjet.Meuble;
 //import EnvObjet.TV;
 import EnvObjet.Table;
-import EnvObjet.Window;
+import EnvObjet.Light;
 //import EnvObjet.Window;
 import Model.Mdl;
 import View.FrameMenu;
@@ -60,32 +61,58 @@ public class CtrlMenu implements MouseListener {
 	}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+	public void mousePressed(MouseEvent e)  {
+		int X;
+		int Y;
+		String orientation;
 		System.out.println("coucou "+((JButton)(e.getSource())).getText());
 				switch (((JButton)(e.getSource())).getText()){
 					case  "Table" :
-					System.out.println("table");
-					mdl.getListObjet().add(new Table(fm.getPosXFieldToInt(), fm.getPosYFieldToInt()));
+						System.out.println("table");
+						X = fm.getPosXFieldToInt();
+						Y = fm.getPosYFieldToInt();
+						orientation = fm.getOrientation();
+						mdl.getListObjet().add(new Table(X, Y, orientation) );
+						break;
+					case  "Sofa" :
+						System.out.println("sofa");
+						X = fm.getPosXFieldToInt();
+						Y = fm.getPosYFieldToInt();
+						orientation = fm.getOrientation();
+						mdl.getListObjet().add(new Sofa(X, Y, orientation) );
+						break;
+						
+					case  "Light" :
+						System.out.println("light");
+						X = fm.getPosXFieldToInt();
+						Y = fm.getPosYFieldToInt();
+						orientation = fm.getOrientation();
+						mdl.getListObjet().add(new Light(X, Y, orientation));
 						break;
 						
 					case  "Meuble" :
 						System.out.println("Meuble");
-						mdl.getListObjet().add(new Meuble(fm.getPosXFieldToInt(),fm.getPosYFieldToInt()));
-
-							break;
+						X = fm.getPosXFieldToInt();
+						Y = fm.getPosYFieldToInt();
+						orientation = fm.getOrientation();
+						mdl.getListObjet().add(new Meuble(X, Y, orientation));
+						break;
 							
 					case  "TV" :
 						System.out.println("TV");
-						mdl.getListObjet().add(new TV(fm.getPosXFieldToInt(), fm.getPosYFieldToInt()));
-
-							break;
+						X = fm.getPosXFieldToInt();
+						Y = fm.getPosYFieldToInt();
+						orientation = fm.getOrientation();
+						mdl.getListObjet().add(new TV(X, Y, orientation));
+						break;
 							
 					case  "Window" :
 						System.out.println("Window");
-						mdl.getListObjet().add(new Window(fm.getPosXFieldToInt(), fm.getPosYFieldToInt()));
-						
-							break;
+						X = fm.getPosXFieldToInt();
+						Y = fm.getPosYFieldToInt();
+						orientation = fm.getOrientation();
+						mdl.getListObjet().add(new Light(X, Y, orientation));
+						break;
 				
 					case  "Camera 1" :
 						mdl.changeCamera(0);

@@ -16,9 +16,23 @@ public class TV extends ObjetGen {
 	File tv = new File("ressources/textures/tv.jpg") ;
 	
 
-	public TV(int X, int Y) {
-		super(X, Y);
-		// TODO Auto-generated constructor stub
+	public TV(int X, int Y, String orientation) {
+		if (X > 15)
+			posX = 15;
+		else if (X < -15)
+			posX = -15;
+		else
+			posX = X;
+		
+		if (Y > 15)
+			posY = 15;
+		else if (Y < -15)
+			posY = -15;
+		else
+			posY = Y;
+		
+		this.orientation = orientation;
+		isOnable = false;
 		
 	}
 

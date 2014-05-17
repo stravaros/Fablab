@@ -41,8 +41,6 @@ public class Mdl extends Observable {
 	int parametreAnimation = 0;
 
 	private ArrayList<Capteur> listCapteur;
-
-
 	private ArrayList<ObjetGen> listObjet;
 
 	public Mdl() {
