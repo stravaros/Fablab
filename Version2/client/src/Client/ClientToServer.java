@@ -134,7 +134,6 @@ public class ClientToServer implements Runnable {
 			InterruptedException {
 		String delims = "[ ]+";
 		String[] tokens = null;
-		System.out.println("plop3");
 		DatagramPacket paquet = new DatagramPacket(buffer, buffer.length);
 		try {		
 			Thread.sleep(1000);
@@ -142,13 +141,10 @@ public class ClientToServer implements Runnable {
 			taille = paquet.getLength();
 			donnees = new String(paquet.getData(), 0, taille);
 			tokens = donnees.split(delims);
-			System.out.println("plop4");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("plop5");
 		if (tokens[0].equals("X")) {
-			System.out.println("plop6");
 			System.out.println("Coordonnees");
 			System.out.println(donnees);
 			sem1.acquire();
@@ -172,11 +168,9 @@ public class ClientToServer implements Runnable {
 	@Override
 	public void run() {
 		while (true) {
-			try {System.out.println("plop1");
+			try {
 				lectureXY();
-				System.out.println("plop2");
-
-			} catch (ExceptionSingularite e) {
+						} catch (ExceptionSingularite e) {
 				System.out.println("Erreur : Matrice singulière");
 				System.exit(-1);
 			} catch (InterruptedException e) {
