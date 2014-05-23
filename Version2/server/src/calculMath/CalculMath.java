@@ -14,7 +14,7 @@ public final class CalculMath {
 	private ArrayList<Capteur> tabCapteur;
 
 	// Coefficient de "proportionnalité" RSSI/rayon (distance)
-	private final static double K = 1/6.0;
+	private final static double K = 1/2.0;
 
 	// Tableau et matrice H
 	private double[][] tabH;
