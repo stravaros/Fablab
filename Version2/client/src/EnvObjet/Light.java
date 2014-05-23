@@ -8,6 +8,9 @@ import com.jogamp.opengl.util.texture.Texture;
 public class Light extends ObjetGen{
 	
 	public Light(int X, int Y, String orientation) {
+		this.orientation = orientation;
+		
+		
 		if (X > 19)
 			posX = 19;
 		else if (X < -19)
@@ -22,12 +25,12 @@ public class Light extends ObjetGen{
 		else
 			posY = Y;
 		
-		this.orientation = orientation;
+		
 		isOnable = false;
 	}
 
 	@Override
-	public void drawObjet(GL2 gl, GLUT glut,  Texture text) {
+	public void drawObjet(GL2 gl, GLUT glut,  Texture text, boolean on) {
 		gl.glPushMatrix();
 		gl.glTranslated(this.posX ,this.posY, 6f ); //(x ,z,y)
 

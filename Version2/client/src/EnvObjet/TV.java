@@ -32,12 +32,12 @@ public class TV extends ObjetGen {
 			posY = Y;
 		
 		this.orientation = orientation;
-		isOnable = false;
+		isOnable = true;
 		
 	}
 
 	@Override
-	public void drawObjet(GL2 gl, GLUT glut, Texture text) {
+	public void drawObjet(GL2 gl, GLUT glut, Texture text, boolean on) {
 		// TODO Auto-generated method stub
 		 //dessin du meuble
 	    gl.glBegin(GL2.GL_QUADS);
@@ -90,7 +90,7 @@ public class TV extends ObjetGen {
 			gl.glVertex3d(posX + 8,posY -3, 2); // Bottom Right
 			gl.glVertex3d(posX + 8,posY -1, 2); // Bottom Left
 		gl.glEnd();*/
-		
+		if (on == true){
 		try {
 			text_tv= TextureIO.newTexture(tv, true);
 			text_tv.enable(gl);
@@ -111,6 +111,8 @@ public class TV extends ObjetGen {
 			gl.glTexCoord2d(1, 0); gl.glVertex3d(posX + 6, posY-2, 2);  
 		gl.glEnd();
 		
+	
+	} 
 	}
 
 }

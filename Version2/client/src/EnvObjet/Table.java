@@ -29,7 +29,7 @@ public class Table extends ObjetGen {
 	}
 
 	@Override
-	public void drawObjet(GL2 gl, GLUT glut, Texture text_table) {
+	public void drawObjet(GL2 gl, GLUT glut, Texture text_table, boolean on) {
 		// TODO Auto-generated method stub
 		try {
 			

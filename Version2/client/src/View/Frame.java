@@ -80,8 +80,9 @@ public class Frame implements GLEventListener {
 		gl.glEnable(GL2.GL_TEXTURE_2D);
 		fond(gl);
 		mur(gl);
-		for (int i = 0; i<mdl.getListObjet().size(); i++)
-				mdl.getListObjet().get(i).drawObjet(gl, glut, text_table);
+		for (int i = 0; i<mdl.getListObjet().size(); i++){
+				mdl.getListObjet().get(i).drawObjet(gl, glut, text_table, isNearTo (mdl.getListObjet().get(i).getPosX(), mdl.getListObjet().get(i).getPosY()));
+		}
 		gl.glDisable(GL2.GL_TEXTURE_2D);
 		
 		//DESSIN DU CAPTEUR
@@ -187,6 +188,12 @@ public class Frame implements GLEventListener {
 	    glut.glutSolidTorus(0.5, 1.5 ,20, 20);    // middle teapot
 	    gl.glPopMatrix();
 
+	}
+	
+	private boolean isNearTo (int x, int y){
+		boolean ret = (((x - mdl.getCapteurMouvant().getCoordoneeX()) * (x - mdl.getCapteurMouvant().getCoordoneeX()))
+				+ ((y - mdl.getCapteurMouvant().getCoordoneeY()) * (y - mdl.getCapteurMouvant().getCoordoneeY())))<9 ;
+		return ret;
 	}
 	
 	@Override

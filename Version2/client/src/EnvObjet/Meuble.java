@@ -27,7 +27,7 @@ public class Meuble extends ObjetGen {
 	}
 
 	@Override
-	public void drawObjet(GL2 gl, GLUT glut,  Texture text) {
+	public void drawObjet(GL2 gl, GLUT glut,  Texture text, boolean on) {
 		if (orientation == "Horizontal"){
 		gl.glBegin(GL2.GL_QUADS);
 		gl.glColor3d(0, 0, 1); // set the color of the quad
@@ -145,5 +145,7 @@ public class Meuble extends ObjetGen {
 			gl.glEnd();
 		}
 	}
+
+
 
 }
