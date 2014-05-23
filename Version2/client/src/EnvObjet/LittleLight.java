@@ -5,15 +5,11 @@ import javax.media.opengl.GL2;
 import com.jogamp.opengl.util.gl2.GLUT;
 import com.jogamp.opengl.util.texture.Texture;
 
-public class Sofa extends ObjetGen{
-	
-	public Sofa (int X, int Y, String orientation){
-		
-	}
+public class LittleLight extends ObjetGen {
 
 	@Override
 	public void drawObjet(GL2 gl, GLUT glut, Texture tex, boolean on) {
-		
+		// TODO Auto-generated method stub
 		
 	}
 

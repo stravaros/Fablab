@@ -32,6 +32,6 @@ public abstract class ObjetGen {
 		return isOnable;
 	}
 	
-	public abstract void drawObjet (GL2 gl, GLUT glut,  Texture tex);
+	public abstract void drawObjet (GL2 gl, GLUT glut,  Texture tex, boolean on);
 	
 }
