@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 import javax.swing.JButton;
 
 import Capteur.Capteur;
+import EnvObjet.Chaise;
 import EnvObjet.Laptop;
 import EnvObjet.LittleLight;
 import EnvObjet.Meuble;
@@ -51,6 +52,11 @@ public class CtrlMenu implements MouseListener {
 							mdl.setHasFloatingObject(true);
 							mdl.setFloatingObject(new Table());
 						break;
+					case  "Chaise" :
+						orientation = fm.getOrientation();
+						mdl.setHasFloatingObject(true);
+						mdl.setFloatingObject(new Chaise());
+					break;
 					case  "Sofa" :
 							orientation = fm.getOrientation();
 							mdl.setHasFloatingObject(true);

@@ -247,9 +247,9 @@ public class Frame implements GLEventListener {
 	    gl.glPopMatrix();*/
 		
 		gl.glPushMatrix();
-		gl.glTranslated(mdl.getCapteurMouvant().getCoordoneeX() ,mdl.getCapteurMouvant().getCoordoneeY(), 5f );
+		gl.glTranslated(mdl.getCapteurMouvant().getCoordoneeX() ,mdl.getCapteurMouvant().getCoordoneeY(), 3f );
 		gl.glRotated(90,0.0,1.0,0.0);
-		gl.glScaled(0.10, 0.10, 0.10);
+		gl.glScaled(0.07, 0.07, 0.07);
 		gl.glPushAttrib(GL2.GL_COLOR_BUFFER_BIT);
 		gl.glColor3f(0, 0, 1);
 		drawPeople(gl, glut);

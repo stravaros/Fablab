@@ -23,6 +23,7 @@ public class FrameMenu extends JPanel{
 	private AbstractButton turnON;
 	
 	private AbstractButton table;
+	private AbstractButton chaise;
 	private AbstractButton teapot;
 	private AbstractButton Sofa;
 	private AbstractButton TV;
@@ -40,7 +41,7 @@ public class FrameMenu extends JPanel{
 	
 		//Placer meuble
 		JPanel panelMeuble = new JPanel(new BorderLayout());
-		JPanel panelMeubleList = new JPanel (new GridLayout(9, 1));
+		JPanel panelMeubleList = new JPanel (new GridLayout(10, 1));
 		//JPanel panelPositionMeuble = new JPanel(new GridLayout (3,1));
 		
 		posX = new JTextField();
@@ -63,6 +64,11 @@ public class FrameMenu extends JPanel{
 	    panelMeubleList.add(table);
 		groupMeuble.add(table);
 		table.addMouseListener(new CtrlMenu(mdl, this));
+		
+		chaise = new JButton("Chaise");
+	    panelMeubleList.add(chaise);
+		groupMeuble.add(chaise);
+		chaise.addMouseListener(new CtrlMenu(mdl, this));
 		
 		teapot = new JButton("Teapot");
 	    panelMeubleList.add(teapot);
