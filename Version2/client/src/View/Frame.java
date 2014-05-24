@@ -23,6 +23,8 @@ public class Frame implements GLEventListener {
 	final int[] texId = new int[1];
 	private Mdl mdl;
 	GLAutoDrawable drawable;
+	GLUT glut = new GLUT();	//INSTANCIATION GLUT
+	GLU glu = new GLU(); 
 	GLUquadric qobj;
 	double longueur;
 	double largeur;
@@ -33,13 +35,18 @@ public class Frame implements GLEventListener {
 	File bois = new File("ressources/textures/parquet_comp.jpg") ;
 	File mur = new File("ressources/textures/mur_comp.jpg") ;
 	File fenetre = new File("ressources/textures/fenetre.jpg") ;
-	
+	GL2 gl;
+	private boolean isTextureLoaded = false;
 
 	public Frame(GLAutoDrawable gld, Mdl m) {
 		this.drawable = gld;
 		this.mdl = m;
 		this.longueur = 20;
 		this.largeur = 20;
+		
+		//gl = drawable.getGL().getGL2();
+		
+
 	}
 
 	// IMPLEMENTE ELENVENTLISTENER
@@ -47,9 +54,10 @@ public class Frame implements GLEventListener {
 	public void display(GLAutoDrawable arg0) {
 		// TODO Auto-generated method stub
 		
-		GL2 gl = drawable.getGL().getGL2();
-		GLUT glut = new GLUT();	//INSTANCIATION GLUT
-		GLU glu = new GLU();   
+		gl = drawable.getGL().getGL2();
+		if (!getIsTextureLoaded())
+			loadedTexture();
+		
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT);
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT); 
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
@@ -98,6 +106,28 @@ public class Frame implements GLEventListener {
 		gl.glPopAttrib();
 		}
 	
+	public boolean getIsTextureLoaded (){
+		return isTextureLoaded ;
+	}
+	
+	public void loadedTexture () {
+		try {
+			
+			
+			text_mur = TextureIO.newTexture(mur, true);
+			text_fenetre= TextureIO.newTexture(fenetre, true);
+			text_fond = TextureIO.newTexture(bois, true);
+			
+		} catch (GLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+		isTextureLoaded = true;
+	}
+	
 	public double [] mousePosition (GL2 gl, GLU glu){
 		int x = mdl.getMouseX();
 		int y = mdl.getMouseY();
@@ -129,18 +159,9 @@ public class Frame implements GLEventListener {
 
 	public void fond (GL2 gl){
 		gl.glPushAttrib(GL2.GL_COLOR_BUFFER_BIT);
-		try {
-			text_fond = TextureIO.newTexture(bois, true);
-			text_fond.enable(gl);
-			text_fond.bind(gl);
-		} catch (GLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		};
-
+		
+		text_fond.enable(gl);
+		text_fond.bind(gl);
 		gl.glBegin(GL2.GL_QUADS);
 			gl.glColor4d(1, 1, 1, 1); // set the color of the quad,,
 				gl.glTexCoord2d(0, 0); 		gl.glVertex3d(-longueur, -largeur, 0); // Top Left
@@ -149,24 +170,12 @@ public class Frame implements GLEventListener {
 				gl.glTexCoord2d(0, 1);  	gl.glVertex3d(-longueur, largeur, 0); // Bottom Left
 			gl.glEnd();
 			gl.glPopAttrib();
-			text_fond.disable(gl);
 	}
 	
 	public void mur (GL2 gl){
 		gl.glPushAttrib(GL2.GL_COLOR_BUFFER_BIT);
-		try {
-			text_mur = TextureIO.newTexture(mur, true);
-			text_mur.enable(gl);
-
-			
-		} catch (GLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		};
-		
+		text_mur.enable(gl);
+		text_mur.bind(gl);
 		gl.glBegin(GL2.GL_QUADS);
 			gl.glColor3d(1, 1, 1); // set the color of the quad
 			gl.glTexCoord2d(0, 0); gl.glVertex3d(-longueur, -largeur, 0); 		
@@ -199,18 +208,10 @@ public class Frame implements GLEventListener {
 			gl.glTexCoord2d(1, 1); gl.glVertex3d(longueur, largeur, 10); 	
 			gl.glTexCoord2d(0, 1); gl.glVertex3d(longueur, largeur, 0);  
 		gl.glEnd();
-		text_mur.disable(gl);
-		try {
-			text_fenetre= TextureIO.newTexture(fenetre, true);
-			text_fenetre.enable(gl);
-			text_fenetre.bind(gl);
-		} catch (GLException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		
-		
-		
+		text_fenetre.enable(gl);
+		text_fenetre.bind(gl);
 		gl.glBegin(GL2.GL_QUADS);//fenetre
 		gl.glColor3d(1, 0, 0); // set the color of the quad
 			gl.glVertex3d(-longueur, -largeur/2-1, 2); 		
@@ -227,7 +228,6 @@ public class Frame implements GLEventListener {
 			gl.glTexCoord2d(1, 0); gl.glVertex3d(-longueur, largeur/3, 3);  
 		gl.glEnd();
 		gl.glPopAttrib();
-		text_fenetre.disable(gl);
 	}
 	
 	private void capteur (GL2 gl,  GLUT glut){
@@ -247,7 +247,7 @@ public class Frame implements GLEventListener {
 	    gl.glPopMatrix();*/
 		
 		gl.glPushMatrix();
-		gl.glTranslated(mdl.getCapteurMouvant().getCoordoneeX() ,mdl.getCapteurMouvant().getCoordoneeY(), 0f );
+		gl.glTranslated(mdl.getCapteurMouvant().getCoordoneeX() ,mdl.getCapteurMouvant().getCoordoneeY(), 5f );
 		gl.glRotated(90,0.0,1.0,0.0);
 		gl.glScaled(0.10, 0.10, 0.10);
 		gl.glPushAttrib(GL2.GL_COLOR_BUFFER_BIT);
