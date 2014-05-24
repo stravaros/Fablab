@@ -149,7 +149,7 @@ public class Frame implements GLEventListener {
 				gl.glTexCoord2d(0, 1);  	gl.glVertex3d(-longueur, largeur, 0); // Bottom Left
 			gl.glEnd();
 			gl.glPopAttrib();
-
+			text_fond.disable(gl);
 	}
 	
 	public void mur (GL2 gl){
@@ -199,7 +199,7 @@ public class Frame implements GLEventListener {
 			gl.glTexCoord2d(1, 1); gl.glVertex3d(longueur, largeur, 10); 	
 			gl.glTexCoord2d(0, 1); gl.glVertex3d(longueur, largeur, 0);  
 		gl.glEnd();
-		
+		text_mur.disable(gl);
 		try {
 			text_fenetre= TextureIO.newTexture(fenetre, true);
 			text_fenetre.enable(gl);
@@ -227,6 +227,7 @@ public class Frame implements GLEventListener {
 			gl.glTexCoord2d(1, 0); gl.glVertex3d(-longueur, largeur/3, 3);  
 		gl.glEnd();
 		gl.glPopAttrib();
+		text_fenetre.disable(gl);
 	}
 	
 	private void capteur (GL2 gl,  GLUT glut){
@@ -244,11 +245,11 @@ public class Frame implements GLEventListener {
 		gl.glColor3d(0, 1, 1);
 	    glut.glutSolidTorus(0.5, 1.5 ,20, 20);    // middle teapot
 	    gl.glPopMatrix();*/
-		gl.glPushMatrix();
 		
-		gl.glScaled(0.10, 0.10, 0.10);
-		gl.glTranslated(mdl.getCapteurMouvant().getCoordoneeX() ,mdl.getCapteurMouvant().getCoordoneeY(), 30f );
+		gl.glPushMatrix();
+		gl.glTranslated(mdl.getCapteurMouvant().getCoordoneeX() ,mdl.getCapteurMouvant().getCoordoneeY(), 0f );
 		gl.glRotated(90,0.0,1.0,0.0);
+		gl.glScaled(0.10, 0.10, 0.10);
 		gl.glPushAttrib(GL2.GL_COLOR_BUFFER_BIT);
 		gl.glColor3f(0, 0, 1);
 		drawPeople(gl, glut);

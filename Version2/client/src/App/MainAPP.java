@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -105,6 +106,7 @@ public class MainAPP extends JFrame implements Observer {
 		// js.setResizeWeight(0.3);
 		add(js);
 		js.setOneTouchExpandable(false);
+		
 
 	}
 

@@ -95,7 +95,7 @@ public class TV extends ObjetGen {
 				gl.glTexCoord2d(1, 1); gl.glVertex3d(posX + 2, posY, 5); 	
 				gl.glTexCoord2d(1, 0); gl.glVertex3d(posX + 2, posY, 2);  
 			gl.glEnd();
-			
+			text_tv.disable(gl);
 			gl.glDisable(GL2.GL_TEXTURE_2D);
 		} 
 		
