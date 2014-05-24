@@ -42,6 +42,14 @@ public class Mdl extends Observable {
 
 	private ArrayList<Capteur> listCapteur;
 	private ArrayList<ObjetGen> listObjet;
+	
+	private ObjetGen floatingObject;
+	private boolean hasFloatingObject =false;
+	private int angleElevationForFloatingObject = 0;
+	private int angleAzimuthForFloatingObject = 0;
+	private int distanceForFloatingObject = 50;
+	private int angleDirectionForFloatingObject = 0;
+	private int hauteurForFloatingObject = 0;
 
 	public Mdl() {
 		setAngleElevation(0.0f);
@@ -97,8 +105,11 @@ public class Mdl extends Observable {
 	}
 
 	public void moveMouse(int newMouseX, int newMouseY, boolean[] buttonPressed) {
-		// TODO Auto-generated method stub
-
+		if (hasFloatingObject){
+			mouseX = newMouseX;// ON MET A JOUR ET ON NOTIFIE
+			mouseY = newMouseY;
+			notifyChanges("camera");
+		}
 	}
 
 	public void drawTable() {
@@ -209,6 +220,49 @@ public class Mdl extends Observable {
 	public int getParametreAnimation() {
 		return parametreAnimation;
 	}
+	
+
+	public int getAngleElevationForFloatingObject() {
+		return angleElevationForFloatingObject;
+	}
+
+	public void setAngleElevationForFloatingObject(
+			int angleElevationForFloatingObject) {
+		this.angleElevationForFloatingObject = angleElevationForFloatingObject;
+	}
+
+	public int getAngleAzimuthForFloatingObject() {
+		return angleAzimuthForFloatingObject;
+	}
+
+	public void setAngleAzimuthForFloatingObject(int angleAzimuthForFloatingObject) {
+		this.angleAzimuthForFloatingObject = angleAzimuthForFloatingObject;
+	}
+
+	public int getDistanceForFloatingObject() {
+		return distanceForFloatingObject;
+	}
+
+	public void setDistanceForFloatingObject(int distanceForFloatingObject) {
+		this.distanceForFloatingObject = distanceForFloatingObject;
+	}
+
+	public int getAngleDirectionForFloatingObject() {
+		return angleDirectionForFloatingObject;
+	}
+
+	public void setAngleDirectionForFloatingObject(
+			int angleDirectionForFloatingObject) {
+		this.angleDirectionForFloatingObject = angleDirectionForFloatingObject;
+	}
+
+	public int getHauteurForFloatingObject() {
+		return hauteurForFloatingObject;
+	}
+
+	public void setHauteurForFloatingObject(int hauteurForFloatingObject) {
+		this.hauteurForFloatingObject = hauteurForFloatingObject;
+	}
 
 	// SETTER
 	public void setAngleElevation(float angleElevation) {
@@ -299,6 +353,24 @@ public class Mdl extends Observable {
 	}
 	
 	
+	
+	public ObjetGen getFloatingObject() {
+		return floatingObject;
+	}
+
+	public void setFloatingObject(ObjetGen floatingObject) {
+		this.floatingObject = floatingObject;
+	}
+	
+
+	public boolean isHasFloatingObject() {
+		return hasFloatingObject;
+	}
+
+	public void setHasFloatingObject(boolean hasFloatingObject) {
+		this.hasFloatingObject = hasFloatingObject;
+	}
+
 	public void connect() {
 		if (!connected) {
 			connected = true;

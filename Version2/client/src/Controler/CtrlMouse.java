@@ -33,12 +33,17 @@ public class CtrlMouse implements MouseListener, MouseMotionListener{
 		// TODO Auto-generated method stub
 		//System.err.println("MouseMoved");
 		mdl.moveMouse(arg0.getX(), arg0.getY(), buttonPressed);
-	//	System.out.println(arg0.getX()+" "+ arg0.getY());
+		//System.out.println(arg0.getX()+" "+ arg0.getY());
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
+		if (mdl.isHasFloatingObject()){
+			mdl.setHasFloatingObject(false);
+			mdl.getListObjet().add(mdl.getFloatingObject());
+			mdl.notifyChanges("camera");
+		}
 		
 	}
 

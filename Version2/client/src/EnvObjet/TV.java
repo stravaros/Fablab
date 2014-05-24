@@ -15,7 +15,10 @@ public class TV extends ObjetGen {
 	private Texture text_tv;
 	File tv = new File("ressources/textures/tv.jpg") ;
 	
-
+	public TV (String orientation){
+		this.orientation= orientation;
+	}
+	
 	public TV(int X, int Y, String orientation) {
 		if (X > 15)
 			posX = 15;

@@ -53,6 +53,7 @@ public class Frame implements GLEventListener {
 		
 		GL2 gl = drawable.getGL().getGL2();
 		GLUT glut = new GLUT();	//INSTANCIATION GLUT
+		GLU glu = new GLU();   
 		try {
 			text_fond = TextureIO.newTexture(bois, true);
 			text_mur = TextureIO.newTexture(mur, true);
@@ -63,18 +64,24 @@ public class Frame implements GLEventListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);  
+		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT); 
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();     /* réinitialiation de la matrice de GL_MODELVIEW */
 		
+		if (mdl.isHasFloatingObject()){
+			gl.glTranslatef(0.0f, 0.0f, -50);
+			gl.glTranslatef(0.0f, 0.0f, 0.0f);		
+			gl.glRotatef(0.0f, 1.0f, 0.0f, 0.0f);
+			gl.glRotatef(0.0f, 0.0f, 1.0f, 0.0f);
+			gl.glRotatef(0.0f, 0.0f, 0.0f, 1.0f);
 
-		gl.glTranslatef(0.0f, 0.0f, -mdl.getDistance());
-		gl.glTranslatef(0.0f, mdl.getHauteur(), 0.0f);
-		gl.glRotatef(mdl.getAngleElevation(), 1.0f, 0.0f, 0.0f);
-		gl.glRotatef(mdl.getAngleAzimuth(), 0.0f, 1.0f, 0.0f);
-		gl.glRotatef(mdl.getAngleDirection(), 0.0f, 0.0f, 1.0f);
+		}else {
+			gl.glTranslatef(0.0f, 0.0f, -mdl.getDistance());
+			gl.glTranslatef(0.0f, mdl.getHauteur(), 0.0f);		
+			gl.glRotatef(mdl.getAngleElevation(), 1.0f, 0.0f, 0.0f);
+			gl.glRotatef(mdl.getAngleAzimuth(), 0.0f, 1.0f, 0.0f);
+			gl.glRotatef(mdl.getAngleDirection(), 0.0f, 0.0f, 1.0f);
+		}
 		
 		//DESSIN DE LA SCENNE
 		gl.glEnable(GL2.GL_TEXTURE_2D);
@@ -83,11 +90,49 @@ public class Frame implements GLEventListener {
 		for (int i = 0; i<mdl.getListObjet().size(); i++){
 				mdl.getListObjet().get(i).drawObjet(gl, glut, text_table, isNearTo (mdl.getListObjet().get(i).getPosX(), mdl.getListObjet().get(i).getPosY()));
 		}
+		if (mdl.isHasFloatingObject()){
+			double [] tmp = mousePosition (gl, glu); 
+			mdl.getFloatingObject().setPosX(-(int)tmp[0]);
+			mdl.getFloatingObject().setPosY(-(int)tmp[1]);
+			mdl.getFloatingObject().drawObjet(gl, glut, text_table, isNearTo (-(int)tmp[0], -(int)tmp[1]));
+		}
+		
 		gl.glDisable(GL2.GL_TEXTURE_2D);
 		
 		//DESSIN DU CAPTEUR
 		capteur(gl, glut);
+		
+		//mousePosition (gl, glu);	
 	}
+	
+	public double [] mousePosition (GL2 gl, GLU glu){
+		int x = mdl.getMouseX();
+		int y = mdl.getMouseY();
+
+		int viewport[] = new int[4];
+	    double mvmatrix[] = new double[16];
+	    double projmatrix[] = new double[16];
+	    int realy = 0;// GL y coord pos
+	    double wcoord[] = new double[4];// wx, wy, wz;// returned xyz coords
+		
+		gl.glGetIntegerv(GL2.GL_VIEWPORT, viewport, 0);
+        gl.glGetDoublev(GL2.GL_MODELVIEW_MATRIX, mvmatrix, 0);
+        gl.glGetDoublev(GL2.GL_PROJECTION_MATRIX, projmatrix, 0);
+        realy = viewport[3] - (int) y - 1;
+
+        glu.gluUnProject((double) x, (double) realy,  1, //
+            mvmatrix, 0,
+            projmatrix, 0,
+            viewport, 0, 
+            wcoord, 0);
+
+	        double t  = (50) /(wcoord[2]-50); // on calcule t en fonction de la position de la camera(Az) et de (Bz)
+	        double Mx = t *(wcoord[0]-0)+ 0; //on calcule les positions de M  avec t
+	        double My = t *(wcoord[1]-0)+0 ;
+        	//System.out.println("World coords at z=1.0 are (" + Mx + ", " + My + ", " + Mz+" ");
+                        return new double [] {Mx, My};
+	}
+	
 
 	public void fond (GL2 gl){
 		try {
@@ -181,13 +226,140 @@ public class Frame implements GLEventListener {
 		    glut.glutSolidOctahedron();    
 		    gl.glPopMatrix();
 		}
-		
+		/*
 		gl.glPushMatrix();
 		gl.glTranslated(mdl.getCapteurMouvant().getCoordoneeX() ,mdl.getCapteurMouvant().getCoordoneeY(), 3f ); //(x ,z,y)
 		gl.glColor3d(0, 1, 1);
 	    glut.glutSolidTorus(0.5, 1.5 ,20, 20);    // middle teapot
-	    gl.glPopMatrix();
+	    gl.glPopMatrix();*/
+		gl.glPushMatrix();
+		gl.glColor3f(1.0f, 0.0f, 0.0f);
+		gl.glScaled(0.12, 0.12, 0.12);
+		gl.glTranslated(mdl.getCapteurMouvant().getCoordoneeX() ,mdl.getCapteurMouvant().getCoordoneeY(), 18f );
+		gl.glRotated(90,0.0,1.0,0.0);
+		drawPeople(gl, glut);
+		gl.glPopMatrix();
 
+	}
+	
+	private void drawPeople (GL2 gl,  GLUT glu) {
+		//le tronc
+		gl.glPushMatrix();
+		
+		gl.glScaled(30.0,6.0,16.0);
+		//gl.glScaled(4.0,15.,30.0);
+		glu.glutSolidCube(1);
+		gl.glPopMatrix();
+		//les bras
+		   //bras gauche
+		gl.glPushMatrix();
+		gl.glTranslated(-15.0,0.0,-13.0);
+		gl.glRotated(180,1.0,0.0,0.0);
+		DessineBras(gl, glu);
+		gl.glPopMatrix();
+		   //bras droit
+		gl.glPushMatrix();
+		gl.glTranslated(-15.0,0.0,13.0);
+		gl.glRotated(180,1.0,0.0,0.0);
+		      DessineBras(gl, glu);
+		      gl.glPopMatrix();
+		//les jambes
+		   //jambe gauche
+		      gl.glPushMatrix();
+		      gl.glTranslated(12.0,0.0,-7.0);
+		      DessineJambe(gl, glu);
+		      gl.glPopMatrix();
+		   //jambe droite   
+		      gl.glPushMatrix();
+		      gl.glTranslated(12.0,0.0,7.0);
+		      DessineJambe(gl, glu);
+		      gl.glPopMatrix();
+		//la tete
+		      gl.glPushMatrix();
+		      gl.glTranslated(-23.0,0.0,0.0);
+		      //glRotatef(paramG.angle_tete,1.0,0.0,0.0);
+		      gl.glRotated(90,0.0,1.0,0.0);
+		      glu.glutSolidSphere(8.0,16,12);
+		      gl.glPopMatrix();
+		
+
+	}
+
+
+
+	void DessineAvantBras(GL2 gl, GLUT glu)
+	{
+		gl.glPushMatrix();
+		gl.glScaled(18.0,3.0,5.0);
+	      glu.glutSolidCube(1);      
+	      gl.glPopMatrix();
+	      gl.glPushMatrix();     
+	      //glTranslatef(7.0,5.0,0.0);
+	      //gl.glRotated(param.angle_twistmain+180,1.0,0.0,0.0);
+	      //gl.glRotated(param.angle_poignet,0.0,0.0,1.0);
+	      gl.glTranslated(9.0,0.0,0.0);
+	      //glRotatef(90,1.0,0.0,1.0);
+	      //glRotatef(90,1.0,0.0,0.0);
+	     // DessineMain(gl, glu);
+	      gl.glPopMatrix();
+	}
+	
+	void DessineBras(GL2 gl, GLUT glu)
+	{
+		gl.glPushMatrix();
+		//gl.glRotatef(param.angle_twistepaule,0.0,1.0,0.0);
+		//gl.glRotatef(param.angle_epaule,0.0,0.0,1.0);
+		gl.glTranslated(8.0,0.0,0.0);
+		gl.glPushMatrix();
+		gl.glScaled(18.0,4.0,6.0);
+	         glu.glutSolidCube(1);      
+	         gl.glPopMatrix();
+	         gl.glPushMatrix();
+	         gl.glTranslated(9.0,0.0,0.0);
+	         //gl.glRotatef(param.angle_twistcoude,0.0,1.0,0.0);
+	         //gl.glRotatef(param.angle_coude,0.0,0.0,1.0);
+	         gl.glTranslated(9.0,0.0,0.0);
+	         DessineAvantBras(gl, glu);
+	         gl.glPopMatrix();
+	   
+	         gl.glPopMatrix();
+	}
+	
+	
+	void DessineJambe(GL2 gl, GLUT glu)
+	{
+		gl.glPushMatrix();
+		//gl.glRotatef(param.angle_twistjambes,0.0,1.0,0.0);
+		//gl.glRotatef(param.angle_jambe,0.0,0.0,1.0);
+		gl.glTranslated(12.0,0.0,0.0);
+	      //dessin de la cuisse
+		gl.glPushMatrix();
+		gl.glScaled(18.0,4.0,6.0);
+	         glu.glutSolidCube(1);  
+	         gl.glPopMatrix();
+	         gl.glPushMatrix();
+	         gl.glTranslated(8.0,0.0,0.0);
+	         //gl.glRotatef(param.angle_genoux,0.0,0.0,1.0);
+	         gl.glTranslated(8.0,0.0,0.0);
+	         //dessin du reste de la jambe
+	         gl.glPushMatrix();
+	         //gl.glRotatef(param.angle_genoux,0.0,0.0,1.0);
+	         gl.glScaled(14.0,4.0,6.0);
+	         glu.glutSolidCube(1);  
+	            gl.glPopMatrix();
+	         /*//dessin du pied
+	            gl.glPushMatrix();
+	            gl.glTranslated(3.0,0.0,0.0);
+	            //gl.glRotatef(param.angle_pied,0.0,0.0,1.0);
+	            gl.glTranslated(3.0,0.0,0.0);
+	            gl.glPushMatrix();
+	            //gl.glRotatef(param.angle_pied,0.0,0.0,1.0);
+	            gl.glScaled(10.0,2.0,5.0);
+	            glu.glutWireCube(1);      
+	            gl.glPopMatrix();
+	            gl.glPopMatrix();      */   
+	         gl.glPopMatrix();
+	      gl.glPopMatrix();
 	}
 	
 	private boolean isNearTo (int x, int y){
@@ -221,6 +393,7 @@ public class Frame implements GLEventListener {
 		//update of width and height 3d frame
 		mdl.setMouseYMax(width);
 		mdl.setMouseXMax(height);
+		//final GL2 gl = glDrawable.getGL().getGL2();
 		initViewProjection(glDrawable, x, y, width, height);
 	}
 
@@ -229,7 +402,7 @@ public class Frame implements GLEventListener {
 		GLUgl2 glu = new GLUgl2();
 		gl.glMatrixMode(GL2.GL_PROJECTION);
 		gl.glLoadIdentity();
-		glu.gluPerspective(50.0f, (float)width/(float)height, 0.1, 200.0);
+		glu.gluPerspective(50, (float)width/(float)height, 0.1, 200.0);
 		System.out.println("proportion"+(float)width/(float)height);
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();

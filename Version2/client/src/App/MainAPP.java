@@ -55,6 +55,7 @@ public class MainAPP extends JFrame implements Observer {
 	private static final long serialVersionUID = 9167791876718956063L;
 
 	private static GLCanvas cv = null;
+	private static JPanel pan = null;
 	private Mdl mdl = new Mdl();
 
 	public MainAPP() {
@@ -75,7 +76,7 @@ public class MainAPP extends JFrame implements Observer {
 		cv.addMouseListener(ctrlM);
 		cv.addKeyListener(ctrlK);
 
-		JPanel pan = new FrameMenu(mdl);
+		pan = new FrameMenu(mdl);
 		// add(cv);
 		JSplitPane js = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pan, cv) {
 			private final int location = 200;// largeur du JFrameMenu

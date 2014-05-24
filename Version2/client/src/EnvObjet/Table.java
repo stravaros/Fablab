@@ -8,6 +8,9 @@ import com.jogamp.opengl.util.texture.Texture;
 
 public class Table extends ObjetGen {
 	
+	public Table (String orientation){
+		this.orientation= orientation;
+	}
 
 	public Table (int X, int Y, String orientation){
 		if (X > 15)
@@ -80,14 +83,7 @@ public class Table extends ObjetGen {
 			gl.glVertex3d(posX +3, posY +4, 2); // Bottom Right
 			gl.glVertex3d(posX +4, posY +4, 2); // Bottom Left
 		gl.glEnd();
-	
-		//dessin de la teapot
-		gl.glPushMatrix();
-		gl.glRotatef(90f ,1f, 0f, 0f);
-		gl.glTranslatef(posX ,3f, -posY); //(x ,z,y)
-		gl.glColor3d(0, 1, 0);
-	    glut.glutSolidTeapot(1.5);     // middle teapot
-	    gl.glPopMatrix();
+
 	    
 	    if (orientation == "Horizontal"){
 	    //dessin de la chaise

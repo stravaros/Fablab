@@ -20,13 +20,23 @@ public class FrameMenu extends JPanel{
 	private JTextField posY;
 	private JComboBox orientation;
 	
+	private AbstractButton table;
+	private AbstractButton teapot;
+	private AbstractButton Sofa;
+	private AbstractButton TV;
+	private AbstractButton window;
+	private AbstractButton music;
+	private AbstractButton light;
+	private AbstractButton littleLight;
+	private AbstractButton meuble;
+	
 	public FrameMenu (Mdl m) {
 		super(new BorderLayout());
 		mdl = m;
 	
 		//Placer meuble
 		JPanel panelMeuble = new JPanel(new BorderLayout());
-		JPanel panelMeubleList = new JPanel (new GridLayout(6, 1));
+		JPanel panelMeubleList = new JPanel (new GridLayout(8, 1));
 		JPanel panelPositionMeuble = new JPanel(new GridLayout (3,1));
 		
 		posX = new JTextField();
@@ -43,32 +53,42 @@ public class FrameMenu extends JPanel{
 	    
 		ButtonGroup groupMeuble = new ButtonGroup();
 		
-	    AbstractButton table = new JButton("Table");
+	    table = new JButton("Table");
 	    panelMeubleList.add(table);
 		groupMeuble.add(table);
 		table.addMouseListener(new CtrlMenu(mdl, this));
 		
-		AbstractButton Sofa = new JButton("Sofa");
+		teapot = new JButton("Teapot");
+	    panelMeubleList.add(teapot);
+		groupMeuble.add(teapot);
+		teapot.addMouseListener(new CtrlMenu(mdl, this));
+		
+		Sofa = new JButton("Sofa");
 	    panelMeubleList.add(Sofa);
 		groupMeuble.add(Sofa);
 		Sofa.addMouseListener(new CtrlMenu(mdl, this));
 		
-		AbstractButton TV = new JButton("TV");
+		TV = new JButton("TV");
 		panelMeubleList.add(TV);
 		groupMeuble.add(TV);
 		TV.addMouseListener(new CtrlMenu(mdl, this));
 		
-	    AbstractButton window = new JButton("Light");
+	    window = new JButton("Light");
 	    panelMeubleList.add(window);
 		groupMeuble.add(window);
 		window.addMouseListener(new CtrlMenu(mdl, this));
 		
-		AbstractButton meuble = new JButton("Meuble");
+		littleLight = new JButton("Little Light");
+	    panelMeubleList.add(littleLight);
+		groupMeuble.add(littleLight);
+		littleLight.addMouseListener(new CtrlMenu(mdl, this));
+		
+		meuble = new JButton("Meuble");
 		panelMeubleList.add(meuble);
 		groupMeuble.add(meuble);
 		meuble.addMouseListener(new CtrlMenu(mdl, this));
 		
-		AbstractButton music = new JButton("Music");
+		music = new JButton("Music");
 		panelMeubleList.add(music);
 		groupMeuble.add(music);
 		music.addMouseListener(new CtrlMenu(mdl, this));
@@ -105,6 +125,8 @@ public class FrameMenu extends JPanel{
   	    this.add(panelCamera, BorderLayout.SOUTH);
 	    
 	}
+	
+
 	
 	
 	public String getOrientation(){

@@ -6,6 +6,7 @@ import com.jogamp.opengl.util.gl2.GLUT;
 import com.jogamp.opengl.util.texture.Texture;
 
 public abstract class ObjetGen {
+
 	protected int posX;
 	protected int posY;
 	protected int rayonAllumage = 3;
@@ -18,6 +19,14 @@ public abstract class ObjetGen {
 	
 	public int getPosY(){
 		return posY;
+	}
+	
+	public void setPosX(int posX) {
+		this.posX = posX;
+	}
+
+	public void setPosY(int posY) {
+		this.posY = posY;
 	}
 	
 	public int getRayonAllumage (){
