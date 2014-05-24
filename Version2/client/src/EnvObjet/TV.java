@@ -14,6 +14,7 @@ public class TV extends ObjetGen {
 
 	private Texture text_tv;
 	File tv = new File("ressources/textures/tv.jpg") ;
+	private boolean isLoadedTexture = false;
 	
 	public TV (){
 		this.orientation= 0;
@@ -75,17 +76,10 @@ public class TV extends ObjetGen {
 			gl.glVertex3d(posX + 8,posY -1, 2); // Bottom Left
 		gl.glEnd();*/
 		if (on == true){
-			gl.glEnable(GL2.GL_TEXTURE_2D);
-			try {
-				text_tv= TextureIO.newTexture(tv, true);
-				text_tv.enable(gl);
-				text_tv.bind(gl);
-			} catch (GLException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-					
-					
+			if (!getIsLoadedTexture())
+				loadedTexture(gl);
+			text_tv.enable(gl);
+			text_tv.bind(gl);	
 			
 			//texture gl.glBegin(GL2.GL_QUADS);//fenetre
 			 gl.glBegin(GL2.GL_QUADS);
@@ -100,5 +94,20 @@ public class TV extends ObjetGen {
 		} 
 		
 	}
+	
+	public void loadedTexture (GL2 gl){
+		gl.glEnable(GL2.GL_TEXTURE_2D);
+		try {
+			text_tv= TextureIO.newTexture(tv, true);
+			
+		} catch (GLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		isLoadedTexture = true;
+	}
 
+	public boolean getIsLoadedTexture () {
+		return isLoadedTexture;
+	}
 }

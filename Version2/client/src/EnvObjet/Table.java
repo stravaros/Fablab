@@ -21,25 +21,14 @@ public class Table extends ObjetGen {
 	@Override
 	public void drawObjet(GL2 gl, GLUT glut, boolean on) {
 		// TODO Auto-generated method stub
-		gl.glEnable(GL2.GL_TEXTURE_2D);
-		try {
-			text_table= TextureIO.newTexture(table, true);
-			text_table.enable(gl);
-			text_table.bind(gl);
-		} catch (GLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		};
+		
 		gl.glBegin(GL2.GL_QUADS);
 		gl.glColor3f(1, 1, 1); // set the color of the quad
 		
-		gl.glTexCoord2d(0, 0); gl.glVertex3d(posX -4, posY -4, 2); // Top Left
-		gl.glTexCoord2d(1, 0); gl.glVertex3d(posX + 4, posY -4, 2); // Top Right
-		gl.glTexCoord2d(1, 1); gl.glVertex3d(posX + 4, posY + 4, 2); // Bottom Right
-		gl.glTexCoord2d(0, 1); gl.glVertex3d(posX -4, posY + 4, 2); // Bottom Left
+			gl.glVertex3d(posX -4, posY -4, 2); // Top Left
+			gl.glVertex3d(posX + 4, posY -4, 2); // Top Right
+			gl.glVertex3d(posX + 4, posY + 4, 2); // Bottom Right
+			gl.glVertex3d(posX -4, posY + 4, 2); // Bottom Left
 		gl.glEnd();
 		gl.glEnable(GL2.GL_TEXTURE_2D);
 		
@@ -132,6 +121,6 @@ public class Table extends ObjetGen {
 			gl.glEnd();
 			
 	    }
-	    gl.glDisable(GL2.GL_TEXTURE_2D);
 	}
+	
 }
