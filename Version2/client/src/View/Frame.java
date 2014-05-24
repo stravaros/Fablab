@@ -364,7 +364,7 @@ public class Frame implements GLEventListener {
 	
 	private boolean isNearTo (int x, int y){
 		boolean ret = (((x - mdl.getCapteurMouvant().getCoordoneeX()) * (x - mdl.getCapteurMouvant().getCoordoneeX()))
-				+ ((y - mdl.getCapteurMouvant().getCoordoneeY()) * (y - mdl.getCapteurMouvant().getCoordoneeY())))<9 ;
+				+ ((y - mdl.getCapteurMouvant().getCoordoneeY()) * (y - mdl.getCapteurMouvant().getCoordoneeY())))<25 ;
 		return ret;
 	}
 	

@@ -146,10 +146,18 @@ public class ClientToServer implements Runnable {
 		}
 		if (tokens[0].equals("X")) {
 			System.out.println("Coordonnees");
-			System.out.println(donnees);
+			
 			sem1.acquire();
+			try {
+				System.out.println(Double.parseDouble(tokens[1]));
+				System.out.println(Double.parseDouble(tokens[3]));
+				
 			mdl.setCoordXY(Double.parseDouble(tokens[1]),
 					Double.parseDouble(tokens[3]));
+			}
+			catch(NumberFormatException exception){
+				
+			}
 			sem1.release();
 			
 			
