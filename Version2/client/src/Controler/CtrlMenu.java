@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 import javax.swing.JButton;
 
 import Capteur.Capteur;
+import EnvObjet.Laptop;
 import EnvObjet.LittleLight;
 import EnvObjet.Meuble;
 import EnvObjet.Sofa;
@@ -46,110 +47,64 @@ public class CtrlMenu implements MouseListener {
 		System.out.println("coucou "+((JButton)(e.getSource())).getText());
 				switch (button.getText()){
 					case  "Table" :
-						if (e.getButton()==MouseEvent.BUTTON3){
 							orientation = fm.getOrientation();
 							mdl.setHasFloatingObject(true);
-							mdl.setFloatingObject(new Table(orientation));
-						}else{
-							System.out.println("table");
-							X = fm.getPosXFieldToInt();
-							Y = fm.getPosYFieldToInt();
-							orientation = fm.getOrientation();
-							mdl.getListObjet().add(new Table(X, Y, orientation) );
-						}
+							mdl.setFloatingObject(new Table());
 						break;
 					case  "Sofa" :
-						if (e.getButton()==MouseEvent.BUTTON3){
 							orientation = fm.getOrientation();
 							mdl.setHasFloatingObject(true);
-							mdl.setFloatingObject(new Sofa(orientation));
-						}else{
-							System.out.println("light");
-							X = fm.getPosXFieldToInt();
-							Y = fm.getPosYFieldToInt();
-							orientation = fm.getOrientation();
-							mdl.getListObjet().add(new Sofa(X, Y, orientation));
-						}
+							mdl.setFloatingObject(new Sofa());
 						break;
 						
 					case  "Light" :
-						if (e.getButton()==MouseEvent.BUTTON3){
 							orientation = fm.getOrientation();
 							mdl.setHasFloatingObject(true);
-							mdl.setFloatingObject(new Light(orientation));
-						}else{
-							System.out.println("light");
-							X = fm.getPosXFieldToInt();
-							Y = fm.getPosYFieldToInt();
-							orientation = fm.getOrientation();
-							mdl.getListObjet().add(new Light(X, Y, orientation));
-						}
+							mdl.setFloatingObject(new Light());
 						break;
 					case  "Little Light" :
-						if (e.getButton()==MouseEvent.BUTTON3){
 							orientation = fm.getOrientation();
 							mdl.setHasFloatingObject(true);
-							mdl.setFloatingObject(new LittleLight(orientation));
-						}else{
-							System.out.println("light");
-							X = fm.getPosXFieldToInt();
-							Y = fm.getPosYFieldToInt();
-							orientation = fm.getOrientation();
-							mdl.getListObjet().add(new Light(X, Y, orientation));
-						}
+							mdl.setFloatingObject(new LittleLight());
 						break;
 						
 					case  "Meuble" :
-						if (e.getButton()==MouseEvent.BUTTON3){
 							orientation = fm.getOrientation();
 							mdl.setHasFloatingObject(true);
-							mdl.setFloatingObject(new Meuble(orientation));
-						}else{
-							System.out.println("Meuble");
-							X = fm.getPosXFieldToInt();
-							Y = fm.getPosYFieldToInt();
-							orientation = fm.getOrientation();
-							mdl.getListObjet().add(new Meuble(X, Y, orientation));
-						}
+							mdl.setFloatingObject(new Meuble());
 						break;
 					
 					case  "Teapot" :
-						if (e.getButton()==MouseEvent.BUTTON3){
 							orientation = fm.getOrientation();
 							mdl.setHasFloatingObject(true);
-							mdl.setFloatingObject(new Teapot(orientation));
-						}else{
-							System.out.println("light");
-							X = fm.getPosXFieldToInt();
-							Y = fm.getPosYFieldToInt();
-							orientation = fm.getOrientation();
-							mdl.getListObjet().add(new Teapot(X, Y, orientation));
-						}
+							mdl.setFloatingObject(new Teapot());
 						break;
 							
 							
 					case  "TV" :
-						if (e.getButton()==MouseEvent.BUTTON3){
 							orientation = fm.getOrientation();
 							mdl.setHasFloatingObject(true);
-							mdl.setFloatingObject(new TV(orientation));
-						}else{
-							System.out.println("TV");
-							X = fm.getPosXFieldToInt();
-							Y = fm.getPosYFieldToInt();
-							orientation = fm.getOrientation();
-							mdl.getListObjet().add(new TV(X, Y, orientation));
-						}
+							mdl.setFloatingObject(new TV());
+						
 						break;
 							
 					case  "Window" :
 						System.out.println("Window");
-						X = fm.getPosXFieldToInt();
-						Y = fm.getPosYFieldToInt();
 						orientation = fm.getOrientation();
-						mdl.getListObjet().add(new Light(X, Y, orientation));
+						mdl.getListObjet().add(new Light());
 						break;
-				
+					case  "Laptop" :
+						orientation = fm.getOrientation();
+						mdl.setHasFloatingObject(true);
+						mdl.setFloatingObject(new Laptop());
+						break;
+					case "Turn ON/OFF" :
+						mdl.setTurnOnOff();
+						if (mdl.getTurnOnOff()==true)
+							button.setBackground(Color.GREEN);
+						else
+							button.setBackground(Color.RED);
+						break;
 					case  "Camera 1" :
 						mdl.changeCamera(0);
 						break;

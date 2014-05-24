@@ -1,44 +1,35 @@
 package EnvObjet;
 
+import java.io.File;
+import java.io.IOException;
+
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLException;
 
 import com.jogamp.opengl.util.gl2.GLUT;
 import com.jogamp.opengl.util.texture.Texture;
+import com.jogamp.opengl.util.texture.TextureIO;
 
 public class Table extends ObjetGen {
+	private Texture text_table;
+	File table = new File("ressources/textures/table_comp.jpg") ;
 	
-	public Table (String orientation){
-		this.orientation= orientation;
-	}
-
-	public Table (int X, int Y, String orientation){
-		if (X > 15)
-			posX = 15;
-		else if (X < -15)
-			posX = -15;
-		else
-			posX = X;
-		
-		if (Y > 15)
-			posY = 15;
-		else if (Y < -15)
-			posY = -15;
-		else
-			posY = Y;
-		
-		this.orientation = orientation;
-		isOnable = false;
+	public Table (){
+		this.orientation= 0;
 	}
 
 	@Override
-	public void drawObjet(GL2 gl, GLUT glut, Texture text_table, boolean on) {
+	public void drawObjet(GL2 gl, GLUT glut, boolean on) {
 		// TODO Auto-generated method stub
+		gl.glEnable(GL2.GL_TEXTURE_2D);
 		try {
-			
+			text_table= TextureIO.newTexture(table, true);
 			text_table.enable(gl);
 			text_table.bind(gl);
 		} catch (GLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		};
@@ -85,7 +76,7 @@ public class Table extends ObjetGen {
 		gl.glEnd();
 
 	    
-	    if (orientation == "Horizontal"){
+	    if (orientation == 0 || orientation == 2){
 	    //dessin de la chaise
 	    gl.glBegin(GL2.GL_QUADS);
 	    gl.glColor3d(1, 0, 0); // set the color of the quad
@@ -139,7 +130,8 @@ public class Table extends ObjetGen {
 				gl.glVertex3d(posX -7, posY + 2, 1); // Bottom Right
 				gl.glVertex3d(posX -6, posY + 2, 1); // Bottom Left
 			gl.glEnd();
+			
 	    }
-		
+	    gl.glDisable(GL2.GL_TEXTURE_2D);
 	}
 }

@@ -9,9 +9,8 @@ public abstract class ObjetGen {
 
 	protected int posX;
 	protected int posY;
-	protected int rayonAllumage = 3;
 	protected boolean isOnable;
-	protected String orientation;
+	protected int orientation;
 	
 	public int getPosX(){
 		return posX;
@@ -29,18 +28,18 @@ public abstract class ObjetGen {
 		this.posY = posY;
 	}
 	
-	public int getRayonAllumage (){
-		return rayonAllumage;
+	public int getOrientation (){
+		return orientation;
 	}
 	
-	public String getOrientation (){
-		return orientation;
+	public void setOrientation (int orientation){
+		this.orientation = orientation%4;
 	}
 	
 	public boolean isOnable (){
 		return isOnable;
 	}
 	
-	public abstract void drawObjet (GL2 gl, GLUT glut,  Texture tex, boolean on);
+	public abstract void drawObjet (GL2 gl, GLUT glut, boolean on);
 	
 }

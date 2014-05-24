@@ -39,10 +39,15 @@ public class CtrlMouse implements MouseListener, MouseMotionListener{
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		if (mdl.isHasFloatingObject()){
-			mdl.setHasFloatingObject(false);
-			mdl.getListObjet().add(mdl.getFloatingObject());
-			mdl.notifyChanges("camera");
+		if (arg0.getButton()==MouseEvent.BUTTON1){
+			if (mdl.isHasFloatingObject()){
+				mdl.setHasFloatingObject(false);
+				mdl.getListObjet().add(mdl.getFloatingObject());
+				mdl.notifyChanges("camera");
+			}
+		}
+		if (arg0.getButton()==MouseEvent.BUTTON3 && mdl.isHasFloatingObject()){
+			mdl.incrementOrientation();
 		}
 		
 	}

@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -19,6 +20,7 @@ public class FrameMenu extends JPanel{
 	private JTextField posX;
 	private JTextField posY;
 	private JComboBox orientation;
+	private AbstractButton turnON;
 	
 	private AbstractButton table;
 	private AbstractButton teapot;
@@ -29,15 +31,17 @@ public class FrameMenu extends JPanel{
 	private AbstractButton light;
 	private AbstractButton littleLight;
 	private AbstractButton meuble;
+	private AbstractButton laptop;
 	
 	public FrameMenu (Mdl m) {
 		super(new BorderLayout());
+		
 		mdl = m;
 	
 		//Placer meuble
 		JPanel panelMeuble = new JPanel(new BorderLayout());
-		JPanel panelMeubleList = new JPanel (new GridLayout(8, 1));
-		JPanel panelPositionMeuble = new JPanel(new GridLayout (3,1));
+		JPanel panelMeubleList = new JPanel (new GridLayout(9, 1));
+		//JPanel panelPositionMeuble = new JPanel(new GridLayout (3,1));
 		
 		posX = new JTextField();
 		posY = new JTextField();
@@ -45,13 +49,15 @@ public class FrameMenu extends JPanel{
 		orientation.addItem("Horizontal");
 		orientation.addItem("Vertical");
 		
-		panelPositionMeuble.add(posX);
+		/*panelPositionMeuble.add(posX);
 		panelPositionMeuble.add(posY);
-		panelPositionMeuble.add(orientation);
+		panelPositionMeuble.add(orientation);*/
 		Border borderMeuble = BorderFactory.createTitledBorder("Objet set");
 		panelMeuble.setBorder(borderMeuble);
 	    
 		ButtonGroup groupMeuble = new ButtonGroup();
+		
+		
 		
 	    table = new JButton("Table");
 	    panelMeubleList.add(table);
@@ -92,9 +98,19 @@ public class FrameMenu extends JPanel{
 		panelMeubleList.add(music);
 		groupMeuble.add(music);
 		music.addMouseListener(new CtrlMenu(mdl, this));
+		
+		laptop = new JButton("Laptop");
+		panelMeubleList.add(laptop);
+		groupMeuble.add(laptop);
+		laptop.addMouseListener(new CtrlMenu(mdl, this));
 	    
-		panelMeuble.add(panelPositionMeuble, BorderLayout.NORTH);
+		//panelMeuble.add(panelPositionMeuble, BorderLayout.NORTH);
+		turnON = new JButton ("Turn ON/OFF");
+		turnON.addMouseListener(new CtrlMenu(mdl, this));
+		turnON.setOpaque(true);
+		turnON.setBackground(Color.RED);
 		panelMeuble.add(panelMeubleList, BorderLayout.CENTER);
+		this.add(turnON, BorderLayout.NORTH);
 		this.add(panelMeuble, BorderLayout.CENTER);
 	    
 	    

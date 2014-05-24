@@ -7,8 +7,12 @@ import com.jogamp.opengl.util.texture.Texture;
 
 public class Music extends ObjetGen{
 
+	public Music (){
+		this.orientation= 0;
+	}
+	
 	@Override
-	public void drawObjet(GL2 gl, GLUT glut, Texture tex, boolean on) {
+	public void drawObjet(GL2 gl, GLUT glut, boolean on) {
 		// TODO Auto-generated method stub
 		
 	}

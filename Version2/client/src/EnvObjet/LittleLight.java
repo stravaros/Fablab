@@ -7,16 +7,16 @@ import com.jogamp.opengl.util.texture.Texture;
 
 public class LittleLight extends ObjetGen {
 
-	public LittleLight(String orientation) {
-		this.orientation = orientation;
+	public LittleLight() {
+		this.orientation= 0;
 	}
 
 	@Override
-	public void drawObjet(GL2 gl, GLUT glut, Texture tex, boolean on) {
+	public void drawObjet(GL2 gl, GLUT glut, boolean on) {
 		gl.glPushMatrix();
 		gl.glTranslated(this.posX ,this.posY, 4f ); //(x ,z,y)
 		if (on == true){
-			gl.glColor3d(0, 1, 0);
+			gl.glColor3d(1, 1, 0);
 			}
 		else
 			gl.glColor3d(1, 0, 1);

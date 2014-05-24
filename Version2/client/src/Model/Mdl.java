@@ -50,6 +50,7 @@ public class Mdl extends Observable {
 	private int distanceForFloatingObject = 50;
 	private int angleDirectionForFloatingObject = 0;
 	private int hauteurForFloatingObject = 0;
+	private boolean isOnOff = false;
 
 	public Mdl() {
 		setAngleElevation(0.0f);
@@ -84,13 +85,13 @@ public class Mdl extends Observable {
 	public void moveDragged(int newMouseX, int newMouseY,
 			boolean buttonPressed[]) {
 		if (buttonPressed[CtrlMouse.LEFT_BTN]) { // CLIQUE GAUCHE
-			// System.err.println("modif elev et azim");
 			angleElevation += vitesse / 5.0 * (newMouseY - mouseY);
 			angleAzimuth += vitesse / 5.0 * (newMouseX - mouseX);
+			if (angleElevation < -90)
+				angleElevation = -90;
 		}
 
 		if (buttonPressed[CtrlMouse.MIDDLE_BTN]) { // CLIQUE CENTRE
-			// System.err.println("modif dist");
 			distance += vitesse * (newMouseY - mouseY);
 		}
 
@@ -100,7 +101,7 @@ public class Mdl extends Observable {
 			mouseY = newMouseY;
 			notifyChanges("camera");
 		}
-		System.out.println("souris " + mouseX + " " + mouseY);
+		//System.out.println("souris " + mouseX + " " + mouseY);
 
 	}
 
@@ -266,7 +267,10 @@ public class Mdl extends Observable {
 
 	// SETTER
 	public void setAngleElevation(float angleElevation) {
-		this.angleElevation = angleElevation;
+		if (angleElevation > -90)
+			this.angleElevation = angleElevation;
+		else
+			this.angleElevation = -90;
 	}
 
 	public void setAngleAzimuth(float angleAzimuth) {
@@ -420,6 +424,25 @@ public class Mdl extends Observable {
 		listCapteur.clear();
 		connected = false;
 		notifyChanges("stop");
+	}
+
+	public boolean getTurnOnOff() {
+		// TODO Auto-generated method stub
+		return isOnOff ;
+	}
+	
+	public void setTurnOnOff() {
+		// TODO Auto-generated method stub
+		if (isOnOff==false)
+			isOnOff = true;
+		else
+			isOnOff = false;
+		notifyChanges("camera");
+	}
+
+	public void incrementOrientation() {
+		floatingObject.setOrientation((floatingObject.getOrientation()+1)%4);
+		notifyChanges("camera");
 	}
 	
 	

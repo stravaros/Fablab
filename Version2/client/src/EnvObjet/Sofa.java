@@ -7,18 +7,14 @@ import com.jogamp.opengl.util.texture.Texture;
 
 public class Sofa extends ObjetGen{
 	
-	public Sofa (String orientation){
-		this.orientation= orientation;
+	public Sofa (){
+		this.orientation= 0;
 	}
 	
-	public Sofa (int X, int Y, String orientation){
-		
-	}
 
 	@Override
-	public void drawObjet(GL2 gl, GLUT glut, Texture tex, boolean on) {
-		
-	
+	public void drawObjet(GL2 gl, GLUT glut, boolean on) {
+
 	    gl.glBegin(GL2.GL_QUADS);
 	    gl.glColor3d(1, 0, 0); // set the color of the quad
 			gl.glVertex3d(posX -5, posY-3, 2); // Top Left

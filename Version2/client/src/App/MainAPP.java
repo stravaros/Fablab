@@ -37,6 +37,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.Border;
 
 import com.jogamp.newt.event.KeyEvent;
@@ -59,6 +60,12 @@ public class MainAPP extends JFrame implements Observer {
 	private Mdl mdl = new Mdl();
 
 	public MainAPP() {
+		try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+		
 		createMenu();
 
 		cv = new GLCanvas(); // CREATION D'UN CANVAS
