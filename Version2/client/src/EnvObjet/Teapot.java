@@ -19,9 +19,9 @@ public class Teapot extends ObjetGen {
 		//dessin de la teapot
 		gl.glPushMatrix();
 		gl.glRotatef(90f ,1f, 0f, 0f);
-		gl.glTranslatef(posX ,3f, -posY); //(x ,z,y)
-		gl.glColor3d(0, 1, 0);
-	    glut.glutSolidTeapot(1.5);     // middle teapot
+		gl.glTranslatef(posX ,2.7f, -posY); //(x ,z,y)
+		gl.glColor3d(0.25, 0.51, 0.4);
+	    glut.glutSolidTeapot(1);     // middle teapot
 	    gl.glPopMatrix();
 		
 	}

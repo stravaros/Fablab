@@ -114,7 +114,7 @@ public class FrameMenu extends JPanel{
 		turnON = new JButton ("Turn ON/OFF");
 		turnON.addMouseListener(new CtrlMenu(mdl, this));
 		turnON.setOpaque(true);
-		turnON.setBackground(Color.RED);
+		turnON.setBackground(Color.GREEN);
 		panelMeuble.add(panelMeubleList, BorderLayout.CENTER);
 		this.add(turnON, BorderLayout.NORTH);
 		this.add(panelMeuble, BorderLayout.CENTER);

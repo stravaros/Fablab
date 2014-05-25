@@ -106,10 +106,6 @@ public class CtrlMenu implements MouseListener {
 						break;
 					case "Turn ON/OFF" :
 						mdl.setTurnOnOff();
-						if (mdl.getTurnOnOff()==true)
-							button.setBackground(Color.GREEN);
-						else
-							button.setBackground(Color.RED);
 						break;
 					case  "Camera 1" :
 						mdl.changeCamera(0);

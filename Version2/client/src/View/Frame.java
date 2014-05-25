@@ -214,18 +214,18 @@ public class Frame implements GLEventListener {
 		text_fenetre.bind(gl);
 		gl.glBegin(GL2.GL_QUADS);//fenetre
 		gl.glColor3d(1, 0, 0); // set the color of the quad
-			gl.glVertex3d(-longueur, -largeur/2-1, 2); 		
-			gl.glVertex3d(-longueur, -largeur/2-1, 8);		
-			gl.glVertex3d(-longueur, largeur/3+1, 8); 	
-			 gl.glVertex3d(-longueur, largeur/3+1, 2);  
+			gl.glVertex3d(-longueur, 1, 0); 		
+			gl.glVertex3d(-longueur, 1, 10);		
+			gl.glVertex3d(-longueur, -8, 10); 	
+			 gl.glVertex3d(-longueur, -8, 0);  
 		gl.glEnd();
 		
 		gl.glBegin(GL2.GL_QUADS);//fenetre
 		gl.glColor3d(1, 1, 1); // set the color of the quad
-			gl.glTexCoord2d(0, 0); gl.glVertex3d(-longueur, -largeur/2, 3); 		
-			gl.glTexCoord2d(0, 1); gl.glVertex3d(-longueur, -largeur/2, 7);		
-			gl.glTexCoord2d(1, 1); gl.glVertex3d(-longueur, largeur/3, 7); 	
-			gl.glTexCoord2d(1, 0); gl.glVertex3d(-longueur, largeur/3, 3);  
+			gl.glTexCoord2d(0, 0); gl.glVertex3d(-longueur, 0, 0); 		
+			gl.glTexCoord2d(0, 1); gl.glVertex3d(-longueur, 0, 9);		
+			gl.glTexCoord2d(1, 1); gl.glVertex3d(-longueur, -7, 9); 	
+			gl.glTexCoord2d(1, 0); gl.glVertex3d(-longueur, -7, 0);  
 		gl.glEnd();
 		gl.glPopAttrib();
 	}
@@ -249,7 +249,7 @@ public class Frame implements GLEventListener {
 		gl.glPushMatrix();
 		gl.glTranslated(mdl.getCapteurMouvant().getCoordoneeX() ,mdl.getCapteurMouvant().getCoordoneeY(), 3f );
 		gl.glRotated(90,0.0,1.0,0.0);
-		gl.glScaled(0.07, 0.07, 0.07);
+		gl.glScaled(0.08, 0.08, 0.08);
 		gl.glPushAttrib(GL2.GL_COLOR_BUFFER_BIT);
 		gl.glColor3f(0, 0, 1);
 		drawPeople(gl, glut);
@@ -370,6 +370,7 @@ public class Frame implements GLEventListener {
 	private boolean isNearToAndOn (int x, int y){
 		boolean ret = (((x - mdl.getCapteurMouvant().getCoordoneeX()) * (x - mdl.getCapteurMouvant().getCoordoneeX()))
 				+ ((y - mdl.getCapteurMouvant().getCoordoneeY()) * (y - mdl.getCapteurMouvant().getCoordoneeY())))<25 ;
+		
 		return ret & mdl.getTurnOnOff();
 	}
 	

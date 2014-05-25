@@ -9,7 +9,7 @@ public abstract class ObjetGen {
 
 	protected int posX;
 	protected int posY;
-	protected boolean isOnable;
+	protected boolean isOnable = false;
 	protected int orientation;
 	
 	public int getPosX(){

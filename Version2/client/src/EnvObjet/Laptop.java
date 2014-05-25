@@ -27,10 +27,10 @@ public class Laptop extends ObjetGen{
 		//clavier
 		gl.glBegin(GL2.GL_QUADS);
 		gl.glColor3f(0, 0, 0);
-		gl.glVertex3d(posX -2, posY - 2, 2); // Top Left
-		gl.glVertex3d(posX -2, posY + 2, 2); // Top Right
-		gl.glVertex3d(posX +2, posY + 2, 2); // Bottom Right
-		gl.glVertex3d(posX +2, posY -2, 2); // Bottom Left
+		gl.glVertex3d(posX -1.5, posY - 1.5, 2); // Top Left
+		gl.glVertex3d(posX -1.5, posY + 1.5, 2); // Top Right
+		gl.glVertex3d(posX +1.5, posY + 1.5, 2); // Bottom Right
+		gl.glVertex3d(posX +1.5, posY -1.5, 2); // Bottom Left
 		gl.glEnd();
 
 		if (on == true){
@@ -43,40 +43,40 @@ public class Laptop extends ObjetGen{
 				//ecran
 				gl.glBegin(GL2.GL_QUADS);
 				gl.glColor3f(1, 1, 1);
-				gl.glTexCoord2d(0, 0); gl.glVertex3d(posX -2, posY -2, 2); // Top Left
-				gl.glTexCoord2d(1, 0); gl.glVertex3d(posX +2, posY -2, 2); // Top Right
-				gl.glTexCoord2d(1, 1); gl.glVertex3d(posX +2, posY -3, 4); // Bottom Right
-				gl.glTexCoord2d(0, 1); gl.glVertex3d(posX -2, posY -3, 4); // Bottom Left
+				gl.glTexCoord2d(0, 0); gl.glVertex3d(posX -1.5, posY -1.5, 2); // Top Left
+				gl.glTexCoord2d(1, 0); gl.glVertex3d(posX +1.5, posY -1.5, 2); // Top Right
+				gl.glTexCoord2d(1, 1); gl.glVertex3d(posX +1.5, posY -2, 4); // Bottom Right
+				gl.glTexCoord2d(0, 1); gl.glVertex3d(posX -1.5, posY -2, 4); // Bottom Left
 				gl.glEnd();
 			}
 			if (orientation == 1){
 				//ecran
 				gl.glBegin(GL2.GL_QUADS);
 				gl.glColor3f(1, 1, 1);
-				gl.glTexCoord2d(0, 0); gl.glVertex3d(posX -2, posY -2, 2); // Top Left
-				gl.glTexCoord2d(1, 0); gl.glVertex3d(posX -2, posY +2, 2); // Top Right
-				gl.glTexCoord2d(1, 1); gl.glVertex3d(posX -3, posY +2, 4); // Bottom Right
-				gl.glTexCoord2d(0, 1); gl.glVertex3d(posX -3, posY -2, 4); // Bottom Left
+				gl.glTexCoord2d(0, 0); gl.glVertex3d(posX -1.5, posY -1.5, 2); // Top Left
+				gl.glTexCoord2d(1, 0); gl.glVertex3d(posX -1.5, posY +1.5, 2); // Top Right
+				gl.glTexCoord2d(1, 1); gl.glVertex3d(posX -2, posY +1.5, 4); // Bottom Right
+				gl.glTexCoord2d(0, 1); gl.glVertex3d(posX -2, posY -1.5, 4); // Bottom Left
 				gl.glEnd();
 			}
 			if (orientation == 2){
 				//ecran
 				gl.glBegin(GL2.GL_QUADS);
 				gl.glColor3f(1, 1, 1);
-				gl.glTexCoord2d(0, 0); gl.glVertex3d(posX -2, posY +2, 2); // Top Left
-				gl.glTexCoord2d(1, 0); gl.glVertex3d(posX +2, posY +2, 2); // Top Right
-				gl.glTexCoord2d(1, 1); gl.glVertex3d(posX +2, posY +3, 4); // Bottom Right
-				gl.glTexCoord2d(0, 1); gl.glVertex3d(posX -2, posY +3, 4); // Bottom Left
+				gl.glTexCoord2d(0, 0); gl.glVertex3d(posX -1.5, posY +1.5, 2); // Top Left
+				gl.glTexCoord2d(1, 0); gl.glVertex3d(posX +1.5, posY +1.5, 2); // Top Right
+				gl.glTexCoord2d(1, 1); gl.glVertex3d(posX +1.5, posY +2, 4); // Bottom Right
+				gl.glTexCoord2d(0, 1); gl.glVertex3d(posX -1.5, posY +2, 4); // Bottom Left
 				gl.glEnd();
 			}
 			if (orientation == 3){
 				//ecran
 				gl.glBegin(GL2.GL_QUADS);
 				gl.glColor3f(1, 1, 1);
-				gl.glTexCoord2d(0, 0); gl.glVertex3d(posX +2, posY -2, 2); // Top Left
-				gl.glTexCoord2d(1, 0); gl.glVertex3d(posX +2, posY +2, 2); // Top Right
-				gl.glTexCoord2d(1, 1); gl.glVertex3d(posX +3, posY +2, 4); // Bottom Right
-				gl.glTexCoord2d(0, 1); gl.glVertex3d(posX +3, posY -2, 4); // Bottom Left
+				gl.glTexCoord2d(0, 0); gl.glVertex3d(posX +1.5, posY -1.5, 2); // Top Left
+				gl.glTexCoord2d(1, 0); gl.glVertex3d(posX +1.5, posY +1.5, 2); // Top Right
+				gl.glTexCoord2d(1, 1); gl.glVertex3d(posX +2, posY +1.5, 4); // Bottom Right
+				gl.glTexCoord2d(0, 1); gl.glVertex3d(posX +2, posY -1.5, 4); // Bottom Left
 				gl.glEnd();
 			}
 			
@@ -87,40 +87,40 @@ public class Laptop extends ObjetGen{
 				//ecran
 				gl.glBegin(GL2.GL_QUADS);
 				gl.glColor3f(1, 1, 1);
-				gl.glVertex3d(posX -2, posY -2, 2); // Top Left
-				gl.glVertex3d(posX +2, posY -2, 2); // Top Right
-				gl.glVertex3d(posX +2, posY -3, 4); // Bottom Right
-				gl.glVertex3d(posX -2, posY -3, 4); // Bottom Left
+				gl.glVertex3d(posX -1.5, posY -1.5, 2); // Top Left
+				gl.glVertex3d(posX +1.5, posY -1.5, 2); // Top Right
+				gl.glVertex3d(posX +1.5, posY -2, 4); // Bottom Right
+				gl.glVertex3d(posX -1.5, posY -2, 4); // Bottom Left
 				gl.glEnd();
 			}
 			if (orientation == 1) {
 				//ecran
 				gl.glBegin(GL2.GL_QUADS);
 				gl.glColor3f(1, 1, 1);
-				gl.glVertex3d(posX -2, posY -2, 2); // Top Left
-				gl.glVertex3d(posX -2, posY +2, 2); // Top Right
-				gl.glVertex3d(posX -3, posY +2, 4); // Bottom Right
-				gl.glVertex3d(posX -3, posY -2, 4); // Bottom Left
+				gl.glVertex3d(posX -1.5, posY -1.5, 2); // Top Left
+				gl.glVertex3d(posX -1.5, posY +1.5, 2); // Top Right
+				gl.glVertex3d(posX -2, posY +1.5, 4); // Bottom Right
+				gl.glVertex3d(posX -2, posY -1.5, 4); // Bottom Left
 				gl.glEnd();
 			}
 			if (orientation == 2){
 				//ecran
 				gl.glBegin(GL2.GL_QUADS);
 				gl.glColor3f(1, 1, 1);
-				gl.glVertex3d(posX -2, posY +2, 2); // Top Left
-				gl.glVertex3d(posX +2, posY +2, 2); // Top Right
-				gl.glVertex3d(posX +2, posY +3, 4); // Bottom Right
-				gl.glVertex3d(posX -2, posY +3, 4); // Bottom Left
+				gl.glVertex3d(posX -1.5, posY +1.5, 2); // Top Left
+				gl.glVertex3d(posX +1.5, posY +1.5, 2); // Top Right
+				gl.glVertex3d(posX +1.5, posY +2, 4); // Bottom Right
+				gl.glVertex3d(posX -1.5, posY +2, 4); // Bottom Left
 				gl.glEnd();
 			}
 			if (orientation == 3) {
 				//ecran
 				gl.glBegin(GL2.GL_QUADS);
 				gl.glColor3f(1, 1, 1);
-				gl.glVertex3d(posX +2, posY -2, 2); // Top Left
-				gl.glVertex3d(posX +2, posY +2, 2); // Top Right
-				gl.glVertex3d(posX +3, posY +2, 4); // Bottom Right
-				gl.glVertex3d(posX +3, posY -2, 4); // Bottom Left
+				gl.glVertex3d(posX +1.5, posY -1.5, 2); // Top Left
+				gl.glVertex3d(posX +1.5, posY +1.5, 2); // Top Right
+				gl.glVertex3d(posX +2, posY +1.5, 4); // Bottom Right
+				gl.glVertex3d(posX +2, posY -1.5, 4); // Bottom Left
 				gl.glEnd();
 			}
 

@@ -19,7 +19,7 @@ public class LittleLight extends ObjetGen {
 			gl.glColor3d(1, 1, 0);
 			}
 		else
-			gl.glColor3d(1, 0, 1);
+			gl.glColor3d(0.4, 0.8, 0.8);
 		
 	    glut.glutSolidTorus(0.5, 1.5 ,20, 20);   
 	    gl.glTranslated(0, 0, -2f ); //(x ,z,y)

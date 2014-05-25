@@ -23,7 +23,7 @@ public class Table extends ObjetGen {
 		// TODO Auto-generated method stub
 		
 		gl.glBegin(GL2.GL_QUADS);
-		gl.glColor3f(1, 1, 1); // set the color of the quad
+		gl.glColor3f(0.5f, 0.25f, 0.12f); // set the color of the quad
 		
 			gl.glVertex3d(posX -4, posY -4, 2); // Top Left
 			gl.glVertex3d(posX + 4, posY -4, 2); // Top Right
@@ -33,6 +33,7 @@ public class Table extends ObjetGen {
 		
 		//pied1
 		gl.glBegin(GL2.GL_QUADS);
+		//gl.glColor3f(1, 1, 1);
 			gl.glVertex3d(posX -4, posY + 4, 0); // Top Left
 			gl.glVertex3d(posX -3, posY + 4, 0); // Top Right
 			gl.glVertex3d(posX -3, posY + 4, 2); // Bottom Right

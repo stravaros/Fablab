@@ -439,6 +439,10 @@ public class Mdl extends Observable {
 			isOnOff = false;
 		notifyChanges("camera");
 	}
+	
+	public void setTurnOnOff(boolean b) {
+			isOnOff = b;
+	}
 
 	public void incrementOrientation() {
 		floatingObject.setOrientation((floatingObject.getOrientation()+1)%4);

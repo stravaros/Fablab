@@ -26,7 +26,7 @@ public class TV extends ObjetGen {
 		//dessin du meuble
 		if (orientation == 0 || orientation == 2){
 			gl.glBegin(GL2.GL_QUADS);
-			gl.glColor3d(0, 0, 0); // set the color of the quad
+			gl.glColor3d(0.4f, 0.4f, 0.4f); // set the color of the quad
 			gl.glVertex3d(posX -4, posY-1, 2); // Top Left
 			gl.glVertex3d(posX -4, posY+1, 2); // Top Right
 			gl.glVertex3d(posX + 4,posY +1, 2); // Bottom Right
@@ -54,7 +54,7 @@ public class TV extends ObjetGen {
 
 			//TV
 			gl.glBegin(GL2.GL_QUADS);
-			//gl.glColor3d(1, 0, 0); // set the color of the quad
+			gl.glColor3d(0, 0, 0); // set the color of the quad
 			gl.glVertex3d(posX - 2, posY, 2); // Top Left
 			gl.glVertex3d(posX - 2, posY, 5); // Top Right
 			gl.glVertex3d(posX + 2 ,posY, 5); // Bottom Right
@@ -79,7 +79,7 @@ public class TV extends ObjetGen {
 		}
 		if (orientation == 1 || orientation == 3){
 			gl.glBegin(GL2.GL_QUADS);
-			gl.glColor3d(0, 0, 0); // set the color of the quad
+			gl.glColor3d(0.4f, 0.4f, 0.4f); // set the color of the quad
 			gl.glVertex3d(posX -1, posY-4, 2); // Top Left
 			gl.glVertex3d(posX +1, posY-4, 2); // Top Right
 			gl.glVertex3d(posX + 1,posY +4, 2); // Bottom Right
@@ -107,7 +107,7 @@ public class TV extends ObjetGen {
 
 			//TV
 			gl.glBegin(GL2.GL_QUADS);
-			//gl.glColor3d(1, 0, 0); // set the color of the quad
+			gl.glColor3d(0, 0, 0); // set the color of the quad
 			gl.glVertex3d(posX , posY-2, 2); // Top Left
 			gl.glVertex3d(posX , posY-2, 5); // Top Right
 			gl.glVertex3d(posX ,posY+2, 5); // Bottom Right
