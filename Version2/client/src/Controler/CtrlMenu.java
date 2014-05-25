@@ -27,7 +27,7 @@ import View.FrameMenu;
 public class CtrlMenu implements MouseListener {
 	private Mdl mdl;
 	private FrameMenu fm;
-	
+
 	public CtrlMenu (Mdl m, FrameMenu f){
 		mdl = m;
 		fm = f;
@@ -36,110 +36,81 @@ public class CtrlMenu implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e)  {
-		int X;
-		int Y;
-		String orientation;
 		JButton button = ((JButton)(e.getSource()));
-		System.out.println("coucou "+((JButton)(e.getSource())).getText());
-				switch (button.getText()){
-					case  "Table" :
-							orientation = fm.getOrientation();
-							mdl.setHasFloatingObject(true);
-							mdl.setFloatingObject(new Table());
-						break;
-					case  "Chaise" :
-						orientation = fm.getOrientation();
-						mdl.setHasFloatingObject(true);
-						mdl.setFloatingObject(new Chaise());
-					break;
-					case  "Sofa" :
-							orientation = fm.getOrientation();
-							mdl.setHasFloatingObject(true);
-							mdl.setFloatingObject(new Sofa());
-						break;
-						
-					case  "Light" :
-							orientation = fm.getOrientation();
-							mdl.setHasFloatingObject(true);
-							mdl.setFloatingObject(new Light());
-						break;
-					case  "Little Light" :
-							orientation = fm.getOrientation();
-							mdl.setHasFloatingObject(true);
-							mdl.setFloatingObject(new LittleLight());
-						break;
-						
-					case  "Meuble" :
-							orientation = fm.getOrientation();
-							mdl.setHasFloatingObject(true);
-							mdl.setFloatingObject(new Meuble());
-						break;
-					
-					case  "Teapot" :
-							orientation = fm.getOrientation();
-							mdl.setHasFloatingObject(true);
-							mdl.setFloatingObject(new Teapot());
-						break;
-							
-							
-					case  "TV" :
-							orientation = fm.getOrientation();
-							mdl.setHasFloatingObject(true);
-							mdl.setFloatingObject(new TV());
-						
-						break;
-							
-					case  "Window" :
-						System.out.println("Window");
-						orientation = fm.getOrientation();
-						mdl.getListObjet().add(new Light());
-						break;
-					case  "Laptop" :
-						orientation = fm.getOrientation();
-						mdl.setHasFloatingObject(true);
-						mdl.setFloatingObject(new Laptop());
-						break;
-					case "Turn ON/OFF" :
-						mdl.setTurnOnOff();
-						break;
-					case  "Camera 1" :
-						mdl.changeCamera(0);
-						break;
-					
-					case  "Camera 2" :
-						mdl.changeCamera(1);
-						break;
-					case  "Camera 3" :
-						mdl.changeCamera(2);
-						break;
-				}
-				mdl.notifyChanges("camera");
-		
+		System.out.println("Button "+((JButton)(e.getSource())).getText());
+		switch (button.getText()){
+		case  "Table" :
+			mdl.setHasFloatingObject(true);
+			mdl.setFloatingObject(new Table());
+			break;
+		case  "Chaise" :
+			mdl.setHasFloatingObject(true);
+			mdl.setFloatingObject(new Chaise());
+			break;
+		case  "Sofa" :
+			mdl.setHasFloatingObject(true);
+			mdl.setFloatingObject(new Sofa());
+			break;
+		case  "Light" :
+			mdl.setHasFloatingObject(true);
+			mdl.setFloatingObject(new Light());
+			break;
+		case  "Little Light" :
+			mdl.setHasFloatingObject(true);
+			mdl.setFloatingObject(new LittleLight());
+			break;
+		case  "Meuble" :
+			mdl.setHasFloatingObject(true);
+			mdl.setFloatingObject(new Meuble());
+			break;
+		case  "Teapot" :
+			mdl.setHasFloatingObject(true);
+			mdl.setFloatingObject(new Teapot());
+			break;
+		case  "TV" :
+			mdl.setHasFloatingObject(true);
+			mdl.setFloatingObject(new TV());
+			break;
+		case  "Window" :
+			mdl.getListObjet().add(new Light());
+			break;
+		case  "Laptop" :
+			mdl.setHasFloatingObject(true);
+			mdl.setFloatingObject(new Laptop());
+			break;
+		case "Turn ON/OFF" :
+			mdl.setTurnOnOff();
+			break;
+		case  "Camera 1" :
+			mdl.changeCamera(0);
+			break;
+		case  "Camera 2" :
+			mdl.changeCamera(1);
+			break;
+		case  "Camera 3" :
+			mdl.changeCamera(2);
+			break;
+		}
+		mdl.notifyChanges("camera");
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("exit1 " +fm.isActivated);
-		fm.isActivated = false;
-		System.out.println("exit2 " +fm.isActivated);
-		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 }

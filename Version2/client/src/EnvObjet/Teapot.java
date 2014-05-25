@@ -15,7 +15,7 @@ public class Teapot extends ObjetGen {
 	}
 
 	@Override
-	public void drawObjet(GL2 gl, GLUT glut, boolean on) {
+	public void drawObjet(GL2 gl, GLUT glut) {
 		//dessin de la teapot
 		gl.glPushMatrix();
 		gl.glRotatef(90f ,1f, 0f, 0f);

@@ -15,20 +15,15 @@ public class CtrlKeyboard implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		//System.out.println("keyT "+e.getKeyCode());
-		//pause();
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		//System.out.println("keyP "+e.getKeyCode());
-	
 		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		//System.out.println("keyR "+e.getKeyCode());
 		int code = e.getKeyCode();
 		switch (code){
 		case 37 : //gauche

@@ -62,11 +62,11 @@ public class MainAPP extends JFrame implements Observer {
 
 	public MainAPP() {
 		try {
-            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        } 
-		
+			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+
 		createMenu();
 
 		cv = new GLCanvas(); // CREATION D'UN CANVAS
@@ -106,7 +106,6 @@ public class MainAPP extends JFrame implements Observer {
 		// js.setResizeWeight(0.3);
 		add(js);
 		js.setOneTouchExpandable(false);
-		
 
 	}
 
@@ -207,10 +206,10 @@ public class MainAPP extends JFrame implements Observer {
 	}
 
 	public static final class AboutWindow implements ActionListener { // fenetre
-																		// 'a
-																		// propos
-																		// de
-																		// fablab'
+		// 'a
+		// propos
+		// de
+		// fablab'
 		private static final AboutWindow aboutWindow = new AboutWindow();
 		JPanel panel;
 		JFrame frame;

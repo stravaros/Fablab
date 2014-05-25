@@ -16,10 +16,6 @@ import Model.Mdl;
 public class FrameMenu extends JPanel{
 	
 	private Mdl mdl;
-	public boolean isActivated=false;
-	private JTextField posX;
-	private JTextField posY;
-	private JComboBox orientation;
 	private AbstractButton turnON;
 	
 	private AbstractButton table;
@@ -27,7 +23,6 @@ public class FrameMenu extends JPanel{
 	private AbstractButton teapot;
 	private AbstractButton Sofa;
 	private AbstractButton TV;
-	private AbstractButton window;
 	private AbstractButton music;
 	private AbstractButton light;
 	private AbstractButton littleLight;
@@ -42,24 +37,12 @@ public class FrameMenu extends JPanel{
 		//Placer meuble
 		JPanel panelMeuble = new JPanel(new BorderLayout());
 		JPanel panelMeubleList = new JPanel (new GridLayout(10, 1));
-		//JPanel panelPositionMeuble = new JPanel(new GridLayout (3,1));
-		
-		posX = new JTextField();
-		posY = new JTextField();
-		orientation = new JComboBox();
-		orientation.addItem("Horizontal");
-		orientation.addItem("Vertical");
-		
-		/*panelPositionMeuble.add(posX);
-		panelPositionMeuble.add(posY);
-		panelPositionMeuble.add(orientation);*/
+
 		Border borderMeuble = BorderFactory.createTitledBorder("Objet set");
 		panelMeuble.setBorder(borderMeuble);
 	    
 		ButtonGroup groupMeuble = new ButtonGroup();
-		
-		
-		
+
 	    table = new JButton("Table");
 	    panelMeubleList.add(table);
 		groupMeuble.add(table);
@@ -85,10 +68,10 @@ public class FrameMenu extends JPanel{
 		groupMeuble.add(TV);
 		TV.addMouseListener(new CtrlMenu(mdl, this));
 		
-	    window = new JButton("Light");
-	    panelMeubleList.add(window);
-		groupMeuble.add(window);
-		window.addMouseListener(new CtrlMenu(mdl, this));
+		light = new JButton("Light");
+	    panelMeubleList.add(light);
+		groupMeuble.add(light);
+		light.addMouseListener(new CtrlMenu(mdl, this));
 		
 		littleLight = new JButton("Little Light");
 	    panelMeubleList.add(littleLight);
@@ -119,7 +102,6 @@ public class FrameMenu extends JPanel{
 		this.add(turnON, BorderLayout.NORTH);
 		this.add(panelMeuble, BorderLayout.CENTER);
 	    
-	    
 	    //camera choice
   		JPanel panelCamera = new JPanel(new GridLayout(0, 1));
   		Border borderCamera = BorderFactory.createTitledBorder("Camera set");
@@ -147,39 +129,5 @@ public class FrameMenu extends JPanel{
   	    this.add(panelCamera, BorderLayout.SOUTH);
 	    
 	}
-	
 
-	
-	
-	public String getOrientation(){
-		return orientation.getSelectedItem().toString();
-	}
-	
-	public String getPosXField(){
-		return posX.getText();
-	}
-
-	public String getPosYField(){
-		return posY.getText();
-	}
-	
-	public int getPosXFieldToInt() throws NumberFormatException{
-		try{
-			int tmp = Integer.parseInt(posX.getText());
-			return tmp;
-		} catch (Exception e){
-			JOptionPane.showMessageDialog(this,"Invalid X position","Error",JOptionPane.ERROR_MESSAGE);
-			throw new NumberFormatException ();
-		}
-	}
-
-	public int getPosYFieldToInt() throws NumberFormatException {
-		try{
-			int tmp = Integer.parseInt(posY.getText());
-			return tmp;
-		} catch (Exception e){
-			JOptionPane.showMessageDialog(this,"Invalid Y position","Error",JOptionPane.ERROR_MESSAGE);
-			throw new NumberFormatException ();
-		}
-	}
 }

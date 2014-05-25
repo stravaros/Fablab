@@ -18,12 +18,10 @@ public class Laptop extends ObjetGen{
 
 	public Laptop() {
 		this.orientation= 0;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void drawObjet(GL2 gl, GLUT glut, boolean on) {
-		// TODO Auto-generated method stub
+	public void drawObjet(GL2 gl, GLUT glut) {
 		//clavier
 		gl.glBegin(GL2.GL_QUADS);
 		gl.glColor3f(0, 0, 0);
@@ -33,7 +31,7 @@ public class Laptop extends ObjetGen{
 		gl.glVertex3d(posX +1.5, posY -1.5, 2); // Bottom Left
 		gl.glEnd();
 
-		if (on == true){
+		if (OnOff == true){
 			if (!getIsLoadedTexture())
 				loadedTexture(gl);
 			text_laptop.enable(gl);
@@ -79,7 +77,7 @@ public class Laptop extends ObjetGen{
 				gl.glTexCoord2d(0, 1); gl.glVertex3d(posX +2, posY -1.5, 4); // Bottom Left
 				gl.glEnd();
 			}
-			
+
 			gl.glDisable(GL2.GL_TEXTURE_2D);
 		}
 		else{

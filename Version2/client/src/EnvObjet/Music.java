@@ -12,8 +12,7 @@ public class Music extends ObjetGen{
 	}
 	
 	@Override
-	public void drawObjet(GL2 gl, GLUT glut, boolean on) {
-		// TODO Auto-generated method stub
+	public void drawObjet(GL2 gl, GLUT glut) {
 		
 	}
 

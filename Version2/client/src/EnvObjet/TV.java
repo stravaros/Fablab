@@ -21,8 +21,7 @@ public class TV extends ObjetGen {
 	}
 
 	@Override
-	public void drawObjet(GL2 gl, GLUT glut, boolean on) {
-		// TODO Auto-generated method stub
+	public void drawObjet(GL2 gl, GLUT glut) {
 		//dessin du meuble
 		if (orientation == 0 || orientation == 2){
 			gl.glBegin(GL2.GL_QUADS);
@@ -35,7 +34,6 @@ public class TV extends ObjetGen {
 
 			//pied1
 			gl.glBegin(GL2.GL_QUADS);
-			//gl.glColor3d(1, 0, 0); // set the color of the quad
 			gl.glVertex3d(posX -4 ,posY -1, 0); // Top Left
 			gl.glVertex3d( posX -4 ,posY -1, 2); // Top Right
 			gl.glVertex3d(posX -4 , posY+1, 2); // Bottom Right
@@ -44,7 +42,6 @@ public class TV extends ObjetGen {
 
 			//pied2
 			gl.glBegin(GL2.GL_QUADS);
-			//gl.glColor3d(1, 0, 0); // set the color of the quad
 			gl.glVertex3d(posX + 4, posY -1, 0); // Top Left
 			gl.glVertex3d(posX + 4,posY -1, 2); // Top Right
 			gl.glVertex3d(posX + 4,posY +1, 2); // Bottom Right
@@ -60,7 +57,7 @@ public class TV extends ObjetGen {
 			gl.glVertex3d(posX + 2 ,posY, 5); // Bottom Right
 			gl.glVertex3d(posX + 2, posY, 2); // Bottom Left
 			gl.glEnd();
-			if (on == true){
+			if (OnOff == true){
 				if (!getIsLoadedTexture())
 					loadedTexture(gl);
 				text_tv.enable(gl);
@@ -88,7 +85,6 @@ public class TV extends ObjetGen {
 
 			//pied1
 			gl.glBegin(GL2.GL_QUADS);
-			//gl.glColor3d(1, 0, 0); // set the color of the quad
 			gl.glVertex3d(posX -1 ,posY -4, 0); // Top Left
 			gl.glVertex3d( posX -1 ,posY -4, 2); // Top Right
 			gl.glVertex3d(posX +1 , posY-4, 2); // Bottom Right
@@ -97,7 +93,6 @@ public class TV extends ObjetGen {
 
 			//pied2
 			gl.glBegin(GL2.GL_QUADS);
-			//gl.glColor3d(1, 0, 0); // set the color of the quad
 			gl.glVertex3d(posX -1, posY +4, 0); // Top Left
 			gl.glVertex3d(posX -1,posY +4, 2); // Top Right
 			gl.glVertex3d(posX + 1,posY +4, 2); // Bottom Right
@@ -113,13 +108,12 @@ public class TV extends ObjetGen {
 			gl.glVertex3d(posX ,posY+2, 5); // Bottom Right
 			gl.glVertex3d(posX , posY+2, 2); // Bottom Left
 			gl.glEnd();
-			if (on == true){
+			if (OnOff == true){
 				if (!getIsLoadedTexture())
 					loadedTexture(gl);
 				text_tv.enable(gl);
 				text_tv.bind(gl);	
 
-				//texture gl.glBegin(GL2.GL_QUADS);//fenetre
 				gl.glBegin(GL2.GL_QUADS);
 				gl.glColor3d(1, 1, 1); // set the color of the quad
 				gl.glTexCoord2d(0, 0); gl.glVertex3d(posX , posY-2, 2); 		

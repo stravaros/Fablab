@@ -13,6 +13,7 @@ import Client.ClientToServer;
 import Controler.CtrlMouse;
 import EnvObjet.ObjetGen;
 import EnvObjet.Table;
+import EnvObjet.Window;
 
 public class Mdl extends Observable {
 
@@ -42,7 +43,7 @@ public class Mdl extends Observable {
 
 	private ArrayList<Capteur> listCapteur;
 	private ArrayList<ObjetGen> listObjet;
-	
+
 	private ObjetGen floatingObject;
 	private boolean hasFloatingObject =false;
 	private int angleElevationForFloatingObject = 0;
@@ -68,6 +69,8 @@ public class Mdl extends Observable {
 		listCapteur = new ArrayList<Capteur>();
 		listObjet = new ArrayList<ObjetGen>();
 		capteurMouvant = new Capteur(3);
+		
+		listObjet.add(new Window (-20, -5));
 
 	}
 
@@ -87,8 +90,16 @@ public class Mdl extends Observable {
 		if (buttonPressed[CtrlMouse.LEFT_BTN]) { // CLIQUE GAUCHE
 			angleElevation += vitesse / 5.0 * (newMouseY - mouseY);
 			angleAzimuth += vitesse / 5.0 * (newMouseX - mouseX);
+			
 			if (angleElevation < -90)
 				angleElevation = -90;
+			if (angleElevation > 90)
+				angleElevation = 90;
+			
+			if(angleAzimuth< -90)
+				angleAzimuth = -90;
+			if(angleAzimuth> 90)
+				angleAzimuth = 90;
 		}
 
 		if (buttonPressed[CtrlMouse.MIDDLE_BTN]) { // CLIQUE CENTRE
@@ -221,7 +232,7 @@ public class Mdl extends Observable {
 	public int getParametreAnimation() {
 		return parametreAnimation;
 	}
-	
+
 
 	public int getAngleElevationForFloatingObject() {
 		return angleElevationForFloatingObject;
@@ -355,9 +366,9 @@ public class Mdl extends Observable {
 	public ArrayList<Capteur> getListCapteur() {
 		return listCapteur;
 	}
-	
-	
-	
+
+
+
 	public ObjetGen getFloatingObject() {
 		return floatingObject;
 	}
@@ -365,7 +376,7 @@ public class Mdl extends Observable {
 	public void setFloatingObject(ObjetGen floatingObject) {
 		this.floatingObject = floatingObject;
 	}
-	
+
 
 	public boolean isHasFloatingObject() {
 		return hasFloatingObject;
@@ -407,7 +418,7 @@ public class Mdl extends Observable {
 			notifyChanges("notConnected");
 		}
 	}
-	
+
 	public void run() {		
 		//thread = new Thread(cl);
 		//thread.start();
@@ -417,7 +428,7 @@ public class Mdl extends Observable {
 
 		notifyChanges("run");
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public void stop() {
 		thread.stop();
@@ -430,7 +441,7 @@ public class Mdl extends Observable {
 		// TODO Auto-generated method stub
 		return isOnOff ;
 	}
-	
+
 	public void setTurnOnOff() {
 		// TODO Auto-generated method stub
 		if (isOnOff==false)
@@ -439,16 +450,16 @@ public class Mdl extends Observable {
 			isOnOff = false;
 		notifyChanges("camera");
 	}
-	
+
 	public void setTurnOnOff(boolean b) {
-			isOnOff = b;
+		isOnOff = b;
 	}
 
 	public void incrementOrientation() {
 		floatingObject.setOrientation((floatingObject.getOrientation()+1)%4);
 		notifyChanges("camera");
 	}
-	
-	
+
+
 
 }

@@ -10,6 +10,7 @@ public abstract class ObjetGen {
 	protected int posX;
 	protected int posY;
 	protected boolean isOnable = false;
+	protected boolean OnOff = false;
 	protected int orientation;
 	
 	public int getPosX(){
@@ -40,6 +41,25 @@ public abstract class ObjetGen {
 		return isOnable;
 	}
 	
-	public abstract void drawObjet (GL2 gl, GLUT glut, boolean on);
+	public void turnOn (){
+		OnOff = true;
+	}
+	
+	public void turnOff (){
+		OnOff = false;
+	}
+	
+	public void turnOnOff (){
+		if (OnOff == true)
+			OnOff = false;
+		else
+			OnOff = true;
+	}
+	
+	public boolean getOnOff (){
+		return OnOff;
+	}
+	
+	public abstract void drawObjet (GL2 gl, GLUT glut);
 	
 }
