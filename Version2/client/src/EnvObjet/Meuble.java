@@ -13,10 +13,11 @@ public class Meuble extends ObjetGen {
 
 	@Override
 	public void drawObjet(GL2 gl, GLUT glut) {
+
+		gl.glColor3f(0.60f, 0.3f, 0.1f);
 		if (orientation == 0 || orientation == 2){
 
 			gl.glBegin(GL2.GL_QUADS);
-
 			gl.glVertex3d(posX -10, posY +2, 0); // Top Left
 			gl.glVertex3d(posX -10, posY -2, 0); // Top Right
 			gl.glVertex3d(posX -10, posY -2, 10); // Bottom Right

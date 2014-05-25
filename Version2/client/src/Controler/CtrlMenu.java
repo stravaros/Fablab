@@ -13,6 +13,7 @@ import EnvObjet.Chaise;
 import EnvObjet.Laptop;
 import EnvObjet.LittleLight;
 import EnvObjet.Meuble;
+import EnvObjet.Music;
 import EnvObjet.Sofa;
 import EnvObjet.TV;
 //import EnvObjet.Meuble;
@@ -82,6 +83,10 @@ public class CtrlMenu implements MouseListener {
 		case  "Laptop" :
 			mdl.setHasFloatingObject(true);
 			mdl.setFloatingObject(new Laptop());
+			break;
+		case  "Music" :
+			mdl.setHasFloatingObject(true);
+			mdl.setFloatingObject(new Music());
 			break;
 		case "Turn ON/OFF" :
 			mdl.setTurnOnOff();
