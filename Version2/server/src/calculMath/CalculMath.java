@@ -48,9 +48,12 @@ public final class CalculMath {
 			for (int j = i + 1; j < tabCapteur.size(); j++) {
 				/*tabRayons[indiceLigne] = RSSI[j] * RSSI[j] * K * K - RSSI[i]
 						* RSSI[i] * K * K;*/
-				tabRayons[indiceLigne] = xbeeReception.getRSSI(j) * xbeeReception.getRSSI(j) * K * K - xbeeReception.getRSSI(i)
-				* xbeeReception.getRSSI(i) * K * K;
-				System.out.println("RSSI " +j + " " +xbeeReception.getRSSI(j) +" RSSI " +i +" " +xbeeReception.getRSSI(i));
+				double rssij = xbeeReception.getRSSI(j);
+				double rssii = xbeeReception.getRSSI(i);
+				//tabRayons[indiceLigne] = xbeeReception.getRSSI(j) * xbeeReception.getRSSI(j) * K * K - xbeeReception.getRSSI(i)
+				//* xbeeReception.getRSSI(i) * K * K;
+				tabRayons[indiceLigne] = this.getDistanceFromRSSI(j, rssij) * this.getDistanceFromRSSI(j, rssij) * K * K - this.getDistanceFromRSSI(i, rssii)
+				* this.getDistanceFromRSSI(i, rssii);
 				indiceLigne++;
 			}
 		}
@@ -58,6 +61,21 @@ public final class CalculMath {
 				* (tabCapteur.size() - 1) / 2);
 		position = constMatrix.times(matrixRayon.plus(matrixC));
 		return position.getColumnPackedCopy();
+	}
+	
+	public double getDistanceFromRSSI(int i, double rssi){
+		if(i==0){
+			if(rssi-44.0 < 0.0)
+				return 0.0;
+			else
+				return (rssi-44.0)/1.26;
+		}
+		else {
+			if(rssi-48.2 < 0.0)
+				return 0.0;
+			else
+				return (rssi-48.2)/0.98;
+		}
 	}
 
 	/**
